@@ -9,6 +9,14 @@
     ],
     "tasks": [
         {
+            "label": "clear",
+            "type": "shell",
+            "windows":
+            {
+                "command": "rm -r -fo ${workspaceFolder}\\build"
+            }
+        },
+        {
             "label": "createBuildFolder",
             "type": "shell",
             "windows":
