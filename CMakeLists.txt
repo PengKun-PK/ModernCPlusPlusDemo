@@ -52,6 +52,8 @@ add_subdirectory(${GOOGLETEST_DIR})
 
 # 将源代码添加到 GoogleTest 来生成可执行文件。
 set(TEST_SOURCE_FILES
+    Test/DataSourceMock.hpp
+    Test/TestCamera.hpp
     Test/TestCamera.cpp
    )
 

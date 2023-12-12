@@ -6,10 +6,13 @@
 
 #include "MathFunctions.hpp"
 #include "Camera.hpp"
+#include "DataSource.hpp"
 
 using namespace std;
 
 using namespace MathFunctions;
+
+using namespace StateMachine;
 
 const std::string testString = "TEST Console Start!";
 
@@ -40,10 +43,11 @@ int main()
         cout << "Invalid input!" << '\n';
     }
     // Test Camera statemachine.
-    Camera::Camera cam;
+    DataSource dataSource;
+    Camera cam(dataSource);
     cam.initiate();
-    cam.process_event(Camera::EvShutterFull("enter shooting"));
-    cam.process_event(Camera::EvShutterHalf("enter half shooting"));
-    cam.process_event(Camera::EvShutterRelease("enter NoShooting"));
-    cam.process_event(Camera::EvConfig("enter config"));
+    cam.process_event(EvShutterFull("enter shooting"));
+    cam.process_event(EvShutterHalf("enter half shooting"));
+    cam.process_event(EvShutterRelease("enter NoShooting"));
+    cam.process_event(EvConfig("enter config"));
 }

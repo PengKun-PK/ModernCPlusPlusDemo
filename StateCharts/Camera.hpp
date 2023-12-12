@@ -8,9 +8,11 @@
 #include <boost/statechart/simple_state.hpp>
 #include <boost/statechart/custom_reaction.hpp>
 
+#include "IDataSource.hpp"
+
 namespace sc = boost::statechart;
 
-namespace Camera
+namespace StateMachine
 {
 
 // event
@@ -58,8 +60,11 @@ struct EvConfig : sc::event<EvConfig>
 struct NotShooting;
 struct Camera : sc::state_machine<Camera, NotShooting>
 {
+	Camera(IDataSource &dataSource);
 	bool IsMemoryAvailable() const { return true; }
 	bool IsBatteryLow() const { return false; }
+
+	IDataSource &m_dataSource;
 };
 
 // state NotShooting

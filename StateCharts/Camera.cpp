@@ -1,6 +1,13 @@
 #include "Camera.hpp"
 
-using namespace Camera;
+namespace StateMachine
+{
+
+Camera::Camera(IDataSource &dataSource)
+	: m_dataSource(dataSource)
+{
+
+}
 
 sc::result NotShooting::react(const EvShutterHalf& ev)
 {
@@ -46,4 +53,6 @@ sc::result Configuring::react(const EvConfig& ev)
 {
 	std::cout << ev.msg << std::endl;
 	return transit<Idle>();
+}
+
 }
