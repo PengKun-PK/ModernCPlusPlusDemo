@@ -30,6 +30,8 @@ void CameraTest::TearDown()
 TEST_F(CameraTest, testEnterShooting)
 {
     m_cameraHandler->initiate();
+
+    EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
     m_cameraHandler->process_event(EvShutterFull("enter shooting"));
 }
 

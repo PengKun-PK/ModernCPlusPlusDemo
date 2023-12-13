@@ -14,6 +14,7 @@ sc::result NotShooting::react(const EvShutterHalf& ev)
 	auto& stm = context<Camera>();
 	if (stm.IsMemoryAvailable())
 	{
+		stm.m_dataSource.InsertToStringVec(ev.msg);
 		std::cout << ev.msg << std::endl;
 		return transit<Shooting>();
 	}
@@ -32,6 +33,7 @@ sc::result NotShooting::react(const EvShutterFull& ev)
 	}
 	else
 	{
+		stm.m_dataSource.InsertToStringVec(ev.msg);
 		std::cout << ev.msg << std::endl;
 		return transit<Shooting>();
 	}
@@ -39,18 +41,24 @@ sc::result NotShooting::react(const EvShutterFull& ev)
 
 sc::result Shooting::react(const EvShutterRelease& ev)
 {
+	auto& stm = context<Camera>();
+	stm.m_dataSource.InsertToStringVec(ev.msg);
 	std::cout << ev.msg << std::endl;
 	return transit<NotShooting>();
 }
 
 sc::result Idle::react(const EvConfig& ev)
 {
+	auto& stm = context<Camera>();
+	stm.m_dataSource.InsertToStringVec(ev.msg);
 	std::cout << ev.msg << std::endl;
 	return transit<Configuring>();
 }
 
 sc::result Configuring::react(const EvConfig& ev)
 {
+	auto& stm = context<Camera>();
+	stm.m_dataSource.InsertToStringVec(ev.msg);
 	std::cout << ev.msg << std::endl;
 	return transit<Idle>();
 }
