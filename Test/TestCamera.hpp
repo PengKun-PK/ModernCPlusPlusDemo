@@ -4,6 +4,7 @@
 #include <gmock/gmock.h>
 
 #include "DataSourceMock.hpp"
+#include "../StateCharts/Camera.hpp"
 
 namespace StateMachine
 {
@@ -15,7 +16,13 @@ public:
     virtual ~CameraTest();
 
 protected:
-    DataSourceMock m_dataSource;
+    void SetUp() override;
+
+    void TearDown() override;
+
+    DataSourceMock m_dataSourceMock;
+
+    std::unique_ptr<Camera> m_cameraHandler;
 };
 
 }

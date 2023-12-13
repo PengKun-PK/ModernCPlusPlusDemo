@@ -59,16 +59,12 @@ set(TEST_SOURCE_FILES
 
 add_executable(gtest_unitTest ${TEST_SOURCE_FILES})
 
-# 将 GoogleTest 和 GoogleMock 链接到你的测试目标。
-target_link_libraries(gtest_unitTest gtest gtest_main gmock gmock_main)
-
-# 同时, 让其链接到 pthread
-find_package(Threads)
-if(THREADS_HAVE_PTHREAD_ARG)
-  target_compile_options(PUBLIC MyProject "-pthread")
-endif()
-if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(MyProject "${CMAKE_THREAD_LIBS_INIT}")
-endif()
+target_link_libraries(gtest_unitTest
+   gtest
+   gtest_main
+   gmock
+   gmock_main
+   StateCharts
+   MathFunctions)
 
 ###################################################################

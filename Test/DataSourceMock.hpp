@@ -8,7 +8,7 @@
 namespace StateMachine
 {
 
-class DataSourceMock : IDataSource
+class DataSourceMock : public IDataSource
 {
 public:
     MOCK_METHOD0(GetStringVector,

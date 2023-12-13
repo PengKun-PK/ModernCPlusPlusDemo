@@ -17,10 +17,20 @@ CameraTest::~CameraTest()
 
 }
 
-TEST_F(CameraTest, test1)
+void CameraTest::SetUp()
 {
-    std::string testString1 = "Hello";
-    EXPECT_EQ(testString1, "Hello");
+    m_cameraHandler = std::make_unique<Camera>(m_dataSourceMock);
+}
+
+void CameraTest::TearDown()
+{
+
+}
+
+TEST_F(CameraTest, testEnterShooting)
+{
+    m_cameraHandler->initiate();
+    m_cameraHandler->process_event(EvShutterFull("enter shooting"));
 }
 
 }
