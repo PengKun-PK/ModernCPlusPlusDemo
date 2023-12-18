@@ -47,7 +47,6 @@ int main()
     Camera cam(dataSource);
     cam.initiate();
     cam.process_event(EvShutterFull("enter shooting"));
-    cam.process_event(EvShutterHalf("enter half shooting"));
     cam.process_event(EvShutterRelease("enter NoShooting"));
     cam.process_event(EvConfig("enter config"));
 }
