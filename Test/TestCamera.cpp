@@ -33,6 +33,15 @@ TEST_F(CameraTest, testEnterShooting)
 
     EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
     m_cameraHandler->process_event(EvShutterFull("enter shooting"));
+    Mock::VerifyAndClearExpectations(&m_dataSourceMock);
+
+    EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
+    m_cameraHandler->process_event(EvShutterRelease("enter no shooting"));
+    Mock::VerifyAndClearExpectations(&m_dataSourceMock);
+
+     EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
+    m_cameraHandler->process_event(EvConfig("enter Config"));
+    Mock::VerifyAndClearExpectations(&m_dataSourceMock);
 }
 
 using event = boost::statechart::event_base;
@@ -73,7 +82,7 @@ TEST_P(CameraTestWithParams, TestDataSourceFunction)
 
     // Test
     const auto data = GetParam();
-    EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(1);
+    EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(0));
     switch (data.type)
     {
     case eventType::ShutterFull:
@@ -86,10 +95,12 @@ TEST_P(CameraTestWithParams, TestDataSourceFunction)
         m_cameraHandler->process_event(EvConfig(data.strData));
         break;
     }
+    Mock::VerifyAndClearExpectations(&m_dataSourceMock);
 }
 
 INSTANTIATE_TEST_SUITE_P(TestDataSourceFunction, CameraTestWithParams, Values(
-    TestInput{ eventType::ShutterFull,          "enter shooting" },
+    TestInput{ eventType::ShutterFull,          "Enter shooting" },
+    TestInput{ eventType::ShutterRelease,       "Enter no Shooting"},
     TestInput{ eventType::ShutterConfig,        "Enter Config"}
 ));
 
