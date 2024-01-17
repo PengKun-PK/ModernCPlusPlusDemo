@@ -101,8 +101,8 @@ int main()
 {
     const auto testString = getTestString();
     cout << testString.value_or("no msg!!!") << endl;
-    MathFunction math;
-    const auto result = math.calDividedFunction(7, 0);
+    std::unique_ptr<MathFunction> math;
+    const auto result = math->calDividedFunction(7, 0);
     if (result.has_value())
     {
         cout << result.value() << '\n';
@@ -113,11 +113,11 @@ int main()
     }
     // Test Camera statemachine.
     DataSource dataSource;
-    Camera cam(dataSource);
-    cam.initiate();
-    cam.process_event(EvShutterFull("enter shooting"));
-    cam.process_event(EvShutterRelease("enter NoShooting"));
-    cam.process_event(EvConfig("enter config"));
+    std::shared_ptr<Camera> cam = std::make_shared<Camera>(dataSource);
+    cam->initiate();
+    cam->process_event(EvShutterFull("enter shooting"));
+    cam->process_event(EvShutterRelease("enter NoShooting"));
+    cam->process_event(EvConfig("enter config"));
 
     // Test String
     cout << "\n###################################" << endl;
