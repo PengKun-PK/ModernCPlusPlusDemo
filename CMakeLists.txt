@@ -51,6 +51,10 @@ set(gtest_disable_pthreads on)
 
 add_subdirectory(${GOOGLETEST_DIR})
 
+# spLog
+set(SPLOG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/splog)
+add_subdirectory(${SPLOG_DIR})
+
 # test exe
 set(TEST_SOURCE_FILES
     Test/DataSourceMock.hpp
