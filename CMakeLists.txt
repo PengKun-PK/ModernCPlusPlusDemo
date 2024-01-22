@@ -36,9 +36,9 @@ add_subdirectory(StateCharts)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-                            ${Boost_LIBRARIES}
-                            MathFunctions
-                            StateCharts)
+                      ${Boost_LIBRARIES}
+                      MathFunctions
+                      StateCharts)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_BINARY_DIR}
@@ -54,6 +54,8 @@ add_subdirectory(${GOOGLETEST_DIR})
 # spLog
 set(SPLOG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/splog)
 add_subdirectory(${SPLOG_DIR})
+target_link_libraries(${PROJECT_NAME} PUBLIC
+                      spdlog::spdlog)
 
 # test exe
 set(TEST_SOURCE_FILES

@@ -3,6 +3,7 @@
 #include <string>
 
 #include <boost/filesystem.hpp>
+#include <spdlog/spdlog.h>
 
 #include "MathFunctions.hpp"
 #include "Camera.hpp"
@@ -99,6 +100,9 @@ std::optional<std::string> replaceCommandWithString(std::string& messageText) {
 
 int main()
 {
+    // splog initialize
+    spdlog::info("Hello, {}!", "World");
+
     const auto testString = getTestString();
     cout << testString.value_or("no msg!!!") << endl;
     std::unique_ptr<MathFunction> math;
@@ -111,6 +115,7 @@ int main()
     {
         cout << "Invalid input!" << '\n';
     }
+
     // Test Camera statemachine.
     DataSource dataSource;
     std::shared_ptr<Camera> cam = std::make_shared<Camera>(dataSource);
