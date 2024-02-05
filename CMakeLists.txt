@@ -32,18 +32,21 @@ endif()
 # custom library and link
 add_subdirectory(MathFunctions)
 add_subdirectory(StateCharts)
+add_subdirectory(SPDLogEx)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
                       ${Boost_LIBRARIES}
                       MathFunctions
-                      StateCharts)
+                      StateCharts
+                      SPDLogEx)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_BINARY_DIR}
                            ${PROJECT_SOURCE_DIR}/MathFunctions
-                           ${PROJECT_SOURCE_DIR}/StateCharts)
+                           ${PROJECT_SOURCE_DIR}/StateCharts
+                           ${PROJECT_SOURCE_DIR}/SPDLogEx)
 
 # google test
 set(GOOGLETEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Test/googletest)
@@ -59,8 +62,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 
 # test exe
 set(TEST_SOURCE_FILES
-    Test/DataSourceMock.hpp
-    Test/TestCamera.hpp
     Test/TestCamera.cpp
    )
 
