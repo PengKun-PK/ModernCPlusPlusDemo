@@ -57,6 +57,8 @@ add_subdirectory(${GOOGLETEST_DIR})
 # spLog
 set(SPLOG_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/splog)
 add_subdirectory(${SPLOG_DIR})
+target_include_directories(SPDLogEx PRIVATE
+                           ${CMAKE_CURRENT_SOURCE_DIR}/lib/splog/include)
 target_link_libraries(${PROJECT_NAME} PUBLIC
                       spdlog::spdlog)
 
