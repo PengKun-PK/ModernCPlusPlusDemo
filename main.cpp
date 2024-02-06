@@ -3,6 +3,7 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
+#include "Singleton.hpp"
 #include "MathFunctions.hpp"
 #include "Camera.hpp"
 #include "DataSource.hpp"
@@ -100,8 +101,8 @@ int main()
 {
     const auto testString = getTestString();
     cout << testString.value_or("no msg!!!") << endl;
-    std::unique_ptr<MathFunction> math;
-    const auto result = math->calDividedFunction(7, 0);
+    const auto& math = Instance<MathFunction>();
+    const auto result = math.calDividedFunction(7, 0);
     if (result.has_value())
     {
         cout << result.value() << '\n';
@@ -112,7 +113,7 @@ int main()
     }
 
     // Test Camera statemachine.
-    DataSource dataSource;
+    auto& dataSource = Instance<DataSource>();
     std::shared_ptr<Camera> cam = std::make_shared<Camera>(dataSource);
     cam->initiate();
     cam->process_event(EvShutterFull("enter shooting"));

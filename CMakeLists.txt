@@ -44,6 +44,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_BINARY_DIR}
+                           ${PROJECT_SOURCE_DIR}/Singleton
                            ${PROJECT_SOURCE_DIR}/MathFunctions
                            ${PROJECT_SOURCE_DIR}/StateCharts
                            ${PROJECT_SOURCE_DIR}/SPDLogEx)
