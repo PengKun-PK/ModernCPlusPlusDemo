@@ -18,8 +18,6 @@
 #include <spdlog/details/thread_pool.h>
 #include <spdlog/details/thread_pool-inl.h>
 
-#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-
 // 默认的日志输出格式
 #define LOG_OUTPUT_FORMAT      "%^[ %Y-%m-%d %H:%M:%S.%e ] <thread %t> [%n] [%l]\n%@,%!\n%v%$\n"
 // 封装宏
