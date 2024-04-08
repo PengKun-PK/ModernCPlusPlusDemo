@@ -1,213 +1,119 @@
 #include "SPDLogEx.hpp"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/async.h"
 
-namespace Trace
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+using namespace Trace;
+
+SpdLogger::SpdLogger(const std::string& logFilePath) : filePath(logFilePath)
 {
+	fs::path logDir = fs::path(logFilePath).parent_path();
 
-SPDLogEx::OutMode SPDLogEx::GetOutModeEnum(const std::string& strMode)
-{
-	OutMode eMode;
-	if (strMode == "SYNC")
+	if (logDir.empty())
 	{
-		eMode = OutMode::SYNC;
-	}
-	else if (strMode == "ASYNC")
-	{
-		eMode = OutMode::ASYNC;
-	}
-	else
-	{
-		eMode = OutMode::SYNC;
-	}
+        logDir = fs::current_path();
+    }
 
-	return eMode;
+    // Create directory if it doesn't exist
+    if (!fs::exists(logDir))
+        fs::create_directories(logDir);
+
+    spdlog::init_thread_pool(8192, 1); // 队列大小8192，线程数1
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+    console_sink->set_level(spdlog::level::trace); // 控制台输出级别
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFilePath, true);
+    file_sink->set_level(spdlog::level::trace); // 文件输出级别
+    std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+    logger = std::make_shared<spdlog::async_logger>("async_logger", sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+    logger->set_level(spdlog::level::trace);
+    logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
+    spdlog::register_logger(logger);
 }
 
-SPDLogEx::OutLevel SPDLogEx::GetOutLevelEnum(const std::string& strLevel)
+void SpdLogger::setLevel(LogLevel level)
 {
-	OutLevel eLevel;
-
-	if (strLevel == "TRACE")
-	{
-		eLevel = OutLevel::LEVEL_TRACE;
-	}
-	else if (strLevel == "DEBUG")
-	{
-		eLevel = OutLevel::LEVEL_DEBUG;
-	}
-	else if (strLevel == "INFO")
-	{
-		eLevel = OutLevel::LEVEL_INFO;
-	}
-	else if (strLevel == "WARN")
-	{
-		eLevel = OutLevel::LEVEL_WARN;
-	}
-	else if (strLevel == "ERROR")
-	{
-		eLevel = OutLevel::LEVEL_ERROR;
-	}
-	else if (strLevel == "CRITI")
-	{
-		eLevel = OutLevel::LEVEL_CRITI;
-	}
-	else
-	{
-		eLevel =  OutLevel::LEVEL_TRACE;
-	}
-
-	return eLevel;
+    logger->set_level(levelToSpdlogLevel(level));
 }
 
-SPDLogEx::SPDLogEx()
-	:m_bInit(false)
+void SpdLogger::setFilePath(const std::string& filePath)
 {
-
-}
-
-SPDLogEx::~SPDLogEx()
-{
-	if (m_bInit)
+    if (this->filePath != filePath)
 	{
-		this->UnInit();
-	}
-}
+		fs::path logDir = fs::path(filePath).parent_path();
 
-bool SPDLogEx::AddColorConsole(const char* pLoggerName, const OutLevel level)
-{
-	printf("[log]: AddColorConsole, logName=%s  level=%d  \n", pLoggerName, level);
-	auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-	console_sink->set_level((spdlog::level::level_enum)level);
-	//console_sink->set_pattern(LOG_OUTPUT_FORMAT);
-	UpdateSinkMap(pLoggerName, console_sink);
-	return true;
-}
-
-bool SPDLogEx::AddRotatingFile(const char* pLoggerName, const char* pFileName, const int nMaxFileSize, const int nMaxFile, const OutLevel level)
-{
-	printf("[log]: AddRotatingFile, logName=%s  level=%d  fileName=%s  maxFileSize=%d  maxFile=%d \n", pLoggerName, level, pFileName, nMaxFileSize, nMaxFile);
-	auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(pFileName, nMaxFileSize, nMaxFile);
-	file_sink->set_level((spdlog::level::level_enum)level);
-	//file_sink->set_pattern(LOG_OUTPUT_FORMAT);
-	UpdateSinkMap(pLoggerName, file_sink);
-	return true;
-}
-
-bool SPDLogEx::AddDailyFile(const char* pLoggerName, const char* pFileName, const int nHour, const int nMinute, const OutLevel eLevel)
-{
-	//"%Y-%m-%d:%H:%M:%S.log"
-	auto DailyFileSink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(pFileName, nHour, nMinute);
-	DailyFileSink->set_level((spdlog::level::level_enum)eLevel);
-	UpdateSinkMap(pLoggerName, DailyFileSink);
-	return true;
-}
-
-bool SPDLogEx::Init(const OutMode outMode, const string strLogFormat)
-{
-	if (m_bInit)
-	{
-		printf("It's already initialized\n");
-		return false;
-	}
-	m_bInit = true;
-
-	if (outMode == ASYNC)//异步
-	{
-		printf("[log]: mode=ASYNC \n");
-		for (auto e : m_mapLoggerParam)
+		if (logDir.empty())
 		{
-			std::string strLogName = e.first;
-			std::vector<spdlog::sink_ptr> vecSink(e.second);
-			auto tp = std::make_shared<spdlog::details::thread_pool>(1024000, 1);
-			auto logger = std::make_shared<spdlog::async_logger>(strLogName, begin(vecSink), end(vecSink), tp, spdlog::async_overflow_policy::block);
-			UpdateThreadPoolMap(strLogName, tp);
-			//设置根日志输出等级
-			logger->set_level(spdlog::level::trace);
-			//遇到warn级别，立即flush到文件
-			logger->flush_on(spdlog::level::warn);
-			spdlog::register_logger(logger);
-		}
-	}
-	else//同步
-	{
-		printf("[log]:  mode=SYNC \n");
-		for (auto e : m_mapLoggerParam)
-		{
-			std::string strLogName = e.first;
-			std::vector<spdlog::sink_ptr> vecSink(e.second);
-			auto logger = std::make_shared<spdlog::logger>(strLogName, begin(vecSink), end(vecSink));
-			//设置根日志输出等级
-			logger->set_level(spdlog::level::trace);
-			//遇到warn级别，立即flush到文件
-			logger->flush_on(spdlog::level::warn);
-			spdlog::register_logger(logger);
-		}
-	}
+        	logDir = fs::current_path();
+   		}
+		// Create directory if it doesn't exist
+		if (!fs::exists(logDir))
+			fs::create_directories(logDir);
 
-	//定时flush到文件，每三秒刷新一次
-	spdlog::flush_every(std::chrono::seconds(3));
-	//设置全局记录器的输出格式
-	spdlog::set_pattern(strLogFormat);
+        this->filePath = filePath;
+		auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(filePath, true);
+		file_sink->set_level(spdlog::level::trace);
 
-	return true;
+		// Clear existing sinks and add file output sink
+		logger->sinks().clear();
+		logger->sinks().push_back(file_sink);
+		// Add console output sink if not already added
+		logger->sinks().push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+		logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
+	}
 }
 
-void SPDLogEx::UnInit()
+void SpdLogger::log(LogLevel level, const std::string &message, const std::string &fileName, int lineNumber)
 {
-	spdlog::drop_all();
-	spdlog::shutdown();
+    std::stringstream ss;
+    ss << message << " [" << fileName << ":" << lineNumber << "]";
+    logger->log(levelToSpdlogLevel(level), ss.str());
 }
 
-std::vector<std::string> SPDLogEx::StringSplit(const std::string& strSrc, const std::string& strSplit)
+void SpdLogger::trace(const std::string &msg)
 {
-	std::vector<std::string> resVec;
-	if ("" == strSrc)
-	{
-		return resVec;
-	}
-	//方便截取最后一段数据
-	std::string strs = strSrc + strSplit;
-
-	size_t pos = strs.find(strSplit);
-	size_t size = strs.size();
-
-	while (pos != std::string::npos)
-	{
-		std::string x = strs.substr(0, pos);
-		resVec.push_back(x);
-		strs = strs.substr(pos + 1, size);
-		pos = strs.find(strSplit);
-	}
-
-	return resVec;
-
+    log(LogLevel::trace, msg, __FILE__, __LINE__);
 }
 
-void SPDLogEx::UpdateSinkMap(std::string strLoggerName, spdlog::sink_ptr pSink)
+void SpdLogger::debug(const std::string &msg)
 {
-	auto iter = m_mapLoggerParam.find(strLoggerName);
-	if (iter != m_mapLoggerParam.end())
-	{
-		iter->second.push_back(pSink);
-	}
-	else
-	{
-		std::vector<spdlog::sink_ptr> vecSink;
-		vecSink.push_back(pSink);
-		m_mapLoggerParam[strLoggerName] = vecSink;
-	}
+    log(LogLevel::debug, msg, __FILE__, __LINE__);
 }
 
-void SPDLogEx::UpdateThreadPoolMap(std::string strLoggerName, std::shared_ptr<spdlog::details::thread_pool> pThreadPool)
+void SpdLogger::info(const std::string &msg)
 {
-	auto iter = m_mapAsyncThreadPool.find(strLoggerName);
-	if (iter != m_mapAsyncThreadPool.end())
-	{
-		iter->second = (pThreadPool);
-	}
-	else
-	{
-		m_mapAsyncThreadPool[strLoggerName] = pThreadPool;
-	}
+    log(LogLevel::info, msg, __FILE__, __LINE__);
 }
 
+void SpdLogger::warn(const std::string &msg)
+{
+    log(LogLevel::warn, msg, __FILE__, __LINE__);
+}
+
+void SpdLogger::error(const std::string &msg)
+{
+    log(LogLevel::err, msg, __FILE__, __LINE__);
+}
+
+void SpdLogger::critical(const std::string &msg)
+{
+    log(LogLevel::critical, msg, __FILE__, __LINE__);
+}
+
+spdlog::level::level_enum SpdLogger::levelToSpdlogLevel(LogLevel level)
+{
+    switch (level)
+	{
+        case LogLevel::trace: return spdlog::level::trace;
+        case LogLevel::debug: return spdlog::level::debug;
+        case LogLevel::info: return spdlog::level::info;
+        case LogLevel::warn: return spdlog::level::warn;
+        case LogLevel::err: return spdlog::level::err;
+        case LogLevel::critical: return spdlog::level::critical;
+        case LogLevel::off: return spdlog::level::off;
+        default: return spdlog::level::info;
+    }
 }
