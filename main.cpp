@@ -4,6 +4,8 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
+#include <execution>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
@@ -12,6 +14,7 @@
 #include "Camera.hpp"
 #include "DataSource.hpp"
 #include "ILogger.hpp"
+#include "StateMachine.hpp"
 
 using namespace std;
 
@@ -21,24 +24,23 @@ using namespace StateMachine;
 
 using namespace Trace;
 
-const std::string testString = "TEST Console Start!";
-constexpr double BASE_SPEED_1 = 111.0945;
-constexpr double MAX_SPEED_1 = 30;
-constexpr double SCALE_DISTANCE_1 = 392.9842;
-constexpr double EXPONENT_1 = 1.972242;
+inline const std::string testString = "TEST Console Start!";
+inline constexpr double BASE_SPEED_1 = 111.0945;
+inline constexpr double MAX_SPEED_1 = 30;
+inline constexpr double SCALE_DISTANCE_1 = 392.9842;
+inline constexpr double EXPONENT_1 = 1.972242;
 
-constexpr double BASE_SPEED_2 = 90.03563;
-constexpr double MAX_SPEED_2 = 60;
-constexpr double SCALE_DISTANCE_2 = 314.6796;
-constexpr double EXPONENT_2 = 14.54655;
+inline constexpr double BASE_SPEED_2 = 90.03563;
+inline constexpr double MAX_SPEED_2 = 60;
+inline constexpr double SCALE_DISTANCE_2 = 314.6796;
+inline constexpr double EXPONENT_2 = 14.54655;
 
+inline constexpr double BASE_SPEED_3 = 60;
+inline constexpr double MAX_SPEED_3 = 20;
+inline constexpr double SCALE_DISTANCE_3 = 100;
+inline constexpr double EXPONENT_3 = 1.584963;
 
-constexpr double BASE_SPEED_3 = 60;
-constexpr double MAX_SPEED_3 = 20;
-constexpr double SCALE_DISTANCE_3 = 100;
-constexpr double EXPONENT_3 = 1.584963;
-
-std::optional<std::string> getTestString()
+[[nodiscard]] std::optional<std::string> getTestString()
 {
     if (testString.empty())
     {
@@ -54,7 +56,7 @@ std::optional<std::string> getTestString()
 constexpr char DelimiterStart = '#';
 constexpr char DelimiterMiddle = '|';
 
-std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
+[[nodiscard("返回值很重要")]] std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
 {
     const auto firstDelim = command.find(DelimiterMiddle);
     const auto lastDelim = command.rfind(DelimiterMiddle);
@@ -71,7 +73,7 @@ std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std
     return std::make_pair(id, message);
 }
 
-std::optional<std::string> replaceCommandWithString(std::string& messageText) {
+[[nodiscard]] std::optional<std::string> replaceCommandWithString(std::string& messageText) {
     const auto startPos = messageText.find(DelimiterStart);
     const auto endPos = messageText.rfind(DelimiterStart);
 
@@ -135,19 +137,21 @@ int main()
     cam->process_event(EvShutterRelease("enter NoShooting"));
     cam->process_event(EvConfig("enter config"));
 
-    // Test String
-    std::string inputStr = "in 400 meters, enter the tunnel#SLOW_DWON|2|, please slow down#";
+    // Test StataMachine
+    auto& sm = Instance<MyStateMachine<void>>();
 
-    auto message = replaceCommandWithString(inputStr);
+    logger->info("Starting state machine\n");
+    sm.start();
 
-    if (!message)
-    {
-        logger->error("Failed to replace command in the string.");
-        return -1;
-    }
-    else
-    {
-        logger->info(message.value());
-        return 1;
-    }
+    logger->info("Sending Event1\n");
+    sm.process(StateMachine_<void>::Event1{42});
+
+    logger->info("Sending Event2\n");
+    sm.process(StateMachine_<void>::Event2{"Hello"});
+
+    logger->info("Sending Event3\n");
+    sm.process(StateMachine_<void>::Event3{});
+
+    logger->info("Sending Event2 (internal transition)\n");
+    sm.process(StateMachine_<void>::Event2{"Internal"});
 }

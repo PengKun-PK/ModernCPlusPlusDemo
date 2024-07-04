@@ -38,6 +38,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
                            ${Boost_INCLUDE_DIRS}
                            ${PROJECT_SOURCE_DIR}/Singleton
                            ${PROJECT_SOURCE_DIR}/MathFunctions
+                           ${PROJECT_SOURCE_DIR}/StateMachine
                            ${PROJECT_SOURCE_DIR}/StateCharts
                            ${PROJECT_SOURCE_DIR}/SPDLogEx)
 
