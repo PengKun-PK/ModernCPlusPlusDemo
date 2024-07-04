@@ -40,7 +40,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_SOURCE_DIR}/MathFunctions
                            ${PROJECT_SOURCE_DIR}/StateMachine
                            ${PROJECT_SOURCE_DIR}/StateCharts
-                           ${PROJECT_SOURCE_DIR}/SPDLogEx)
+                           ${PROJECT_SOURCE_DIR}/SPDLogEx
+                           ${PROJECT_SOURCE_DIR}/ThreadPool)
 
 # GoogleTest 配置
 set(GOOGLETEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Test/googletest)

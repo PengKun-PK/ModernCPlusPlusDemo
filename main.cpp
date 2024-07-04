@@ -2,6 +2,7 @@
 #include <optional>
 #include <string>
 #include <chrono>
+#include <random>
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
@@ -15,6 +16,7 @@
 #include "DataSource.hpp"
 #include "ILogger.hpp"
 #include "StateMachine.hpp"
+#include "ThreadPool.hpp"
 
 using namespace std;
 
@@ -101,6 +103,13 @@ constexpr char DelimiterMiddle = '|';
     return extracted->second;
 }
 
+// 一个简单的耗时任务
+[[nodiscard]] int longOperation(int id, int duration)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(duration));
+    return id * 10;
+}
+
 int main()
 {
     // Trace
@@ -154,4 +163,39 @@ int main()
 
     logger->info("Sending Event2 (internal transition)\n");
     sm.process(StateMachine_<void>::Event2{"Internal"});
+
+    // Test ThreadPool
+    ThreadPool pool(4);  // 创建4个线程的线程池
+
+    std::vector<std::future<int>> results;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(100, 2000);
+
+    // 提交20个任务到线程池
+    for (int i = 0; i < 20; ++i) {
+        results.emplace_back(pool.enqueue(longOperation, i, dis(gen)));
+        std::cout << "Task " << i << " submitted. Queue size: " << pool.getQueueSize()
+                  << ", Idle threads: " << pool.getIdleThreads()
+                  << ", Active threads: " << pool.getActiveThreads() << std::endl;
+    }
+
+    // 获取并打印结果
+    for (size_t i = 0; i < results.size(); ++i) {
+        std::cout << "Task " << i << " result: " << results[i].get()
+                  << ", Queue size: " << pool.getQueueSize()
+                  << ", Idle threads: " << pool.getIdleThreads()
+                  << ", Active threads: " << pool.getActiveThreads() << std::endl;
+    }
+
+    double avgTime, minTime, maxTime;
+    pool.getStats(avgTime, minTime, maxTime);
+    std::cout << "Task statistics - Avg time: " << avgTime
+              << "ms, Min time: " << minTime
+              << "ms, Max time: " << maxTime << "ms" << std::endl;
+
+    std::cout << "Total tasks processed: " << pool.getTotalTasks() << std::endl;
+
+    std::cout << "All tasks completed" << std::endl;
 }
