@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug ModernCPlusPlusDemo",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/${command:cmake.buildType}/ModernCPlusPlusDemo.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/${command:cmake.buildType}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build"
+        },
+        {
+            "name": "Debug Google Tests",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/${command:cmake.buildType}/gtest_unitTest.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/${command:cmake.buildType}",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build"
+        }
+    ]
+}

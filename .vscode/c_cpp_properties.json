@@ -7,13 +7,12 @@
                 "C:/WorkSpace/boost_1_83_0"
             ],
             "defines": [
-                "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "windowsSdkVersion": "10.0.22621.0",
+            "compilerPath": "${env:VSINSTALLDIR}/VC/Tools/MSVC/${env:VCToolsVersion}/bin/Hostx64/x64/cl.exe",
             "cStandard": "c17",
-            "cppStandard": "c++17",
+            "cppStandard": "c++20",
             "intelliSenseMode": "windows-msvc-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }

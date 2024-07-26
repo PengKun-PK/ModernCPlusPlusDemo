@@ -1,56 +1,98 @@
 {
+    "version": "2.0.0",
     "inputs": [
         {
             "id": "buildType",
             "type": "pickString",
-            "description": "Which variant do you want to use?",
-            "options": ["Debug", "Release"]
+            "description": "Which build type do you want to use?",
+            "options": ["Debug", "Release"],
+            "default": "Debug"
         }
     ],
     "tasks": [
         {
-            "label": "clear",
+            "label": "Clean",
             "type": "shell",
-            "windows":
-            {
-                "command": "rm -r -fo ${workspaceFolder}\\build"
-            }
+            "windows": {
+                "command": "if (Test-Path ${workspaceFolder}\\build) { Remove-Item -Recurse -Force ${workspaceFolder}\\build }"
+            },
+            "problemMatcher": []
         },
         {
-            "label": "createBuildFolder",
+            "label": "Create Build Folder",
             "type": "shell",
-            "windows":
-            {
-                "command": "mkdir -Force ${workspaceFolder}\\build"
-            }
+            "windows": {
+                "command": "New-Item -ItemType Directory -Force -Path ${workspaceFolder}\\build"
+            },
+            "problemMatcher": []
         },
         {
             "label": "Build",
             "type": "shell",
-            "windows":
-            {
-                "command": "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType}"
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy", "Bypass",
+                    "-Command",
+                    "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType}"
+                ]
             },
-            "dependsOn": "createBuildFolder"
+            "dependsOn": "Create Build Folder",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ]
         },
         {
-            "label": "Run",
+            "label": "Rebuild",
             "type": "shell",
-            "windows":
-            {
-                "command": "cd ${workspaceFolder}\\build/${input:buildType}; ./TestCmakeList"
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy", "Bypass",
+                    "-Command",
+                    "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType} --clean-first"
+                ]
             },
-            "dependsOn": "Build"
+            "dependsOn": "Create Build Folder",
+            "problemMatcher": [
+                "$msCompile"
+            ]
         },
         {
-            "label": "googleTest",
+            "label": "Run ModernCPlusPlusDemo",
             "type": "shell",
-            "windows":
-            {
-                "command": "cd ${workspaceFolder}\\build/${input:buildType}; ./gtest_unitTest"
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy", "Bypass",
+                    "-Command",
+                    "cd ${workspaceFolder}\\build\\${input:buildType}; .\\ModernCPlusPlusDemo.exe"
+                ]
             },
-            "dependsOn": "Build"
+            "dependsOn": "Build",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Google Tests",
+            "type": "shell",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-NoProfile",
+                    "-ExecutionPolicy", "Bypass",
+                    "-Command",
+                    "cd ${workspaceFolder}\\build\\${input:buildType}; .\\gtest_unitTest.exe"
+                ]
+            },
+            "dependsOn": "Build",
+            "problemMatcher": []
         }
-    ],
-    "version": "2.0.0"
+    ]
 }
