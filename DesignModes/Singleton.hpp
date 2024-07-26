@@ -1,6 +1,6 @@
 #pragma once
 
-template <class T>
+template <typename T>
 class Singleton
 {
 public:
@@ -21,7 +21,7 @@ protected:
 
 };
 
-template <class T>
+template <typename T>
 T& Instance()
 {
     return Singleton<T>::s_getInstance();

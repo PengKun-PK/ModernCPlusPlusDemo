@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -10,13 +12,17 @@
 #include <type_traits>
 #include <chrono>
 
-class ThreadPool {
+class ThreadPool
+{
 public:
-    explicit ThreadPool(size_t numThreads)
-        : stop(false), idleThreads(numThreads), activeThreads(0), totalTasks(0) {
-        for(size_t i = 0; i < numThreads; ++i) {
-            workers.emplace_back([this] {
-                while(true) {
+    explicit ThreadPool(size_t numThreads) : stop(false), idleThreads(numThreads), activeThreads(0), totalTasks(0)
+    {
+        for(size_t i = 0; i < numThreads; ++i)
+        {
+            workers.emplace_back([this]()
+            {
+                while(true)
+                {
                     std::function<void()> task;
                     {
                         std::unique_lock<std::mutex> lock(queue_mutex);
@@ -38,9 +44,9 @@ public:
         }
     }
 
-    template<class F, class... Args>
-    auto enqueue(F&& f, Args&&... args)
-        -> std::future<typename std::invoke_result<F, Args...>::type> {
+    template <typename F, typename... Args>
+    auto enqueue(F&& f, Args&&... args) -> std::future<typename std::invoke_result<F, Args...>::type>
+    {
         using return_type = typename std::invoke_result<F, Args...>::type;
 
         auto task = std::make_shared<std::packaged_task<return_type()>>(
@@ -51,7 +57,8 @@ public:
         {
             std::unique_lock<std::mutex> lock(queue_mutex);
             if(stop) throw std::runtime_error("enqueue on stopped ThreadPool");
-            tasks.emplace([this, task](){
+            tasks.emplace([this, task]()
+            {
                 auto start = std::chrono::high_resolution_clock::now();
                 (*task)();
                 auto end = std::chrono::high_resolution_clock::now();
@@ -64,33 +71,38 @@ public:
         return res;
     }
 
-    ~ThreadPool() {
+    ~ThreadPool()
+    {
         {
             std::unique_lock<std::mutex> lock(queue_mutex);
             stop = true;
         }
         condition.notify_all();
-        for(std::thread &worker: workers) {
+        for(std::thread &worker: workers)
+        {
             worker.join();
         }
     }
 
     size_t getIdleThreads() const { return idleThreads; }
     size_t getActiveThreads() const { return activeThreads; }
-    size_t getQueueSize() const {
+    size_t getQueueSize() const
+    {
         std::unique_lock<std::mutex> lock(queue_mutex);
         return tasks.size();
     }
     size_t getTotalTasks() const { return totalTasks; }
 
-    void getStats(double& avgTime, double& minTime, double& maxTime) const {
+    void getStats(double& avgTime, double& minTime, double& maxTime) const
+    {
         std::unique_lock<std::mutex> lock(stats_mutex);
         avgTime = totalTaskTime / (totalTasks - tasks.size());
         minTime = minTaskTime;
         maxTime = maxTaskTime;
     }
 
-    void resetStats() {
+    void resetStats()
+    {
         std::unique_lock<std::mutex> lock(stats_mutex);
         totalTaskTime = 0;
         minTaskTime = std::numeric_limits<double>::max();
@@ -113,7 +125,8 @@ private:
     double minTaskTime = std::numeric_limits<double>::max();
     double maxTaskTime = 0;
 
-    void updateStats(double taskTime) {
+    void updateStats(double taskTime)
+    {
         std::unique_lock<std::mutex> lock(stats_mutex);
         totalTaskTime += taskTime;
         minTaskTime = std::min(minTaskTime, taskTime);

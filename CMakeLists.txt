@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(Boost_DEBUG ON)
 set(Boost_USE_STATIC_LIBS ON)
 set(BOOST_ROOT C:/WorkSpace/boost_1_83_0)
-find_package(Boost 1.83 REQUIRED COMPONENTS system filesystem regex iostreams program_options date_time)
+find_package(Boost 1.83 REQUIRED COMPONENTS system filesystem regex iostreams program_options date_time json)
 
 # 如果找到 Boost, 则打印相关信息
 if(Boost_FOUND)
@@ -36,12 +36,13 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_BINARY_DIR}
                            ${Boost_INCLUDE_DIRS}
-                           ${PROJECT_SOURCE_DIR}/Singleton
+                           ${PROJECT_SOURCE_DIR}/DesignModes
                            ${PROJECT_SOURCE_DIR}/MathFunctions
                            ${PROJECT_SOURCE_DIR}/StateMachine
                            ${PROJECT_SOURCE_DIR}/StateCharts
                            ${PROJECT_SOURCE_DIR}/SPDLogEx
-                           ${PROJECT_SOURCE_DIR}/ThreadPool)
+                           ${PROJECT_SOURCE_DIR}/ThreadPool
+                           ${PROJECT_SOURCE_DIR}/TemplateClassDemo)
 
 # GoogleTest 配置
 set(GOOGLETEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Test/googletest)

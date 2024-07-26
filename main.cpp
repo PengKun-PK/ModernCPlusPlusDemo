@@ -3,199 +3,237 @@
 #include <string>
 #include <chrono>
 #include <random>
-#include <iomanip>
-#include <sstream>
 #include <algorithm>
 #include <execution>
+#include <iomanip>
+#include <sstream>
+#include <numeric>
+#include <fstream>
+#include <future>
+#include <array>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
 #include "Singleton.hpp"
+#include "ObjectFactory.hpp"
+#include "EventBus.hpp"
+#include "Observer.hpp"
 #include "MathFunctions.hpp"
 #include "Camera.hpp"
 #include "DataSource.hpp"
 #include "ILogger.hpp"
 #include "StateMachine.hpp"
 #include "ThreadPool.hpp"
+#include "TemplateClassDemo.hpp"
 
-using namespace std;
-
-using namespace MathFunctions;
-
-using namespace StateMachine;
-
-using namespace Trace;
-
-inline const std::string testString = "TEST Console Start!";
-inline constexpr double BASE_SPEED_1 = 111.0945;
-inline constexpr double MAX_SPEED_1 = 30;
-inline constexpr double SCALE_DISTANCE_1 = 392.9842;
-inline constexpr double EXPONENT_1 = 1.972242;
-
-inline constexpr double BASE_SPEED_2 = 90.03563;
-inline constexpr double MAX_SPEED_2 = 60;
-inline constexpr double SCALE_DISTANCE_2 = 314.6796;
-inline constexpr double EXPONENT_2 = 14.54655;
-
-inline constexpr double BASE_SPEED_3 = 60;
-inline constexpr double MAX_SPEED_3 = 20;
-inline constexpr double SCALE_DISTANCE_3 = 100;
-inline constexpr double EXPONENT_3 = 1.584963;
-
-[[nodiscard]] std::optional<std::string> getTestString()
+namespace
 {
-    if (testString.empty())
+    using namespace MathFunctions;
+
+    using namespace StateMachine;
+
+    using namespace Trace;
+
+    using namespace std::chrono_literals;
+
+    constexpr char DelimiterStart = '#';
+    constexpr char DelimiterMiddle = '|';
+    constexpr std::array<double, 4> SpeedParams1 = {111.0945, 30.0, 392.9842, 1.972242};
+    constexpr std::array<double, 4> SpeedParams2 = {90.03563, 60.0, 314.6796, 14.54655};
+    constexpr std::array<double, 4> SpeedParams3 = {60.0, 20.0, 100.0, 1.584963};
+
+    std::string getCurrentDateTime()
     {
-        return std::nullopt;
+        auto now = std::chrono::system_clock::now();
+        auto in_time_t = std::chrono::system_clock::to_time_t(now);
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
+        return ss.str();
     }
-    else
+
+    std::optional<std::string> getTestString()
     {
-        return testString;
+        static const std::string testString = "TEST Console Start!";
+        return testString.empty() ? std::nullopt : std::make_optional(testString);
+    }
+
+    std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
+    {
+        auto firstDelim = command.find(DelimiterMiddle);
+        auto lastDelim = command.rfind(DelimiterMiddle);
+
+        if (firstDelim == std::string::npos || firstDelim == lastDelim)
+        {
+            return std::nullopt;
+        }
+
+        std::string id = command.substr(firstDelim + 1, lastDelim - firstDelim - 1);
+        std::string message = command.substr(lastDelim + 1);
+        return std::make_pair(id, message);
+    }
+
+    std::optional<std::string> replaceCommandWithString(std::string& messageText)
+    {
+        auto start = messageText.find(DelimiterStart);
+        auto end = messageText.rfind(DelimiterStart);
+
+        if (start == std::string::npos || end == std::string::npos || start == end)
+        {
+            return std::nullopt;
+        }
+
+        auto extracted = extractIdAndMessage(messageText.substr(start + 1, end - start - 1));
+
+        if (!extracted)
+        {
+            return std::nullopt;
+        }
+
+        messageText.replace(start, end - start + 1, extracted->second);
+        return extracted->second;
+    }
+
+    int longOperation(int id, std::chrono::milliseconds duration)
+    {
+        std::this_thread::sleep_for(duration);
+        return id * 10;
+    }
+
+    template<typename T>
+    T calculateSpeed(T distance, const std::array<double, 4>& params)
+    {
+        auto baseSpeed = params[0];
+        auto maxSpeed = params[1];
+        auto scaleDistance = params[2];
+        auto exponent = params[3];
+        return static_cast<T>(std::min(baseSpeed * std::pow(distance / scaleDistance, exponent), static_cast<double>(maxSpeed)));
     }
 }
 
-// 分隔符定义为constexpr字符数组
-constexpr char DelimiterStart = '#';
-constexpr char DelimiterMiddle = '|';
-
-[[nodiscard("返回值很重要")]] std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
+class LoggerWrapper
 {
-    const auto firstDelim = command.find(DelimiterMiddle);
-    const auto lastDelim = command.rfind(DelimiterMiddle);
+public:
 
-    if (firstDelim == std::string::npos || firstDelim == lastDelim)
+    LoggerWrapper(const std::string& filename)
+        : m_logger(ILogger::getLogger(filename))
     {
-        return std::nullopt;
+        m_logger->setLevel(LogLevel::debug);
+        m_logger->setFilePath("Logs/" + getCurrentDateTime() + ".txt");
     }
 
-    std::string strType = command.substr(0, firstDelim);
-    std::string id = command.substr(firstDelim + 1, lastDelim - firstDelim - 1);
-    std::string message = command.substr(lastDelim + 1);
-
-    return std::make_pair(id, message);
-}
-
-[[nodiscard]] std::optional<std::string> replaceCommandWithString(std::string& messageText) {
-    const auto startPos = messageText.find(DelimiterStart);
-    const auto endPos = messageText.rfind(DelimiterStart);
-
-    if (startPos == std::string::npos || endPos == std::string::npos || startPos == endPos)
+    void log(const std::string& message, LogLevel level = LogLevel::info)
     {
-        return std::nullopt;
+        switch (level)
+        {
+            case LogLevel::debug:
+                m_logger->debug(message);
+                break;
+            case LogLevel::info:
+                m_logger->info(message);
+                break;
+            case LogLevel::warn:
+                m_logger->warn(message);
+                break;
+            case LogLevel::err:
+                m_logger->error(message);
+                break;
+            default:
+                m_logger->info(message);
+        }
     }
 
-    auto extracted = extractIdAndMessage(messageText.substr(startPos + 1, endPos - startPos - 1));
+private:
+    std::shared_ptr<ILogger> m_logger;
+};
 
-    if (!extracted.has_value())
-    {
-        return std::nullopt;
-    }
-
-    if (0)
-    {
-        messageText = messageText.substr(0, startPos);
-    }
-    else
-    {
-        messageText.replace(startPos, endPos - startPos + 1, extracted->second);
-    }
-
-    return extracted->second;
-}
-
-// 一个简单的耗时任务
-[[nodiscard]] int longOperation(int id, int duration)
+void testLogging(LoggerWrapper& logger)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(duration));
-    return id * 10;
-}
-
-int main()
-{
-    // Trace
-    auto now = std::chrono::system_clock::now(); // 获取当前时间点
-    auto in_time_t = std::chrono::system_clock::to_time_t(now);
-
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S"); // 格式化日期和时间
-    std::string currentDateTime = ss.str(); // 转换为字符串
-
-    auto logger = ILogger::getLogger("Test.txt");
-    logger->setLevel(LogLevel::debug);
-    logger->setFilePath("Logs/" + currentDateTime + ".txt");
-
     const auto testString = getTestString();
-    logger->info(testString.value_or("no msg!!!"));
+    logger.log(testString.value_or("no msg!!!"));
+
     const auto& math = Instance<MathFunction>();
     const auto result = math.calDividedFunction(7, 0);
-    if (result.has_value())
+    if (result)
     {
-        std::string numStr = boost::lexical_cast<std::string>(result.value());
-        logger->info(numStr);
+        logger.log(boost::lexical_cast<std::string>(*result));
     }
     else
     {
-        logger->error("Invalid result.");
+        logger.log("Invalid result.", LogLevel::err);
     }
+}
 
-    // Test Camera statemachine.
+void testStateMachine(LoggerWrapper& logger)
+{
     auto& dataSource = Instance<DataSource>();
-    std::shared_ptr<Camera> cam = std::make_shared<Camera>(dataSource);
+    auto cam = std::make_shared<Camera>(dataSource);
     cam->initiate();
     cam->process_event(EvShutterFull("enter shooting"));
     cam->process_event(EvShutterRelease("enter NoShooting"));
     cam->process_event(EvConfig("enter config"));
 
-    // Test StataMachine
     auto& sm = Instance<MyStateMachine<void>>();
-
-    logger->info("Starting state machine\n");
+    logger.log("Starting state machine");
     sm.start();
-
-    logger->info("Sending Event1\n");
     sm.process(StateMachine_<void>::Event1{42});
-
-    logger->info("Sending Event2\n");
     sm.process(StateMachine_<void>::Event2{"Hello"});
-
-    logger->info("Sending Event3\n");
     sm.process(StateMachine_<void>::Event3{});
-
-    logger->info("Sending Event2 (internal transition)\n");
     sm.process(StateMachine_<void>::Event2{"Internal"});
+}
 
-    // Test ThreadPool
-    ThreadPool pool(4);  // 创建4个线程的线程池
-
+void testThreadPool(LoggerWrapper& logger)
+{
+    ThreadPool pool(4);
     std::vector<std::future<int>> results;
 
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(100, 2000);
 
-    // 提交20个任务到线程池
-    for (int i = 0; i < 20; ++i) {
-        results.emplace_back(pool.enqueue(longOperation, i, dis(gen)));
-        std::cout << "Task " << i << " submitted. Queue size: " << pool.getQueueSize()
-                  << ", Idle threads: " << pool.getIdleThreads()
-                  << ", Active threads: " << pool.getActiveThreads() << std::endl;
+    for (int i = 0; i < 20; ++i)
+    {
+        results.emplace_back(pool.enqueue(longOperation, i, std::chrono::milliseconds(dis(gen))));
+        logger.log("Task " + std::to_string(i) + " submitted. Queue size: " + std::to_string(pool.getQueueSize()) +
+                   ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
+                   ", Active threads: " + std::to_string(pool.getActiveThreads()));
     }
 
-    // 获取并打印结果
-    for (size_t i = 0; i < results.size(); ++i) {
-        std::cout << "Task " << i << " result: " << results[i].get()
-                  << ", Queue size: " << pool.getQueueSize()
-                  << ", Idle threads: " << pool.getIdleThreads()
-                  << ", Active threads: " << pool.getActiveThreads() << std::endl;
+    for (size_t i = 0; i < results.size(); ++i)
+    {
+        logger.log("Task " + std::to_string(i) + " result: " + std::to_string(results[i].get()) +
+                   ", Queue size: " + std::to_string(pool.getQueueSize()) +
+                   ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
+                   ", Active threads: " + std::to_string(pool.getActiveThreads()));
     }
 
     double avgTime, minTime, maxTime;
     pool.getStats(avgTime, minTime, maxTime);
-    std::cout << "Task statistics - Avg time: " << avgTime
-              << "ms, Min time: " << minTime
-              << "ms, Max time: " << maxTime << "ms" << std::endl;
+    std::stringstream ss;
+    ss << "Task statistics - Avg time: " << avgTime << "ms, Min time: " << minTime << "ms, Max time: " << maxTime << "ms";
+    logger.log(ss.str());
+    logger.log("Total tasks processed: " + std::to_string(pool.getTotalTasks()));
+}
 
-    std::cout << "Total tasks processed: " << pool.getTotalTasks() << std::endl;
+int main()
+{
+    LoggerWrapper logger("Test.txt");
 
-    std::cout << "All tasks completed" << std::endl;
+    testLogging(logger);
+    testStateMachine(logger);
+    testThreadPool(logger);
+
+    std::vector<int> numArray(1000);
+    std::iota(numArray.begin(), numArray.end(), 0);
+
+    std::for_each(std::execution::par_unseq, numArray.begin(), numArray.end(), [&logger](int num) {
+        logger.log("number: " + std::to_string(num), LogLevel::debug);
+    });
+
+    // 测试 calculateSpeed 函数
+    double distance = 1000.0;
+    logger.log("Speed 1: " + std::to_string(calculateSpeed(distance, SpeedParams1)));
+    logger.log("Speed 2: " + std::to_string(calculateSpeed(distance, SpeedParams2)));
+    logger.log("Speed 3: " + std::to_string(calculateSpeed(distance, SpeedParams3)));
+
+    return 0;
 }
