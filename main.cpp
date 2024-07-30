@@ -1,119 +1,119 @@
-#include <iostream>
-#include <optional>
-#include <string>
-#include <chrono>
-#include <random>
 #include <algorithm>
-#include <execution>
-#include <iomanip>
-#include <sstream>
-#include <numeric>
-#include <fstream>
-#include <future>
 #include <array>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
+#include <chrono>
+#include <execution>
+#include <fstream>
+#include <future>
+#include <iomanip>
+#include <iostream>
+#include <numeric>
+#include <optional>
+#include <random>
+#include <sstream>
+#include <string>
 
-#include "Singleton.hpp"
-#include "ObjectFactory.hpp"
-#include "EventBus.hpp"
-#include "Observer.hpp"
-#include "MathFunctions.hpp"
 #include "Camera.hpp"
 #include "DataSource.hpp"
+#include "EventBus.hpp"
 #include "ILogger.hpp"
+#include "MathFunctions.hpp"
+#include "ObjectFactory.hpp"
+#include "Observer.hpp"
+#include "Singleton.hpp"
 #include "StateMachine.hpp"
-#include "ThreadPool.hpp"
 #include "TemplateClassDemo.hpp"
+#include "ThreadPool.hpp"
 
 namespace
 {
-    using namespace MathFunctions;
+using namespace MathFunctions;
 
-    using namespace StateMachine;
+using namespace StateMachine;
 
-    using namespace Trace;
+using namespace Trace;
 
-    using namespace std::chrono_literals;
+using namespace std::chrono_literals;
 
-    constexpr char DelimiterStart = '#';
-    constexpr char DelimiterMiddle = '|';
-    constexpr std::array<double, 4> SpeedParams1 = {111.0945, 30.0, 392.9842, 1.972242};
-    constexpr std::array<double, 4> SpeedParams2 = {90.03563, 60.0, 314.6796, 14.54655};
-    constexpr std::array<double, 4> SpeedParams3 = {60.0, 20.0, 100.0, 1.584963};
+constexpr char DelimiterStart = '#';
+constexpr char DelimiterMiddle = '|';
+constexpr std::array<double, 4> SpeedParams1 = {111.0945, 30.0, 392.9842, 1.972242};
+constexpr std::array<double, 4> SpeedParams2 = {90.03563, 60.0, 314.6796, 14.54655};
+constexpr std::array<double, 4> SpeedParams3 = {60.0, 20.0, 100.0, 1.584963};
 
-    std::string getCurrentDateTime()
-    {
-        auto now = std::chrono::system_clock::now();
-        auto in_time_t = std::chrono::system_clock::to_time_t(now);
-        std::stringstream ss;
-        ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
-        return ss.str();
-    }
-
-    std::optional<std::string> getTestString()
-    {
-        static const std::string testString = "TEST Console Start!";
-        return testString.empty() ? std::nullopt : std::make_optional(testString);
-    }
-
-    std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
-    {
-        auto firstDelim = command.find(DelimiterMiddle);
-        auto lastDelim = command.rfind(DelimiterMiddle);
-
-        if (firstDelim == std::string::npos || firstDelim == lastDelim)
-        {
-            return std::nullopt;
-        }
-
-        std::string id = command.substr(firstDelim + 1, lastDelim - firstDelim - 1);
-        std::string message = command.substr(lastDelim + 1);
-        return std::make_pair(id, message);
-    }
-
-    std::optional<std::string> replaceCommandWithString(std::string& messageText)
-    {
-        auto start = messageText.find(DelimiterStart);
-        auto end = messageText.rfind(DelimiterStart);
-
-        if (start == std::string::npos || end == std::string::npos || start == end)
-        {
-            return std::nullopt;
-        }
-
-        auto extracted = extractIdAndMessage(messageText.substr(start + 1, end - start - 1));
-
-        if (!extracted)
-        {
-            return std::nullopt;
-        }
-
-        messageText.replace(start, end - start + 1, extracted->second);
-        return extracted->second;
-    }
-
-    int longOperation(int id, std::chrono::milliseconds duration)
-    {
-        std::this_thread::sleep_for(duration);
-        return id * 10;
-    }
-
-    template<typename T>
-    T calculateSpeed(T distance, const std::array<double, 4>& params)
-    {
-        auto baseSpeed = params[0];
-        auto maxSpeed = params[1];
-        auto scaleDistance = params[2];
-        auto exponent = params[3];
-        return static_cast<T>(std::min(baseSpeed * std::pow(distance / scaleDistance, exponent), static_cast<double>(maxSpeed)));
-    }
+std::string getCurrentDateTime()
+{
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
+    return ss.str();
 }
+
+std::optional<std::string> getTestString()
+{
+    static const std::string testString = "TEST Console Start!";
+    return testString.empty() ? std::nullopt : std::make_optional(testString);
+}
+
+std::optional<std::pair<std::string, std::string>> extractIdAndMessage(const std::string& command)
+{
+    auto firstDelim = command.find(DelimiterMiddle);
+    auto lastDelim = command.rfind(DelimiterMiddle);
+
+    if (firstDelim == std::string::npos || firstDelim == lastDelim)
+    {
+        return std::nullopt;
+    }
+
+    std::string id = command.substr(firstDelim + 1, lastDelim - firstDelim - 1);
+    std::string message = command.substr(lastDelim + 1);
+    return std::make_pair(id, message);
+}
+
+std::optional<std::string> replaceCommandWithString(std::string& messageText)
+{
+    auto start = messageText.find(DelimiterStart);
+    auto end = messageText.rfind(DelimiterStart);
+
+    if (start == std::string::npos || end == std::string::npos || start == end)
+    {
+        return std::nullopt;
+    }
+
+    auto extracted = extractIdAndMessage(messageText.substr(start + 1, end - start - 1));
+
+    if (!extracted)
+    {
+        return std::nullopt;
+    }
+
+    messageText.replace(start, end - start + 1, extracted->second);
+    return extracted->second;
+}
+
+int longOperation(int id, std::chrono::milliseconds duration)
+{
+    std::this_thread::sleep_for(duration);
+    return id * 10;
+}
+
+template<typename T>
+T calculateSpeed(T distance, const std::array<double, 4>& params)
+{
+    auto baseSpeed = params[0];
+    auto maxSpeed = params[1];
+    auto scaleDistance = params[2];
+    auto exponent = params[3];
+    return static_cast<T>(
+        std::min(baseSpeed * std::pow(distance / scaleDistance, exponent), static_cast<double>(maxSpeed)));
+}
+}  // namespace
 
 class LoggerWrapper
 {
 public:
-
     LoggerWrapper(const std::string& filename)
         : m_logger(ILogger::getLogger(filename))
     {
@@ -200,16 +200,16 @@ void testThreadPool(LoggerWrapper& logger)
 
     for (size_t i = 0; i < results.size(); ++i)
     {
-        logger.log("Task " + std::to_string(i) + " result: " + std::to_string(results[i].get()) +
-                   ", Queue size: " + std::to_string(pool.getQueueSize()) +
-                   ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
+        logger.log("Task " + std::to_string(i) + " result: " + std::to_string(results[i].get()) + ", Queue size: " +
+                   std::to_string(pool.getQueueSize()) + ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
                    ", Active threads: " + std::to_string(pool.getActiveThreads()));
     }
 
     double avgTime, minTime, maxTime;
     pool.getStats(avgTime, minTime, maxTime);
     std::stringstream ss;
-    ss << "Task statistics - Avg time: " << avgTime << "ms, Min time: " << minTime << "ms, Max time: " << maxTime << "ms";
+    ss << "Task statistics - Avg time: " << avgTime << "ms, Min time: " << minTime << "ms, Max time: " << maxTime
+       << "ms";
     logger.log(ss.str());
     logger.log("Total tasks processed: " + std::to_string(pool.getTotalTasks()));
 }
@@ -225,9 +225,8 @@ int main()
     std::vector<int> numArray(1000);
     std::iota(numArray.begin(), numArray.end(), 0);
 
-    std::for_each(std::execution::par_unseq, numArray.begin(), numArray.end(), [&logger](int num) {
-        logger.log("number: " + std::to_string(num), LogLevel::debug);
-    });
+    std::for_each(std::execution::par_unseq, numArray.begin(), numArray.end(),
+                  [&logger](int num) { logger.log("number: " + std::to_string(num), LogLevel::debug); });
 
     // 测试 calculateSpeed 函数
     double distance = 1000.0;
