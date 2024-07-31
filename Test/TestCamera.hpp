@@ -1,10 +1,10 @@
 #pragma once
 
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
-#include "DataSourceMock.hpp"
 #include "../StateCharts/Camera.hpp"
+#include "DataSourceMock.hpp"
 
 namespace StateMachine
 {
@@ -25,4 +25,4 @@ protected:
     std::unique_ptr<Camera> m_cameraHandler;
 };
 
-}
+}  // namespace StateMachine

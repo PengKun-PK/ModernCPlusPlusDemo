@@ -5,7 +5,6 @@ namespace StateMachine
 
 DataSource::~DataSource()
 {
-
 }
 
 const strVector& DataSource::GetStringVector()
@@ -32,4 +31,4 @@ std::optional<bool> DataSource::ClearStringVector()
     }
 }
 
-}
+}  // namespace StateMachine

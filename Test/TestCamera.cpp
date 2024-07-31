@@ -9,12 +9,10 @@ namespace StateMachine
 
 CameraTest::CameraTest()
 {
-
 }
 
 CameraTest::~CameraTest()
 {
-
 }
 
 void CameraTest::SetUp()
@@ -24,7 +22,6 @@ void CameraTest::SetUp()
 
 void CameraTest::TearDown()
 {
-
 }
 
 TEST_F(CameraTest, testEnterShooting)
@@ -39,7 +36,7 @@ TEST_F(CameraTest, testEnterShooting)
     m_cameraHandler->process_event(EvShutterRelease("enter no shooting"));
     Mock::VerifyAndClearExpectations(&m_dataSourceMock);
 
-     EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
+    EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(1));
     m_cameraHandler->process_event(EvConfig("enter Config"));
     Mock::VerifyAndClearExpectations(&m_dataSourceMock);
 }
@@ -60,8 +57,9 @@ struct TestInput
     std::string strData;
 };
 
-class CameraTestWithParams : public CameraTest,
-                             public WithParamInterface<TestInput>
+class CameraTestWithParams
+    : public CameraTest
+    , public WithParamInterface<TestInput>
 {
 public:
     CameraTestWithParams() = default;
@@ -85,23 +83,22 @@ TEST_P(CameraTestWithParams, TestDataSourceFunction)
     EXPECT_CALL(m_dataSourceMock, InsertToStringVec(_)).Times(AtLeast(0));
     switch (data.type)
     {
-    case eventType::ShutterFull:
-        m_cameraHandler->process_event(EvShutterFull(data.strData));
-        break;
-    case eventType::ShutterRelease:
-        m_cameraHandler->process_event(EvShutterRelease(data.strData));
-        break;
-    case eventType::ShutterConfig:
-        m_cameraHandler->process_event(EvConfig(data.strData));
-        break;
+        case eventType::ShutterFull:
+            m_cameraHandler->process_event(EvShutterFull(data.strData));
+            break;
+        case eventType::ShutterRelease:
+            m_cameraHandler->process_event(EvShutterRelease(data.strData));
+            break;
+        case eventType::ShutterConfig:
+            m_cameraHandler->process_event(EvConfig(data.strData));
+            break;
     }
     Mock::VerifyAndClearExpectations(&m_dataSourceMock);
 }
 
-INSTANTIATE_TEST_SUITE_P(TestDataSourceFunction, CameraTestWithParams, Values(
-    TestInput{ eventType::ShutterFull,          "Enter shooting" },
-    TestInput{ eventType::ShutterRelease,       "Enter no Shooting"},
-    TestInput{ eventType::ShutterConfig,        "Enter Config"}
-));
+INSTANTIATE_TEST_SUITE_P(TestDataSourceFunction, CameraTestWithParams,
+                         Values(TestInput{eventType::ShutterFull, "Enter shooting"},
+                                TestInput{eventType::ShutterRelease, "Enter no Shooting"},
+                                TestInput{eventType::ShutterConfig, "Enter Config"}));
 
-}
+}  // namespace StateMachine

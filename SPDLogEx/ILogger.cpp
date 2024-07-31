@@ -3,9 +3,11 @@
 
 using namespace Trace;
 
-std::shared_ptr<ILogger> ILogger::getLogger(const std::string& logFilePath) {
+std::shared_ptr<ILogger> ILogger::getLogger(const std::string& logFilePath)
+{
     static std::shared_ptr<ILogger> logger = nullptr;
-    if (!logger) {
+    if (!logger)
+    {
         logger = std::make_shared<SpdLogger>(logFilePath);
     }
     return logger;

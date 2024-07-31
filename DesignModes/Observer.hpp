@@ -1,17 +1,17 @@
 // Observer.hpp
 #pragma once
 
-#include <vector>
 #include <algorithm>
-#include <functional>
-#include <mutex>
-#include <shared_mutex>
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <memory>
+#include <mutex>
 #include <optional>
+#include <shared_mutex>
+#include <vector>
 
-template <typename... Args>
+template<typename... Args>
 class Subject
 {
 public:
@@ -29,8 +29,7 @@ public:
     bool removeObserver(ObserverId id)
     {
         std::unique_lock<std::shared_mutex> lock(mutex_);
-        auto it = std::find_if(observers_.begin(), observers_.end(),
-            [id](const auto& obs) { return obs.id == id; });
+        auto it = std::find_if(observers_.begin(), observers_.end(), [id](const auto& obs) { return obs.id == id; });
         if (it != observers_.end())
         {
             observers_.erase(it);
@@ -55,8 +54,7 @@ public:
             }
             catch (const std::exception& e)
             {
-                std::cerr << "Exception in observer " << observer.id
-                          << ": " << e.what() << std::endl;
+                std::cerr << "Exception in observer " << observer.id << ": " << e.what() << std::endl;
             }
             catch (...)
             {
@@ -81,7 +79,7 @@ public:
     {
         std::shared_lock<std::shared_mutex> lock(mutex_);
         auto it = std::find_if(observers_.begin(), observers_.end(),
-            [&](const auto& obs) { return obs.callback.target_type() == observer.target_type(); });
+                               [&](const auto& obs) { return obs.callback.target_type() == observer.target_type(); });
         if (it != observers_.end())
         {
             return it->id;

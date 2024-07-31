@@ -4,7 +4,6 @@ using namespace MathFunctions;
 
 MathFunction::~MathFunction()
 {
-
 }
 
 std::optional<double> MathFunction::calDividedFunction(const double a, const double b) const
@@ -16,6 +15,6 @@ std::optional<double> MathFunction::calDividedFunction(const double a, const dou
     }
     else
     {
-        return  a/b;
+        return a / b;
     }
 }

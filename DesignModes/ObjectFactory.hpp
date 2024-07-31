@@ -1,13 +1,13 @@
 #pragma once
 
-#include <memory>
-#include <string>
-#include <unordered_map>
-#include <functional>
-#include <stdexcept>
-#include <typeindex>
-#include <iostream>
 #include <any>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <typeindex>
+#include <unordered_map>
 #include <vector>
 
 #include "Singleton.hpp"
@@ -17,32 +17,27 @@ class ObjectFactory : public Singleton<ObjectFactory>
     friend class Singleton<ObjectFactory>;
 
 public:
-    template <typename T, typename... Args>
+    template<typename T, typename... Args>
     T* create(Args&&... args)
     {
         return createImpl<T>(typeid(T).name(), std::forward<Args>(args)...);
     }
 
-    template <typename T, typename... Args>
+    template<typename T, typename... Args>
     T* createByName(const std::string& typeName, Args&&... args)
     {
         return createImpl<T>(typeName, std::forward<Args>(args)...);
     }
 
-    template <typename T>
+    template<typename T>
     void registerType(const std::string& typeName)
     {
-        m_typeInfo[typeName] = TypeInfo
-        {
-            std::type_index(typeid(T)),
-            [](std::any args) -> std::unique_ptr<void, Deleter>
-            {
-                return { new T(std::any_cast<decltype(args)>(args)), { &Instance<ObjectFactory>() } };
-            }
-        };
+        m_typeInfo[typeName] =
+            TypeInfo{std::type_index(typeid(T)), [](std::any args) -> std::unique_ptr<void, Deleter>
+                     { return {new T(std::any_cast<decltype(args)>(args)), {&Instance<ObjectFactory>()}}; }};
     }
 
-    template <typename T>
+    template<typename T>
     std::vector<T*> getObjects() const
     {
         std::vector<T*> result;
@@ -59,7 +54,7 @@ public:
     void deleteObject(void* ptr)
     {
         auto it = std::find_if(m_objects.begin(), m_objects.end(),
-            [ptr](const auto& pair) { return pair.second.ptr.get() == ptr; });
+                               [ptr](const auto& pair) { return pair.second.ptr.get() == ptr; });
         if (it != m_objects.end())
         {
             m_objects.erase(it);
@@ -76,8 +71,12 @@ private:
     struct Deleter
     {
         ObjectFactory* factory;
-        Deleter(ObjectFactory* f) : factory(f) {}
-        void operator()(void* ptr) const {
+        Deleter(ObjectFactory* f)
+            : factory(f)
+        {
+        }
+        void operator()(void* ptr) const
+        {
             factory->deleteObject(ptr);
             delete ptr;
         }
@@ -98,7 +97,7 @@ private:
     std::unordered_map<std::string, TypeInfo> m_typeInfo;
     std::unordered_map<void*, ObjectInfo> m_objects;
 
-    template <typename T, typename... Args>
+    template<typename T, typename... Args>
     T* createImpl(const std::string& typeName, Args&&... args)
     {
         auto it = m_typeInfo.find(typeName);
@@ -108,15 +107,10 @@ private:
         }
 
         auto any_args = std::make_any<decltype(std::make_tuple(std::forward<Args>(args)...))>(
-            std::make_tuple(std::forward<Args>(args)...)
-        );
+            std::make_tuple(std::forward<Args>(args)...));
         auto unique_ptr = it->second.creator(any_args);
         T* ptr = static_cast<T*>(unique_ptr.get());
-        m_objects[ptr] = ObjectInfo
-        {
-            std::move(unique_ptr),
-            std::type_index(typeid(T))
-        };
+        m_objects[ptr] = ObjectInfo{std::move(unique_ptr), std::type_index(typeid(T))};
         return ptr;
     }
 
