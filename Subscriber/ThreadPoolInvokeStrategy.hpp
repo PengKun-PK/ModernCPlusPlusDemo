@@ -35,6 +35,11 @@ public:
 
     void invoke(std::function<void()> func) override
     {
+        if (!m_running)
+        {
+            throw std::runtime_error("ThreadPoolInvokeStrategy is shutting down");
+        }
+
         std::packaged_task<void()> task(std::move(func));
         std::future<void> future = task.get_future();
 
@@ -43,9 +48,6 @@ public:
             m_taskQueue.emplace(std::move(task));
         }
         m_condition.notify_one();
-
-        // Optionally wait for the task to complete
-        // future.wait();
     }
 
     void shutdown()

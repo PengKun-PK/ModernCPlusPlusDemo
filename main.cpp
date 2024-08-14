@@ -107,17 +107,17 @@ T calculateSpeed(T distance, const std::array<double, 4>& params)
 void testLogging(LoggerWrapper& logger)
 {
     const auto testString = getTestString();
-    logger.log(testString.value_or("no msg!!!"));
+    LOG_INFO(logger, testString.value_or("no msg!!!"));
 
     const auto& math = Instance<MathFunction>();
     const auto result = math.calDividedFunction(7, 0);
     if (result)
     {
-        logger.log(boost::lexical_cast<std::string>(*result));
+        LOG_INFO(logger, boost::lexical_cast<std::string>(*result));
     }
     else
     {
-        logger.log("Invalid result.", LogLevel::err);
+        LOG_ERROR(logger, "Invalid result.");
     }
 }
 
@@ -131,7 +131,7 @@ void testStateMachine(LoggerWrapper& logger)
     cam->process_event(EvConfig("enter config"));
 
     auto& sm = Instance<MyStateMachine<void>>();
-    logger.log("Starting state machine");
+    LOG_INFO(logger, "Starting state machine");
     sm.start();
     sm.process(StateMachine_<void>::Event1{42});
     sm.process(StateMachine_<void>::Event2{"Hello"});
@@ -139,49 +139,191 @@ void testStateMachine(LoggerWrapper& logger)
     sm.process(StateMachine_<void>::Event2{"Internal"});
 }
 
-void testSubscriber(LoggerWrapper& logger)
+void complexTestSubscriberSystem(LoggerWrapper& logger)
 {
     try
     {
-        comm::ThreadPoolInvokeStrategy strategy(8);  // 创建一个有8个线程的策略
+        LOG_INFO(logger, "Starting complex subscriber system test");
 
-        // 事件示例
-        comm::Event<int, std::string> myEvent(strategy);
-        auto subscription = myEvent.subscribe(
-            [&logger](int num, const std::string& str)
-            {
-                std::ostringstream oss;
-                oss << "Event received in thread " << std::this_thread::get_id() << ": " << num << ", " << str;
-                logger.log(oss.str());
-            });
+        // 创建线程池和调用策略
+        comm::ThreadPoolInvokeStrategy strategy(16);  // 使用16个线程
 
-        // 触发多个事件
-        for (int i = 0; i < 10; ++i)
+        // 创建多个事件和属性
+        comm::Event<int, std::string> intStringEvent(strategy);
+        comm::EventSync<double> doubleSyncEvent;
+        comm::Event<std::vector<int>> vectorEvent(strategy);
+        comm::Attribute<int> intAttribute(strategy, 0);
+        comm::AttributeSync<std::string> stringSyncAttribute("");
+        comm::Attribute<std::vector<double>> vectorAttribute(strategy, {});
+
+        std::atomic<int> totalNotifications(0);
+        std::atomic<int> totalAttributeUpdates(0);
+        std::atomic<int> exceptionCount(0);
+
+        // 创建随机数生成器
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> intDis(1, 1000);
+        std::uniform_real_distribution<> doubleDis(0.0, 100.0);
+
+        // 创建多个任务
+        std::vector<std::future<void>> tasks;
+        for (int i = 0; i < 50; ++i)
         {
-            myEvent.notify(i, "Hello from main thread");
+            tasks.emplace_back(std::async(
+                std::launch::async,
+                [&, i]()
+                {
+                    try
+                    {
+                        // 为每种类型的事件和属性创建订阅存储
+                        typename comm::Event<int, std::string>::SubscriptionPtr intStringSubscription;
+                        typename comm::EventSync<double>::SubscriptionPtr doubleSyncSubscription;
+                        typename comm::Event<std::vector<int>>::SubscriptionPtr vectorSubscription;
+                        typename comm::Attribute<int>::SubscriptionPtr intAttributeSubscription;
+                        typename comm::AttributeSync<std::string>::SubscriptionPtr stringSyncAttributeSubscription;
+                        typename comm::Attribute<std::vector<double>>::SubscriptionPtr vectorAttributeSubscription;
+
+                        // 随机订阅事件和属性
+                        if (i % 2 == 0)
+                        {
+                            intStringSubscription = intStringEvent.subscribe(
+                                [&](int n, const std::string& s)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) +
+                                                         " received intStringEvent: " + std::to_string(n) + ", " + s);
+                                    totalNotifications++;
+                                });
+                        }
+                        if (i % 3 == 0)
+                        {
+                            doubleSyncSubscription = doubleSyncEvent.subscribe(
+                                [&](double d)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) +
+                                                         " received doubleSyncEvent: " + std::to_string(d));
+                                    totalNotifications++;
+                                });
+                        }
+                        if (i % 4 == 0)
+                        {
+                            vectorSubscription = vectorEvent.subscribe(
+                                [&](const std::vector<int>& v)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) + " received vectorEvent with " +
+                                                         std::to_string(v.size()) + " elements");
+                                    totalNotifications++;
+                                });
+                        }
+                        if (i % 2 == 1)
+                        {
+                            intAttributeSubscription = intAttribute.subscribe(
+                                [&](int n)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) +
+                                                         " received intAttribute update: " + std::to_string(n));
+                                    totalAttributeUpdates++;
+                                });
+                        }
+                        if (i % 3 == 1)
+                        {
+                            stringSyncAttributeSubscription = stringSyncAttribute.subscribe(
+                                [&](const std::string& s)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) +
+                                                         " received stringSyncAttribute update: " + s);
+                                    totalAttributeUpdates++;
+                                });
+                        }
+                        if (i % 4 == 1)
+                        {
+                            vectorAttributeSubscription = vectorAttribute.subscribe(
+                                [&](const std::vector<double>& v)
+                                {
+                                    LOG_INFO(logger, "Task " + std::to_string(i) +
+                                                         " received vectorAttribute update with " +
+                                                         std::to_string(v.size()) + " elements");
+                                    totalAttributeUpdates++;
+                                });
+                        }
+
+                        // 执行一些操作
+                        for (int j = 0; j < 100; ++j)
+                        {
+                            std::this_thread::sleep_for(std::chrono::milliseconds(intDis(gen)));
+
+                            if (j % 10 == 0)
+                            {
+                                intStringEvent.notify(intDis(gen), "Message from task " + std::to_string(i));
+                            }
+                            if (j % 15 == 0)
+                            {
+                                doubleSyncEvent.notify(doubleDis(gen));
+                            }
+                            if (j % 20 == 0)
+                            {
+                                vectorEvent.notify(std::vector<int>{intDis(gen), intDis(gen), intDis(gen)});
+                            }
+                            if (j % 12 == 0)
+                            {
+                                intAttribute.setValue(intDis(gen));
+                            }
+                            if (j % 18 == 0)
+                            {
+                                stringSyncAttribute.setValue("Update from task " + std::to_string(i));
+                            }
+                            if (j % 25 == 0)
+                            {
+                                vectorAttribute.setValue(
+                                    std::vector<double>{doubleDis(gen), doubleDis(gen), doubleDis(gen)});
+                            }
+
+                            // 模拟随机异常
+                            // if (intDis(gen) % 500 == 0)
+                            // {
+                            //     throw std::runtime_error("Random exception in task " + std::to_string(i));
+                            // }
+                        }
+
+                        // 手动取消所有订阅
+                        intStringSubscription.reset();
+                        doubleSyncSubscription.reset();
+                        vectorSubscription.reset();
+                        intAttributeSubscription.reset();
+                        stringSyncAttributeSubscription.reset();
+                        vectorAttributeSubscription.reset();
+                    }
+                    catch (const std::exception& e)
+                    {
+                        LOG_ERROR(logger, "Exception in task " + std::to_string(i) + ": " + e.what());
+                        exceptionCount++;
+                    }
+                }));
         }
 
-        // 等待一段时间，确保所有事件都被处理
-        const auto waitTime = std::chrono::seconds(2);
-        std::this_thread::sleep_for(waitTime);
+        // 等待所有任务完成
+        for (auto& task : tasks)
+        {
+            task.wait();
+        }
 
-        std::ostringstream oss;
-        oss << "Active threads: " << strategy.getActiveThreadCount();
-        logger.log(oss.str());
+        // 输出统计信息
+        LOG_INFO(logger, "Test completed. Statistics:");
+        LOG_INFO(logger, "Total notifications: " + std::to_string(totalNotifications));
+        LOG_INFO(logger, "Total attribute updates: " + std::to_string(totalAttributeUpdates));
+        LOG_INFO(logger, "Total exceptions: " + std::to_string(exceptionCount));
+        LOG_INFO(logger, "Final intAttribute value: " + std::to_string(intAttribute.value()));
+        LOG_INFO(logger, "Final stringSyncAttribute value: " + stringSyncAttribute.value());
+        LOG_INFO(logger, "Final vectorAttribute size: " + std::to_string(vectorAttribute.value().size()));
 
-        oss.str("");
-        oss << "Queued tasks: " << strategy.getQueueSize();
-        logger.log(oss.str());
+        LOG_INFO(logger, "Active threads in strategy: " + std::to_string(strategy.getActiveThreadCount()));
+        LOG_INFO(logger, "Queued tasks in strategy: " + std::to_string(strategy.getQueueSize()));
 
-        strategy.shutdown();  // 显式关闭线程池
+        LOG_INFO(logger, "Complex test completed successfully");
     }
     catch (const std::exception& e)
     {
-        logger.log("Exception caught: " + std::string(e.what()));
-    }
-    catch (...)
-    {
-        logger.log("Unknown exception caught");
+        LOG_ERROR(logger, "Unexpected exception in main test function: " + std::string(e.what()));
     }
 }
 
@@ -197,16 +339,18 @@ void testThreadPool(LoggerWrapper& logger)
     for (int i = 0; i < 20; ++i)
     {
         results.emplace_back(pool.enqueue(longOperation, i, std::chrono::milliseconds(dis(gen))));
-        logger.log("Task " + std::to_string(i) + " submitted. Queue size: " + std::to_string(pool.getQueueSize()) +
-                   ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
-                   ", Active threads: " + std::to_string(pool.getActiveThreads()));
+        LOG_INFO(logger, "Task " + std::to_string(i) +
+                             " submitted. Queue size: " + std::to_string(pool.getQueueSize()) +
+                             ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
+                             ", Active threads: " + std::to_string(pool.getActiveThreads()));
     }
 
     for (size_t i = 0; i < results.size(); ++i)
     {
-        logger.log("Task " + std::to_string(i) + " result: " + std::to_string(results[i].get()) + ", Queue size: " +
-                   std::to_string(pool.getQueueSize()) + ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
-                   ", Active threads: " + std::to_string(pool.getActiveThreads()));
+        LOG_INFO(logger, "Task " + std::to_string(i) + " result: " + std::to_string(results[i].get()) +
+                             ", Queue size: " + std::to_string(pool.getQueueSize()) +
+                             ", Idle threads: " + std::to_string(pool.getIdleThreads()) +
+                             ", Active threads: " + std::to_string(pool.getActiveThreads()));
     }
 
     double avgTime, minTime, maxTime;
@@ -214,8 +358,8 @@ void testThreadPool(LoggerWrapper& logger)
     std::stringstream ss;
     ss << "Task statistics - Avg time: " << avgTime << "ms, Min time: " << minTime << "ms, Max time: " << maxTime
        << "ms";
-    logger.log(ss.str());
-    logger.log("Total tasks processed: " + std::to_string(pool.getTotalTasks()));
+    LOG_INFO(logger, ss.str());
+    LOG_INFO(logger, "Total tasks processed: " + std::to_string(pool.getTotalTasks()));
 }
 
 int main()
@@ -230,16 +374,16 @@ int main()
     std::iota(numArray.begin(), numArray.end(), 0);
 
     std::for_each(std::execution::par_unseq, numArray.begin(), numArray.end(),
-                  [&logger](int num) { logger.log("number: " + std::to_string(num), LogLevel::debug); });
+                  [&logger](int num) { LOG_DEBUG(logger, "number: " + std::to_string(num)); });
 
     // 测试 calculateSpeed 函数
     double distance = 1000.0;
-    logger.log("Speed 1: " + std::to_string(calculateSpeed(distance, SpeedParams1)));
-    logger.log("Speed 2: " + std::to_string(calculateSpeed(distance, SpeedParams2)));
-    logger.log("Speed 3: " + std::to_string(calculateSpeed(distance, SpeedParams3)));
+    LOG_INFO(logger, "Speed 1: " + std::to_string(calculateSpeed(distance, SpeedParams1)));
+    LOG_INFO(logger, "Speed 2: " + std::to_string(calculateSpeed(distance, SpeedParams2)));
+    LOG_INFO(logger, "Speed 3: " + std::to_string(calculateSpeed(distance, SpeedParams3)));
 
     // 订阅测试
-    testSubscriber(logger);
+    complexTestSubscriberSystem(logger);
 
     return 0;
 }

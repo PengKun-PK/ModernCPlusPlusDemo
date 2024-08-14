@@ -1,9 +1,11 @@
 #pragma once
 
-#include <cassert>
+#include <atomic>
 #include <functional>
 #include <list>
 #include <memory>
+#include <mutex>
+#include <shared_mutex>
 #include <vector>
 
 namespace comm
@@ -17,20 +19,16 @@ public:
 };
 
 template<typename... Arguments>
-class Subscribable
+class Subscribable : public std::enable_shared_from_this<Subscribable<Arguments...>>
 {
 public:
     using Listener = std::function<void(const Arguments&...)>;
 
-    // 前向声明
     class Subscription;
     using SubscriptionPtr = std::shared_ptr<Subscription>;
 
     Subscribable() = default;
-    virtual ~Subscribable()
-    {
-        m_listeners.clear();
-    }
+    virtual ~Subscribable() = default;
 
     Subscribable(const Subscribable&) = delete;
     Subscribable& operator=(const Subscribable&) = delete;
@@ -42,121 +40,128 @@ protected:
     void notifyAsync(IInvokeStrategy& strategy, const Arguments&... arguments) const;
 
 private:
-    struct IUnsubscriber
-    {
-        virtual ~IUnsubscriber() = default;
-        virtual void unsubscribe() = 0;
-    };
-
     class Subscription : public std::enable_shared_from_this<Subscription>
     {
     public:
-        explicit Subscription(Listener listener);
+        explicit Subscription(Listener listener, std::weak_ptr<Subscribable> parent);
         ~Subscription();
 
         void invoke(const Arguments&... args);
-
-        std::weak_ptr<IUnsubscriber> m_unsubscriber;
+        void unsubscribe();
 
     private:
         Listener m_listener;
+        std::weak_ptr<Subscribable> m_parent;
+        std::atomic<bool> m_isActive{true};
     };
 
-    struct SubscriberRecord : IUnsubscriber
-    {
-        std::weak_ptr<Subscription> listener;
-        typename std::list<std::shared_ptr<SubscriberRecord>>::iterator iterator;
-        std::list<std::shared_ptr<SubscriberRecord>>* list = nullptr;
+    void removeSubscription(const Subscription* sub);
 
-        explicit SubscriberRecord(std::weak_ptr<Subscription> l);
-        void unsubscribe() override;
-    };
-
-    std::list<std::shared_ptr<SubscriberRecord>> m_listeners;
+    mutable std::shared_mutex m_mutex;
+    std::list<std::weak_ptr<Subscription>> m_subscriptions;
 };
 
-// 实现部分
+// Implementation
 template<typename... Arguments>
 typename Subscribable<Arguments...>::SubscriptionPtr Subscribable<Arguments...>::subscribe(Listener listener)
 {
-    auto subscription = std::make_shared<Subscription>(listener);
-    auto record = std::make_shared<SubscriberRecord>(subscription);
-    m_listeners.push_back(record);
-    record->iterator = std::prev(m_listeners.end());
-    record->list = &m_listeners;
-    subscription->m_unsubscriber = record;
+    auto subscription = std::make_shared<Subscription>(std::move(listener), this->weak_from_this());
+    {
+        std::unique_lock lock(m_mutex);
+        m_subscriptions.push_back(subscription);
+    }
     return subscription;
 }
 
 template<typename... Arguments>
 void Subscribable<Arguments...>::notifySync(const Arguments&... arguments) const
 {
-    std::vector<std::weak_ptr<Subscription>> listenersCopy;
-    listenersCopy.reserve(m_listeners.size());
-    for (const auto& record : m_listeners)
+    std::vector<std::shared_ptr<Subscription>> activeSubscriptions;
     {
-        listenersCopy.push_back(record->listener);
+        std::shared_lock lock(m_mutex);
+        activeSubscriptions.reserve(m_subscriptions.size());
+        for (const auto& weakSub : m_subscriptions)
+        {
+            if (auto sub = weakSub.lock())
+            {
+                activeSubscriptions.push_back(std::move(sub));
+            }
+        }
     }
 
-    for (const auto& weakListener : listenersCopy)
+    for (const auto& sub : activeSubscriptions)
     {
-        if (auto listener = weakListener.lock())
-        {
-            listener->invoke(arguments...);
-        }
+        sub->invoke(arguments...);
     }
 }
 
 template<typename... Arguments>
 void Subscribable<Arguments...>::notifyAsync(IInvokeStrategy& strategy, const Arguments&... arguments) const
 {
-    for (const auto& record : m_listeners)
+    std::vector<std::shared_ptr<Subscription>> activeSubscriptions;
     {
-        strategy.invoke(
-            [weak = record->listener, arguments...]
+        std::shared_lock lock(m_mutex);
+        activeSubscriptions.reserve(m_subscriptions.size());
+        for (const auto& weakSub : m_subscriptions)
+        {
+            if (auto sub = weakSub.lock())
             {
-                if (auto listener = weak.lock())
-                {
-                    listener->invoke(arguments...);
-                }
-            });
+                activeSubscriptions.push_back(std::move(sub));
+            }
+        }
+    }
+
+    for (const auto& sub : activeSubscriptions)
+    {
+        strategy.invoke([sub, args = std::make_tuple(arguments...)]
+                        { std::apply([&sub](const auto&... params) { sub->invoke(params...); }, args); });
     }
 }
 
 template<typename... Arguments>
-Subscribable<Arguments...>::Subscription::Subscription(Listener listener)
+void Subscribable<Arguments...>::removeSubscription(const Subscription* sub)
+{
+    std::unique_lock lock(m_mutex);
+    m_subscriptions.remove_if(
+        [sub](const std::weak_ptr<Subscription>& weakSub)
+        {
+            auto sharedSub = weakSub.lock();
+            return !sharedSub || sharedSub.get() == sub;
+        });
+}
+
+template<typename... Arguments>
+Subscribable<Arguments...>::Subscription::Subscription(Listener listener, std::weak_ptr<Subscribable> parent)
     : m_listener(std::move(listener))
+    , m_parent(std::move(parent))
 {
 }
 
 template<typename... Arguments>
 Subscribable<Arguments...>::Subscription::~Subscription()
 {
-    if (auto unsubscriber = m_unsubscriber.lock())
-    {
-        unsubscriber->unsubscribe();
-    }
+    unsubscribe();
 }
 
 template<typename... Arguments>
 void Subscribable<Arguments...>::Subscription::invoke(const Arguments&... args)
 {
-    m_listener(args...);
-}
-
-template<typename... Arguments>
-Subscribable<Arguments...>::SubscriberRecord::SubscriberRecord(std::weak_ptr<Subscription> l)
-    : listener(std::move(l))
-{
-}
-
-template<typename... Arguments>
-void Subscribable<Arguments...>::SubscriberRecord::unsubscribe()
-{
-    if (list)
+    if (m_isActive)
     {
-        list->erase(iterator);
-        list = nullptr;
+        m_listener(args...);
+    }
+}
+
+template<typename... Arguments>
+void Subscribable<Arguments...>::Subscription::unsubscribe()
+{
+    bool expected = true;
+    if (m_isActive.compare_exchange_strong(expected, false))
+    {
+        if (auto parent = m_parent.lock())
+        {
+            parent->removeSubscription(this);
+        }
     }
 }
 

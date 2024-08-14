@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include "Subscriber.hpp"
 
 namespace comm
@@ -18,18 +19,21 @@ public:
     {
     }
 
-    const ValueType& value() const
+    ValueType value() const
     {
+        std::shared_lock lock(m_mutex);
         return m_value;
     }
 
     bool setValue(const ValueType& value)
     {
+        std::unique_lock lock(m_mutex);
         if (m_value == value && !m_notifyIfNotChanged)
         {
             return false;
         }
         m_value = value;
+        lock.unlock();
         notify();
         return true;
     }
@@ -37,10 +41,11 @@ public:
 protected:
     virtual void notify()
     {
-        this->notifySync(m_value);
+        this->notifySync(value());
     }
 
 private:
+    mutable std::shared_mutex m_mutex;
     ValueType m_value;
     bool m_notifyIfNotChanged;
 };
@@ -59,18 +64,21 @@ public:
     {
     }
 
-    const ValueType& value() const
+    ValueType value() const
     {
+        std::shared_lock lock(m_mutex);
         return m_value;
     }
 
     bool setValue(const ValueType& value)
     {
+        std::unique_lock lock(m_mutex);
         if (m_value == value && !m_notifyIfNotChanged)
         {
             return false;
         }
         m_value = value;
+        lock.unlock();
         notify();
         return true;
     }
@@ -78,11 +86,12 @@ public:
 protected:
     virtual void notify()
     {
-        this->notifyAsync(m_strategy, m_value);
+        this->notifyAsync(m_strategy, value());
     }
 
 private:
     IInvokeStrategy& m_strategy;
+    mutable std::shared_mutex m_mutex;
     ValueType m_value;
     bool m_notifyIfNotChanged;
 };
@@ -92,6 +101,7 @@ class Subscriptions
 public:
     void add(typename Subscribable<>::SubscriptionPtr subscription)
     {
+        std::lock_guard<std::mutex> lock(m_mutex);
         m_subscriptions.push_back(std::move(subscription));
     }
 
@@ -103,15 +113,18 @@ public:
 
     void unsubscribe()
     {
+        std::lock_guard<std::mutex> lock(m_mutex);
         m_subscriptions.clear();
     }
 
     size_t size() const
     {
+        std::lock_guard<std::mutex> lock(m_mutex);
         return m_subscriptions.size();
     }
 
 private:
+    mutable std::mutex m_mutex;
     std::vector<typename Subscribable<>::SubscriptionPtr> m_subscriptions;
 };
 

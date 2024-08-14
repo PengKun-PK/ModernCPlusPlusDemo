@@ -31,12 +31,12 @@ public:
     virtual void setFilePath(const std::string& filePath) = 0;
     virtual void log(LogLevel level, const std::string& message, const std::string& fileName, int lineNumber) = 0;
 
-    virtual void trace(const std::string& msg) = 0;
-    virtual void debug(const std::string& msg) = 0;
-    virtual void info(const std::string& msg) = 0;
-    virtual void warn(const std::string& msg) = 0;
-    virtual void error(const std::string& msg) = 0;
-    virtual void critical(const std::string& msg) = 0;
+    virtual void trace(const std::string& msg, const char* file = "", int line = 0) = 0;
+    virtual void debug(const std::string& msg, const char* file = "", int line = 0) = 0;
+    virtual void info(const std::string& msg, const char* file = "", int line = 0) = 0;
+    virtual void warn(const std::string& msg, const char* file = "", int line = 0) = 0;
+    virtual void error(const std::string& msg, const char* file = "", int line = 0) = 0;
+    virtual void critical(const std::string& msg, const char* file = "", int line = 0) = 0;
 
     // 获取日志记录器实例（惰性初始化）
     static std::shared_ptr<ILogger> getLogger(const std::string& logFilePath = "logs/log.txt");
@@ -60,30 +60,31 @@ public:
         m_logger->setFilePath("Logs/" + getCurrentDateTime() + ".txt");
     }
 
-    void log(const std::string& message, LogLevel level = LogLevel::info)
+    void log(const std::string& message, LogLevel level = LogLevel::info, const char* file = __FILE__,
+             int line = __LINE__)
     {
         switch (level)
         {
             case LogLevel::trace:
-                m_logger->trace(message);
+                m_logger->trace(message, file, line);
                 break;
             case LogLevel::debug:
-                m_logger->debug(message);
+                m_logger->debug(message, file, line);
                 break;
             case LogLevel::info:
-                m_logger->info(message);
+                m_logger->info(message, file, line);
                 break;
             case LogLevel::warn:
-                m_logger->warn(message);
+                m_logger->warn(message, file, line);
                 break;
             case LogLevel::err:
-                m_logger->error(message);
+                m_logger->error(message, file, line);
                 break;
             case LogLevel::critical:
-                m_logger->critical(message);
+                m_logger->critical(message, file, line);
                 break;
             default:
-                m_logger->info(message);
+                m_logger->info(message, file, line);
         }
     }
 
@@ -107,5 +108,11 @@ private:
         return ss.str();
     }
 };
+
+#define LOG_INFO(logger, message) logger.log(message, LogLevel::info, __FILE__, __LINE__)
+#define LOG_DEBUG(logger, message) logger.log(message, LogLevel::debug, __FILE__, __LINE__)
+#define LOG_WARN(logger, message) logger.log(message, LogLevel::warn, __FILE__, __LINE__)
+#define LOG_ERROR(logger, message) logger.log(message, LogLevel::err, __FILE__, __LINE__)
+#define LOG_CRITICAL(logger, message) logger.log(message, LogLevel::critical, __FILE__, __LINE__)
 
 };  // namespace Trace
