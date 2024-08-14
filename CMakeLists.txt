@@ -60,12 +60,18 @@ target_include_directories(SPDLogEx PRIVATE ${SPLOG_DIR}/include)
 target_link_libraries(${PROJECT_NAME} PUBLIC spdlog::spdlog)
 
 # 单元测试可执行文件
-set(TEST_SOURCE_FILES Test/TestCamera.cpp)
+set(TEST_SOURCE_FILES
+    Test/SubscriberTest.cpp
+    Test/TestCamera.cpp
+)
+
 add_executable(gtest_unitTest ${TEST_SOURCE_FILES})
+
 target_link_libraries(gtest_unitTest PUBLIC
                       gtest
                       gtest_main
                       gmock
                       gmock_main
                       StateCharts
-                      MathFunctions)
+                      MathFunctions
+                      Subscriber)
