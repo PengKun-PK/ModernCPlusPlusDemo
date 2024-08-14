@@ -2,7 +2,6 @@
 #include <array>
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
-#include <chrono>
 #include <execution>
 #include <fstream>
 #include <future>
@@ -14,8 +13,10 @@
 #include <sstream>
 #include <string>
 
+#include "Attribute.hpp"
 #include "Camera.hpp"
 #include "DataSource.hpp"
+#include "Event.hpp"
 #include "EventBus.hpp"
 #include "ILogger.hpp"
 #include "MathFunctions.hpp"
@@ -25,6 +26,7 @@
 #include "StateMachine.hpp"
 #include "TemplateClassDemo.hpp"
 #include "ThreadPool.hpp"
+#include "ThreadPoolInvokeStrategy.hpp"
 
 namespace
 {
@@ -41,15 +43,6 @@ constexpr char DelimiterMiddle = '|';
 constexpr std::array<double, 4> SpeedParams1 = {111.0945, 30.0, 392.9842, 1.972242};
 constexpr std::array<double, 4> SpeedParams2 = {90.03563, 60.0, 314.6796, 14.54655};
 constexpr std::array<double, 4> SpeedParams3 = {60.0, 20.0, 100.0, 1.584963};
-
-std::string getCurrentDateTime()
-{
-    auto now = std::chrono::system_clock::now();
-    auto in_time_t = std::chrono::system_clock::to_time_t(now);
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
-    return ss.str();
-}
 
 std::optional<std::string> getTestString()
 {
@@ -111,41 +104,6 @@ T calculateSpeed(T distance, const std::array<double, 4>& params)
 }
 }  // namespace
 
-class LoggerWrapper
-{
-public:
-    LoggerWrapper(const std::string& filename)
-        : m_logger(ILogger::getLogger(filename))
-    {
-        m_logger->setLevel(LogLevel::debug);
-        m_logger->setFilePath("Logs/" + getCurrentDateTime() + ".txt");
-    }
-
-    void log(const std::string& message, LogLevel level = LogLevel::info)
-    {
-        switch (level)
-        {
-            case LogLevel::debug:
-                m_logger->debug(message);
-                break;
-            case LogLevel::info:
-                m_logger->info(message);
-                break;
-            case LogLevel::warn:
-                m_logger->warn(message);
-                break;
-            case LogLevel::err:
-                m_logger->error(message);
-                break;
-            default:
-                m_logger->info(message);
-        }
-    }
-
-private:
-    std::shared_ptr<ILogger> m_logger;
-};
-
 void testLogging(LoggerWrapper& logger)
 {
     const auto testString = getTestString();
@@ -179,6 +137,52 @@ void testStateMachine(LoggerWrapper& logger)
     sm.process(StateMachine_<void>::Event2{"Hello"});
     sm.process(StateMachine_<void>::Event3{});
     sm.process(StateMachine_<void>::Event2{"Internal"});
+}
+
+void testSubscriber(LoggerWrapper& logger)
+{
+    try
+    {
+        comm::ThreadPoolInvokeStrategy strategy(8);  // 创建一个有8个线程的策略
+
+        // 事件示例
+        comm::Event<int, std::string> myEvent(strategy);
+        auto subscription = myEvent.subscribe(
+            [&logger](int num, const std::string& str)
+            {
+                std::ostringstream oss;
+                oss << "Event received in thread " << std::this_thread::get_id() << ": " << num << ", " << str;
+                logger.log(oss.str());
+            });
+
+        // 触发多个事件
+        for (int i = 0; i < 10; ++i)
+        {
+            myEvent.notify(i, "Hello from main thread");
+        }
+
+        // 等待一段时间，确保所有事件都被处理
+        const auto waitTime = std::chrono::seconds(2);
+        std::this_thread::sleep_for(waitTime);
+
+        std::ostringstream oss;
+        oss << "Active threads: " << strategy.getActiveThreadCount();
+        logger.log(oss.str());
+
+        oss.str("");
+        oss << "Queued tasks: " << strategy.getQueueSize();
+        logger.log(oss.str());
+
+        strategy.shutdown();  // 显式关闭线程池
+    }
+    catch (const std::exception& e)
+    {
+        logger.log("Exception caught: " + std::string(e.what()));
+    }
+    catch (...)
+    {
+        logger.log("Unknown exception caught");
+    }
 }
 
 void testThreadPool(LoggerWrapper& logger)
@@ -233,6 +237,9 @@ int main()
     logger.log("Speed 1: " + std::to_string(calculateSpeed(distance, SpeedParams1)));
     logger.log("Speed 2: " + std::to_string(calculateSpeed(distance, SpeedParams2)));
     logger.log("Speed 3: " + std::to_string(calculateSpeed(distance, SpeedParams3)));
+
+    // 订阅测试
+    testSubscriber(logger);
 
     return 0;
 }

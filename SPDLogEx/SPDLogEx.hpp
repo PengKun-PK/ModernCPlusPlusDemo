@@ -11,7 +11,7 @@ namespace Trace
 class SpdLogger : public ILogger
 {
 public:
-    explicit SpdLogger(const std::string& logFilePath = "logs/log.txt");
+    explicit SpdLogger(const std::string& logFilePath, size_t queueSize = 8192, size_t threadCount = 1);
     void setLevel(LogLevel level) override;
     void setFilePath(const std::string& filePath) override;
     void log(LogLevel level, const std::string& message, const std::string& fileName, int lineNumber) override;

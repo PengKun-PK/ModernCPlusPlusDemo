@@ -20,28 +20,33 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-# 添加子目录
-add_subdirectory(MathFunctions)
-add_subdirectory(StateCharts)
-add_subdirectory(SPDLogEx)
+# 定义子目录列表
+set(SUBDIRECTORIES
+    MathFunctions
+    StateCharts
+    SPDLogEx
+    StateMachine
+    DesignModes
+    ThreadPool
+    Subscriber
+)
+
+# 添加所有子目录
+foreach(DIR ${SUBDIRECTORIES})
+    add_subdirectory(${DIR})
+endforeach()
 
 # 创建主程序的可执行文件
 add_executable(${PROJECT_NAME} main.cpp)
+
+# 链接库
 target_link_libraries(${PROJECT_NAME} PUBLIC
-                      ${Boost_LIBRARIES}
-                      MathFunctions
-                      StateCharts
-                      SPDLogEx)
+    ${Boost_LIBRARIES}
+    ${SUBDIRECTORIES}
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                            ${PROJECT_BINARY_DIR}
-                           ${Boost_INCLUDE_DIRS}
-                           ${PROJECT_SOURCE_DIR}/DesignModes
-                           ${PROJECT_SOURCE_DIR}/MathFunctions
-                           ${PROJECT_SOURCE_DIR}/StateMachine
-                           ${PROJECT_SOURCE_DIR}/StateCharts
-                           ${PROJECT_SOURCE_DIR}/SPDLogEx
-                           ${PROJECT_SOURCE_DIR}/ThreadPool
                            ${PROJECT_SOURCE_DIR}/TemplateClassDemo)
 
 # GoogleTest 配置

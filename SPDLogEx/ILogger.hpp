@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -7,7 +8,6 @@
 
 namespace Trace
 {
-using namespace std;
 
 // 日志级别枚举
 enum class LogLevel
@@ -40,6 +40,72 @@ public:
 
     // 获取日志记录器实例（惰性初始化）
     static std::shared_ptr<ILogger> getLogger(const std::string& logFilePath = "logs/log.txt");
+
+    // 禁用拷贝构造和赋值操作符
+    ILogger(const ILogger&) = delete;
+    ILogger& operator=(const ILogger&) = delete;
+
+protected:
+    // 允许子类构造
+    ILogger() = default;
+};
+
+class LoggerWrapper
+{
+public:
+    explicit LoggerWrapper(const std::string& filename)
+        : m_logger(ILogger::getLogger(filename))
+    {
+        m_logger->setLevel(LogLevel::debug);
+        m_logger->setFilePath("Logs/" + getCurrentDateTime() + ".txt");
+    }
+
+    void log(const std::string& message, LogLevel level = LogLevel::info)
+    {
+        switch (level)
+        {
+            case LogLevel::trace:
+                m_logger->trace(message);
+                break;
+            case LogLevel::debug:
+                m_logger->debug(message);
+                break;
+            case LogLevel::info:
+                m_logger->info(message);
+                break;
+            case LogLevel::warn:
+                m_logger->warn(message);
+                break;
+            case LogLevel::err:
+                m_logger->error(message);
+                break;
+            case LogLevel::critical:
+                m_logger->critical(message);
+                break;
+            default:
+                m_logger->info(message);
+        }
+    }
+
+    // 禁用拷贝构造和赋值操作符
+    LoggerWrapper(const LoggerWrapper&) = delete;
+    LoggerWrapper& operator=(const LoggerWrapper&) = delete;
+
+    // 允许移动构造和赋值
+    LoggerWrapper(LoggerWrapper&&) = default;
+    LoggerWrapper& operator=(LoggerWrapper&&) = default;
+
+private:
+    std::shared_ptr<ILogger> m_logger;
+
+    static std::string getCurrentDateTime()
+    {
+        auto now = std::chrono::system_clock::now();
+        auto in_time_t = std::chrono::system_clock::to_time_t(now);
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&in_time_t), "%Y_%m_%d_%H_%M_%S");
+        return ss.str();
+    }
 };
 
 };  // namespace Trace

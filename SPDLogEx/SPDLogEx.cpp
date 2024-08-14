@@ -9,7 +9,7 @@ namespace fs = std::filesystem;
 
 using namespace Trace;
 
-SpdLogger::SpdLogger(const std::string& logFilePath)
+SpdLogger::SpdLogger(const std::string& logFilePath, size_t queueSize, size_t threadCount)
     : filePath(logFilePath)
 {
     fs::path logDir = fs::path(logFilePath).parent_path();
@@ -19,21 +19,28 @@ SpdLogger::SpdLogger(const std::string& logFilePath)
         logDir = fs::current_path();
     }
 
-    // Create directory if it doesn't exist
-    if (!fs::exists(logDir))
-        fs::create_directories(logDir);
+    try
+    {
+        if (!fs::exists(logDir))
+            fs::create_directories(logDir);
 
-    spdlog::init_thread_pool(8192, 1);  // 队列大小8192，线程数1
-    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-    console_sink->set_level(spdlog::level::trace);  // 控制台输出级别
-    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFilePath, true);
-    file_sink->set_level(spdlog::level::trace);  // 文件输出级别
-    std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
-    logger = std::make_shared<spdlog::async_logger>("async_logger", sinks.begin(), sinks.end(), spdlog::thread_pool(),
-                                                    spdlog::async_overflow_policy::block);
-    logger->set_level(spdlog::level::trace);
-    logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
-    spdlog::register_logger(logger);
+        spdlog::init_thread_pool(queueSize, threadCount);
+        auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        console_sink->set_level(spdlog::level::trace);  // 控制台级别
+        auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFilePath, true);
+        file_sink->set_level(spdlog::level::trace);  // 文件级别
+        std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+        logger = std::make_shared<spdlog::async_logger>("async_logger", sinks.begin(), sinks.end(),
+                                                        spdlog::thread_pool(), spdlog::async_overflow_policy::block);
+        logger->set_level(spdlog::level::trace);
+        logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] %v");
+        spdlog::register_logger(logger);
+    }
+    catch (const std::exception& e)
+    {
+        // 处理初始化过程中的任何异常
+        std::cerr << "Failed to initialize logger: " << e.what() << std::endl;
+    }
 }
 
 void SpdLogger::setLevel(LogLevel level)
@@ -70,9 +77,7 @@ void SpdLogger::setFilePath(const std::string& filePath)
 
 void SpdLogger::log(LogLevel level, const std::string& message, const std::string& fileName, int lineNumber)
 {
-    std::stringstream ss;
-    ss << message << " [" << fileName << ":" << lineNumber << "]";
-    logger->log(levelToSpdlogLevel(level), ss.str());
+    logger->log(levelToSpdlogLevel(level), "{} [{}:{}]", message, fileName, lineNumber);
 }
 
 void SpdLogger::trace(const std::string& msg)
