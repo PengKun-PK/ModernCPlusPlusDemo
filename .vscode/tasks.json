@@ -5,7 +5,10 @@
             "id": "buildType",
             "type": "pickString",
             "description": "Which build type do you want to use?",
-            "options": ["Debug", "Release"],
+            "options": [
+                "Debug",
+                "Release"
+            ],
             "default": "Debug"
         }
     ],
@@ -33,7 +36,8 @@
                 "command": "powershell",
                 "args": [
                     "-NoProfile",
-                    "-ExecutionPolicy", "Bypass",
+                    "-ExecutionPolicy",
+                    "Bypass",
                     "-Command",
                     "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType}"
                 ]
@@ -54,7 +58,8 @@
                 "command": "powershell",
                 "args": [
                     "-NoProfile",
-                    "-ExecutionPolicy", "Bypass",
+                    "-ExecutionPolicy",
+                    "Bypass",
                     "-Command",
                     "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType} --clean-first"
                 ]
@@ -71,7 +76,8 @@
                 "command": "powershell",
                 "args": [
                     "-NoProfile",
-                    "-ExecutionPolicy", "Bypass",
+                    "-ExecutionPolicy",
+                    "Bypass",
                     "-Command",
                     "cd ${workspaceFolder}\\build\\${input:buildType}; .\\ModernCPlusPlusDemo.exe"
                 ]
@@ -86,7 +92,8 @@
                 "command": "powershell",
                 "args": [
                     "-NoProfile",
-                    "-ExecutionPolicy", "Bypass",
+                    "-ExecutionPolicy",
+                    "Bypass",
                     "-Command",
                     "cd ${workspaceFolder}\\build\\${input:buildType}; .\\gtest_unitTest.exe"
                 ]
