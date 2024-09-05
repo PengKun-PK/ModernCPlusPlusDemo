@@ -39,7 +39,7 @@ protected:
     void notifySync(const Arguments&... arguments) const;
     void notifyAsync(IInvokeStrategy& strategy, const Arguments&... arguments) const;
 
-private:
+public:  // 将 Subscription 类移到 public 部分
     class Subscription : public std::enable_shared_from_this<Subscription>
     {
     public:
@@ -55,6 +55,7 @@ private:
         std::atomic<bool> m_isActive{true};
     };
 
+private:
     void removeSubscription(const Subscription* sub);
 
     mutable std::shared_mutex m_mutex;
@@ -113,8 +114,11 @@ void Subscribable<Arguments...>::notifyAsync(IInvokeStrategy& strategy, const Ar
 
     for (const auto& sub : activeSubscriptions)
     {
-        strategy.invoke([sub, args = std::make_tuple(arguments...)]
-                        { std::apply([&sub](const auto&... params) { sub->invoke(params...); }, args); });
+        strategy.invoke(
+            [sub, args = std::make_tuple(arguments...)]() mutable {
+                std::apply([&sub](auto&&... params) { sub->invoke(std::forward<decltype(params)>(params)...); },
+                           std::move(args));
+            });
     }
 }
 

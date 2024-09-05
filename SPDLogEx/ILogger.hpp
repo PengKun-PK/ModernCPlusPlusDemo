@@ -2,8 +2,11 @@
 
 #include <chrono>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <map>
+#include <memory>
+#include <sstream>
 #include <string>
 
 namespace Trace

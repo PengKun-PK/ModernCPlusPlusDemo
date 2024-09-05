@@ -32,9 +32,10 @@ public:
     template<typename T>
     void registerType(const std::string& typeName)
     {
-        m_typeInfo[typeName] =
-            TypeInfo{std::type_index(typeid(T)), [](std::any args) -> std::unique_ptr<void, Deleter>
-                     { return {new T(std::any_cast<decltype(args)>(args)), {&Instance<ObjectFactory>()}}; }};
+        m_typeInfo[typeName] = TypeInfo{
+            std::type_index(typeid(T)), [this](std::any args) -> std::unique_ptr<void, Deleter>
+            { return std::unique_ptr<void, Deleter>(new T(std::any_cast<decltype(args)>(args)), Deleter{this}); },
+            [](void* ptr) { delete static_cast<T*>(ptr); }};
     }
 
     template<typename T>
@@ -71,14 +72,10 @@ private:
     struct Deleter
     {
         ObjectFactory* factory;
-        Deleter(ObjectFactory* f)
-            : factory(f)
-        {
-        }
+
         void operator()(void* ptr) const
         {
             factory->deleteObject(ptr);
-            delete ptr;
         }
     };
 
@@ -86,12 +83,14 @@ private:
     {
         std::unique_ptr<void, Deleter> ptr;
         std::type_index typeIndex;
+        std::function<void(void*)> deleter;
     };
 
     struct TypeInfo
     {
         std::type_index typeIndex;
         std::function<std::unique_ptr<void, Deleter>(std::any)> creator;
+        std::function<void(void*)> deleter;
     };
 
     std::unordered_map<std::string, TypeInfo> m_typeInfo;
@@ -110,7 +109,7 @@ private:
             std::make_tuple(std::forward<Args>(args)...));
         auto unique_ptr = it->second.creator(any_args);
         T* ptr = static_cast<T*>(unique_ptr.get());
-        m_objects[ptr] = ObjectInfo{std::move(unique_ptr), std::type_index(typeid(T))};
+        m_objects[ptr] = ObjectInfo{std::move(unique_ptr), std::type_index(typeid(T)), it->second.deleter};
         return ptr;
     }
 
