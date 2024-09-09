@@ -1,0 +1,28 @@
+name: C++ CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 明确授予写入权限
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Doxygen
+      run: sudo apt-get install -y doxygen graphviz
+
+    - name: Generate Documentation
+      run: doxygen Doxyfile
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4  # 更新到 v4 版本
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/html
+        force_orphan: true  # 确保只保留最新的提交
+        commit_message: "docs: update documentation"  # 自定义提交信息

@@ -1,0 +1,178 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  clang-tidy-check:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Cache Boost
+      id: cache-boost
+      uses: actions/cache@v3
+      with:
+        path: ${{ github.workspace }}/boost_install
+        key: ${{ runner.os }}-boost-1.83.0-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: ${{ runner.os }}-boost-1.83.0-
+
+    - name: Install Boost (Ubuntu)
+      if: runner.os == 'Linux' && steps.cache-boost.outputs.cache-hit != 'true'
+      run: |
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz
+        tar -xzf boost_1_83_0.tar.gz
+        cd boost_1_83_0
+        ./bootstrap.sh --prefix=${{ github.workspace }}/boost_install
+        ./b2 install --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json
+        cd ..
+
+    - name: Install Boost (Windows)
+      if: runner.os == 'Windows' && steps.cache-boost.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        $Env:BOOST_ROOT = "${{ github.workspace }}\boost_install"
+        $Env:BOOST_URL = "https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.zip"
+        $Env:BOOST_ZIP = "${{ runner.temp }}\boost.zip"
+        Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP
+        Expand-Archive -Path $Env:BOOST_ZIP -DestinationPath ${{ runner.temp }}
+        Move-Item -Path "${{ runner.temp }}\boost_1_83_0" -Destination $Env:BOOST_ROOT
+        Set-Location $Env:BOOST_ROOT
+        .\bootstrap.bat
+        .\b2 --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json
+
+    - name: Set Boost environment variables
+      shell: bash
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          echo "BOOST_ROOT=${{ github.workspace }}/boost_install" >> $GITHUB_ENV
+          echo "BOOST_LIBRARYDIR=${{ github.workspace }}/boost_install/stage/lib" >> $GITHUB_ENV
+        else
+          echo "BOOST_ROOT=${{ github.workspace }}/boost_install" >> $GITHUB_ENV
+          echo "BOOST_LIBRARYDIR=${{ github.workspace }}/boost_install/lib" >> $GITHUB_ENV
+        fi
+        echo "Setting Boost variables:"
+        echo "BOOST_ROOT=$BOOST_ROOT"
+        echo "BOOST_LIBRARYDIR=$BOOST_LIBRARYDIR"
+
+    - name: Install LLVM and Clang (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 18
+        sudo apt-get update
+        sudo apt-get install -y clang-tidy-18 clang-18 llvm-18 llvm-18-dev libclang-18-dev
+        sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100
+
+    - name: Install LLVM and Clang (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install llvm --version=18.0.0 -y
+        choco install cmake -y
+        echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        echo "C:\Program Files\CMake\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: Configure CMake
+      run: |
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=${{ env.BOOST_ROOT }} -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    - name: Build project
+      run: cmake --build ${{github.workspace}}/build --config Release
+
+    - name: Run clang-tidy
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = "Stop"
+
+        if ($env:RUNNER_OS -eq "Windows") {
+          $clang_tidy_cmd = "clang-tidy.exe"
+        } else {
+          $clang_tidy_cmd = "clang-tidy-18"
+        }
+
+        $project_path = "${{ github.workspace }}"
+        Write-Output "Using clang-tidy command: $clang_tidy_cmd"
+        Write-Output "Project path: $project_path"
+
+        # Print clang-tidy version
+        & $clang_tidy_cmd --version
+
+        # Generate compile_commands.json
+        cmake -B $project_path/build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+        # Define directories to exclude
+        $exclude_dirs = @("test", "lib", "build", "boost_install")
+
+        # Get all directories in the project root, excluding the ones in $exclude_dirs
+        $source_dirs = Get-ChildItem -Path $project_path -Directory |
+                       Where-Object { $exclude_dirs -notcontains $_.Name }
+
+        $source_files = @()
+        foreach ($dir in $source_dirs) {
+          $source_files += Get-ChildItem -Path $dir.FullName -Recurse -Include *.cpp,*.hpp
+        }
+        # Also include .cpp and .hpp files in the root directory
+        $source_files += Get-ChildItem -Path $project_path -File -Include *.cpp,*.hpp
+
+        if ($source_files) {
+          Write-Output "Found source files:"
+          $source_files | ForEach-Object { Write-Output $_.FullName }
+
+          foreach ($file in $source_files) {
+            # Ensure the file is not in the boost_install directory
+            if ($file.FullName -notlike "*boost_install*" -and $file.FullName -notlike "*\lib\*") {
+              Write-Output "Running clang-tidy on $($file.FullName)"
+              & $clang_tidy_cmd $file.FullName -p "$project_path/build" `
+                --extra-arg=-std=c++20 `
+                --extra-arg=-I"${{ env.BOOST_ROOT }}" `
+                --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" `
+                --extra-arg=-I"$project_path/lib/splog/include" `
+                --extra-arg=-I"$project_path"
+              if ($LASTEXITCODE -ne 0) {
+                Write-Output "Clang-tidy failed on $($file.FullName)"
+                exit 1
+              }
+            }
+          }
+        } else {
+          Write-Output "No source files found in the project directories"
+          exit 1
+        }
+
+        Write-Output "Clang-tidy check completed successfully."
+
+    - name: Run clang-tidy-pr-comments
+      if: github.event_name == 'pull_request'
+      uses: platisd/clang-tidy-pr-comments@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        clang_tidy_fixes: clang-tidy-fixes.yml
+        buildpath: build
+        extensions: 'cpp,hpp'
+
+    - name: Upload CMake logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: cmake-logs-${{ runner.os }}
+        path: |
+          ${{github.workspace}}/build/CMakeFiles/CMakeOutput.log
+          ${{github.workspace}}/build/CMakeFiles/CMakeError.log
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-${{ runner.os }}
+        path: ${{github.workspace}}/build
