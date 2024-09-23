@@ -135,6 +135,7 @@ jobs:
             if ($file.FullName -notlike "*boost_install*" -and $file.FullName -notlike "*\lib\*") {
               Write-Output "Running clang-tidy on $($file.FullName)"
               & $clang_tidy_cmd $file.FullName -p "$project_path/build" `
+                --config-file="$project_path/.clang-tidy" `
                 --extra-arg=-std=c++20 `
                 --extra-arg=-I"${{ env.BOOST_ROOT }}" `
                 --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" `

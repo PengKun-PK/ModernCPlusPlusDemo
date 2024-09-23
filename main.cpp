@@ -19,7 +19,6 @@
 #include "Event.hpp"
 #include "EventBus.hpp"
 #include "ILogger.hpp"
-#include "MathFunctions.hpp"
 #include "ObjectFactory.hpp"
 #include "Observer.hpp"
 #include "Singleton.hpp"
@@ -30,8 +29,6 @@
 
 namespace
 {
-using namespace MathFunctions;
-
 using namespace StateMachine;
 
 using namespace Trace;
@@ -103,23 +100,6 @@ T calculateSpeed(T distance, const std::array<double, 4>& params)
         std::min(baseSpeed * std::pow(distance / scaleDistance, exponent), static_cast<double>(maxSpeed)));
 }
 }  // namespace
-
-void testLogging(LoggerWrapper& logger)
-{
-    const auto testString = getTestString();
-    LOG_INFO(logger, testString.value_or("no msg!!!"));
-
-    const auto& math = Instance<MathFunction>();
-    const auto result = math.calDividedFunction(7, 0);
-    if (result)
-    {
-        LOG_INFO(logger, boost::lexical_cast<std::string>(*result));
-    }
-    else
-    {
-        LOG_ERROR(logger, "Invalid result.");
-    }
-}
 
 void testStateMachine(LoggerWrapper& logger)
 {
@@ -366,7 +346,6 @@ int main()
 {
     LoggerWrapper logger("Test.txt");
 
-    testLogging(logger);
     testStateMachine(logger);
     testThreadPool(logger);
 

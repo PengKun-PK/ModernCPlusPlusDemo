@@ -60,7 +60,6 @@ endif()
 
 # 定义子目录列表
 set(SUBDIRECTORIES
-    MathFunctions
     StateCharts
     SPDLogEx
     StateMachine
@@ -113,6 +112,5 @@ target_link_libraries(gtest_unitTest PUBLIC
     gmock
     gmock_main
     StateCharts
-    MathFunctions
     Subscriber
 )
