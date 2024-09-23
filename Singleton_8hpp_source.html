@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: DesignModes/Singleton.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_179f3c9b076f66b50ad3eaa3ebbd152f.html">DesignModes</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Singleton.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Singleton_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00004"></a><span class="lineno"><a class="line" href="classSingleton.html">    4</a></span>&#160;<span class="keyword">class </span><a class="code" href="classSingleton.html">Singleton</a></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classSingleton.html#a5a03992ebd8d6c31ab0d3b243275243a">    7</a></span>&#160;    <span class="keyword">static</span> T&amp; <a class="code" href="classSingleton.html#a5a03992ebd8d6c31ab0d3b243275243a">s_getInstance</a>()</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">static</span> T s_oT;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keywordflow">return</span> s_oT;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    }</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classSingleton.html#a23b2407170cc04f6746874704b928044">   13</a></span>&#160;    <a class="code" href="classSingleton.html#a23b2407170cc04f6746874704b928044">Singleton</a>(<span class="keyword">const</span> <a class="code" href="classSingleton.html">Singleton</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classSingleton.html#a0765f17c275d65bacc1aae955e9bfc95">   14</a></span>&#160;    <a class="code" href="classSingleton.html">Singleton</a>&amp; <a class="code" href="classSingleton.html#a0765f17c275d65bacc1aae955e9bfc95">operator=</a>(<span class="keyword">const</span> <a class="code" href="classSingleton.html">Singleton</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classSingleton.html#ad55e7dce6e55238fdfb80c980acded28">   15</a></span>&#160;    <a class="code" href="classSingleton.html#ad55e7dce6e55238fdfb80c980acded28">Singleton</a>(<a class="code" href="classSingleton.html">Singleton</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classSingleton.html#a371f260f31335a12d6a1c830f16c71c8">   16</a></span>&#160;    <a class="code" href="classSingleton.html">Singleton</a>&amp; <a class="code" href="classSingleton.html#a371f260f31335a12d6a1c830f16c71c8">operator=</a>(<a class="code" href="classSingleton.html">Singleton</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classSingleton.html#adb1b554fec7ae6065fe0e09111f3581f">   19</a></span>&#160;    <a class="code" href="classSingleton.html#adb1b554fec7ae6065fe0e09111f3581f">Singleton</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classSingleton.html#abfb600cf10389b0bff6147aeee786c87">   20</a></span>&#160;    <a class="code" href="classSingleton.html#abfb600cf10389b0bff6147aeee786c87">~Singleton</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="Singleton_8hpp.html#a2cd0338c41ec136a3e5141f3b0141cb9">   24</a></span>&#160;T&amp; <a class="code" href="Singleton_8hpp.html#a2cd0338c41ec136a3e5141f3b0141cb9">Instance</a>()</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classSingleton.html#a5a03992ebd8d6c31ab0d3b243275243a">Singleton&lt;T&gt;::s_getInstance</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="ttc" id="aSingleton_8hpp_html_a2cd0338c41ec136a3e5141f3b0141cb9"><div class="ttname"><a href="Singleton_8hpp.html#a2cd0338c41ec136a3e5141f3b0141cb9">Instance</a></div><div class="ttdeci">T &amp; Instance()</div><div class="ttdef"><b>Definition:</b> Singleton.hpp:24</div></div>
+<div class="ttc" id="aclassSingleton_html"><div class="ttname"><a href="classSingleton.html">Singleton</a></div><div class="ttdef"><b>Definition:</b> Singleton.hpp:5</div></div>
+<div class="ttc" id="aclassSingleton_html_a0765f17c275d65bacc1aae955e9bfc95"><div class="ttname"><a href="classSingleton.html#a0765f17c275d65bacc1aae955e9bfc95">Singleton::operator=</a></div><div class="ttdeci">Singleton &amp; operator=(const Singleton &amp;)=delete</div></div>
+<div class="ttc" id="aclassSingleton_html_a23b2407170cc04f6746874704b928044"><div class="ttname"><a href="classSingleton.html#a23b2407170cc04f6746874704b928044">Singleton::Singleton</a></div><div class="ttdeci">Singleton(const Singleton &amp;)=delete</div></div>
+<div class="ttc" id="aclassSingleton_html_a371f260f31335a12d6a1c830f16c71c8"><div class="ttname"><a href="classSingleton.html#a371f260f31335a12d6a1c830f16c71c8">Singleton::operator=</a></div><div class="ttdeci">Singleton &amp; operator=(Singleton &amp;&amp;)=delete</div></div>
+<div class="ttc" id="aclassSingleton_html_a5a03992ebd8d6c31ab0d3b243275243a"><div class="ttname"><a href="classSingleton.html#a5a03992ebd8d6c31ab0d3b243275243a">Singleton::s_getInstance</a></div><div class="ttdeci">static T &amp; s_getInstance()</div><div class="ttdef"><b>Definition:</b> Singleton.hpp:7</div></div>
+<div class="ttc" id="aclassSingleton_html_abfb600cf10389b0bff6147aeee786c87"><div class="ttname"><a href="classSingleton.html#abfb600cf10389b0bff6147aeee786c87">Singleton::~Singleton</a></div><div class="ttdeci">~Singleton()=default</div></div>
+<div class="ttc" id="aclassSingleton_html_ad55e7dce6e55238fdfb80c980acded28"><div class="ttname"><a href="classSingleton.html#ad55e7dce6e55238fdfb80c980acded28">Singleton::Singleton</a></div><div class="ttdeci">Singleton(Singleton &amp;&amp;)=delete</div></div>
+<div class="ttc" id="aclassSingleton_html_adb1b554fec7ae6065fe0e09111f3581f"><div class="ttname"><a href="classSingleton.html#adb1b554fec7ae6065fe0e09111f3581f">Singleton::Singleton</a></div><div class="ttdeci">Singleton()=default</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>

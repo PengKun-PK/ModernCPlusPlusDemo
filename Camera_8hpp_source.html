@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: StateCharts/Camera.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_9689685c181983a87d4ce85001ba782c.html">StateCharts</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Camera.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Camera_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;boost/statechart/custom_reaction.hpp&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;boost/statechart/event.hpp&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;boost/statechart/simple_state.hpp&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;boost/statechart/state_machine.hpp&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="IDataSource_8hpp.html">IDataSource.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>sc = boost::statechart;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceStateMachine.html">StateMachine</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">// event</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterHalf.html">   19</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1EvShutterHalf.html">EvShutterHalf</a> : <a class="code" href="namespaceStateMachine.html#a9be894d777f6b9ff1d6a7e0283276baf">sc::event</a>&lt;EvShutterHalf&gt;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterHalf.html#a7eb79e459930bed622f9e0f168201f7f">   21</a></span>&#160;    <a class="code" href="structStateMachine_1_1EvShutterHalf.html#a7eb79e459930bed622f9e0f168201f7f">EvShutterHalf</a>(std::string str)</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="structStateMachine_1_1EvShutterHalf.html#a0a7642cce60a9c45f4d9f36a46116ee8">msg</a> = str;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterHalf.html#a0a7642cce60a9c45f4d9f36a46116ee8">   26</a></span>&#160;    std::string <a class="code" href="structStateMachine_1_1EvShutterHalf.html#a0a7642cce60a9c45f4d9f36a46116ee8">msg</a>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterFull.html">   29</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1EvShutterFull.html">EvShutterFull</a> : <a class="code" href="namespaceStateMachine.html#a9be894d777f6b9ff1d6a7e0283276baf">sc::event</a>&lt;EvShutterFull&gt;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterFull.html#a0291388e95dace0d3fa3d9de98dfa1f9">   31</a></span>&#160;    <a class="code" href="structStateMachine_1_1EvShutterFull.html#a0291388e95dace0d3fa3d9de98dfa1f9">EvShutterFull</a>(std::string str)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="structStateMachine_1_1EvShutterFull.html#aae31d2acac174acf41f4bf66dea04ffb">msg</a> = str;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterFull.html#aae31d2acac174acf41f4bf66dea04ffb">   36</a></span>&#160;    std::string <a class="code" href="structStateMachine_1_1EvShutterFull.html#aae31d2acac174acf41f4bf66dea04ffb">msg</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterRelease.html">   39</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1EvShutterRelease.html">EvShutterRelease</a> : <a class="code" href="namespaceStateMachine.html#a9be894d777f6b9ff1d6a7e0283276baf">sc::event</a>&lt;EvShutterRelease&gt;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterRelease.html#a2cd6bae818801f374fb286464c1543e7">   41</a></span>&#160;    <a class="code" href="structStateMachine_1_1EvShutterRelease.html#a2cd6bae818801f374fb286464c1543e7">EvShutterRelease</a>(std::string str)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="structStateMachine_1_1EvShutterRelease.html#a9fa58726ffd37062e2ce2d6aab860803">msg</a> = str;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    }</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvShutterRelease.html#a9fa58726ffd37062e2ce2d6aab860803">   46</a></span>&#160;    std::string <a class="code" href="structStateMachine_1_1EvShutterRelease.html#a9fa58726ffd37062e2ce2d6aab860803">msg</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;};</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvConfig.html">   49</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1EvConfig.html">EvConfig</a> : <a class="code" href="namespaceStateMachine.html#a9be894d777f6b9ff1d6a7e0283276baf">sc::event</a>&lt;EvConfig&gt;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvConfig.html#a45a84c3691b19416b5f8d302f79b7bf1">   51</a></span>&#160;    <a class="code" href="structStateMachine_1_1EvConfig.html#a45a84c3691b19416b5f8d302f79b7bf1">EvConfig</a>(std::string str)</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    {</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="structStateMachine_1_1EvConfig.html#a97959b98dee34cb0bbb0ae7279b8d67a">msg</a> = str;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structStateMachine_1_1EvConfig.html#a97959b98dee34cb0bbb0ae7279b8d67a">   56</a></span>&#160;    std::string <a class="code" href="structStateMachine_1_1EvConfig.html#a97959b98dee34cb0bbb0ae7279b8d67a">msg</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;};</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// state machine</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1NotShooting.html">NotShooting</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Camera.html">   61</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1Camera.html">Camera</a> : sc::state_machine&lt;Camera, NotShooting&gt;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <a class="code" href="structStateMachine_1_1Camera.html#ab529f9b6507616721c0516eebc5add38">Camera</a>(<a class="code" href="classStateMachine_1_1IDataSource.html">IDataSource</a>&amp; dataSource);</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Camera.html#a45a468897cdfa534f03d82dc359ca6c2">   64</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structStateMachine_1_1Camera.html#a45a468897cdfa534f03d82dc359ca6c2">IsMemoryAvailable</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    }</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Camera.html#ae8c41da9e17ca251858e15b145d87074">   68</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="structStateMachine_1_1Camera.html#ae8c41da9e17ca251858e15b145d87074">IsBatteryLow</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Camera.html#a9e156d2239e0db3471e51baf30d3a2fa">   73</a></span>&#160;    <a class="code" href="classStateMachine_1_1IDataSource.html">IDataSource</a>&amp; <a class="code" href="structStateMachine_1_1Camera.html#a9e156d2239e0db3471e51baf30d3a2fa">m_dataSource</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">// state NotShooting</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1Idle.html">Idle</a>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structStateMachine_1_1NotShooting.html">   78</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1NotShooting.html">NotShooting</a> : sc::simple_state&lt;NotShooting, Camera, Idle&gt;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;{</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="structStateMachine_1_1NotShooting.html#a79e052310f8e075fd85d7d4678eee306">   80</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structStateMachine_1_1NotShooting.html#a79e052310f8e075fd85d7d4678eee306">reactions</a> = boost::mpl::list&lt;sc::custom_reaction&lt;EvShutterFull&gt;, sc::custom_reaction&lt;EvShutterHalf&gt;&gt;;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="comment">// result</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    sc::result <a class="code" href="structStateMachine_1_1NotShooting.html#aed299c132cf00a6d6ccab692996265cd">react</a>(<span class="keyword">const</span> <a class="code" href="structStateMachine_1_1EvShutterFull.html">EvShutterFull</a>&amp;);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    sc::result <a class="code" href="structStateMachine_1_1NotShooting.html#aed299c132cf00a6d6ccab692996265cd">react</a>(<span class="keyword">const</span> <a class="code" href="structStateMachine_1_1EvShutterHalf.html">EvShutterHalf</a>&amp;);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Idle.html">   87</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1Idle.html">Idle</a> : sc::simple_state&lt;Idle, NotShooting&gt;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;{</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Idle.html#a476fc48a440db39d169a5ef74afffe5e">   89</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structStateMachine_1_1Idle.html#a476fc48a440db39d169a5ef74afffe5e">reactions</a> = sc::custom_reaction&lt;EvConfig&gt;;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    sc::result <a class="code" href="structStateMachine_1_1Idle.html#accc71fee9bd0104dc082365640191eef">react</a>(<span class="keyword">const</span> <a class="code" href="structStateMachine_1_1EvConfig.html">EvConfig</a>&amp;);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Configuring.html">   93</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1Configuring.html">Configuring</a> : sc::simple_state&lt;Configuring, NotShooting&gt;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;{</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Configuring.html#a25bb38fa97ab82f473ad7d996228b62c">   95</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structStateMachine_1_1Configuring.html#a25bb38fa97ab82f473ad7d996228b62c">reactions</a> = sc::custom_reaction&lt;EvConfig&gt;;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    sc::result <a class="code" href="structStateMachine_1_1Configuring.html#a7a54037a509f3c19319d8bbdb57ce26d">react</a>(<span class="keyword">const</span> <a class="code" href="structStateMachine_1_1EvConfig.html">EvConfig</a>&amp;);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;};</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">// state Shooting</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Shooting.html">  100</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structStateMachine_1_1Shooting.html">Shooting</a> : sc::simple_state&lt;Shooting, Camera&gt;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;{</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="structStateMachine_1_1Shooting.html#a3c8b58933e0000b7713acff493a83800">  102</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structStateMachine_1_1Shooting.html#a3c8b58933e0000b7713acff493a83800">reactions</a> = sc::custom_reaction&lt;EvShutterRelease&gt;;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    sc::result <a class="code" href="structStateMachine_1_1Shooting.html#a311871ffc82b72e9cc60a9df8b6e4dc5">react</a>(<span class="keyword">const</span> <a class="code" href="structStateMachine_1_1EvShutterRelease.html">EvShutterRelease</a>&amp;);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;};</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}  <span class="comment">// namespace StateMachine</span></div>
+<div class="ttc" id="aIDataSource_8hpp_html"><div class="ttname"><a href="IDataSource_8hpp.html">IDataSource.hpp</a></div></div>
+<div class="ttc" id="aclassStateMachine_1_1IDataSource_html"><div class="ttname"><a href="classStateMachine_1_1IDataSource.html">StateMachine::IDataSource</a></div><div class="ttdef"><b>Definition:</b> IDataSource.hpp:13</div></div>
+<div class="ttc" id="anamespaceStateMachine_html"><div class="ttname"><a href="namespaceStateMachine.html">StateMachine</a></div><div class="ttdef"><b>Definition:</b> Camera.cpp:4</div></div>
+<div class="ttc" id="anamespaceStateMachine_html_a9be894d777f6b9ff1d6a7e0283276baf"><div class="ttname"><a href="namespaceStateMachine.html#a9be894d777f6b9ff1d6a7e0283276baf">StateMachine::event</a></div><div class="ttdeci">boost::statechart::event_base event</div><div class="ttdef"><b>Definition:</b> TestCamera.cpp:44</div></div>
+<div class="ttc" id="astructStateMachine_1_1Camera_html"><div class="ttname"><a href="structStateMachine_1_1Camera.html">StateMachine::Camera</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:62</div></div>
+<div class="ttc" id="astructStateMachine_1_1Camera_html_a45a468897cdfa534f03d82dc359ca6c2"><div class="ttname"><a href="structStateMachine_1_1Camera.html#a45a468897cdfa534f03d82dc359ca6c2">StateMachine::Camera::IsMemoryAvailable</a></div><div class="ttdeci">bool IsMemoryAvailable() const</div><div class="ttdef"><b>Definition:</b> Camera.hpp:64</div></div>
+<div class="ttc" id="astructStateMachine_1_1Camera_html_a9e156d2239e0db3471e51baf30d3a2fa"><div class="ttname"><a href="structStateMachine_1_1Camera.html#a9e156d2239e0db3471e51baf30d3a2fa">StateMachine::Camera::m_dataSource</a></div><div class="ttdeci">IDataSource &amp; m_dataSource</div><div class="ttdef"><b>Definition:</b> Camera.hpp:73</div></div>
+<div class="ttc" id="astructStateMachine_1_1Camera_html_ab529f9b6507616721c0516eebc5add38"><div class="ttname"><a href="structStateMachine_1_1Camera.html#ab529f9b6507616721c0516eebc5add38">StateMachine::Camera::Camera</a></div><div class="ttdeci">Camera(IDataSource &amp;dataSource)</div><div class="ttdef"><b>Definition:</b> Camera.cpp:6</div></div>
+<div class="ttc" id="astructStateMachine_1_1Camera_html_ae8c41da9e17ca251858e15b145d87074"><div class="ttname"><a href="structStateMachine_1_1Camera.html#ae8c41da9e17ca251858e15b145d87074">StateMachine::Camera::IsBatteryLow</a></div><div class="ttdeci">bool IsBatteryLow() const</div><div class="ttdef"><b>Definition:</b> Camera.hpp:68</div></div>
+<div class="ttc" id="astructStateMachine_1_1Configuring_html"><div class="ttname"><a href="structStateMachine_1_1Configuring.html">StateMachine::Configuring</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:94</div></div>
+<div class="ttc" id="astructStateMachine_1_1Configuring_html_a25bb38fa97ab82f473ad7d996228b62c"><div class="ttname"><a href="structStateMachine_1_1Configuring.html#a25bb38fa97ab82f473ad7d996228b62c">StateMachine::Configuring::reactions</a></div><div class="ttdeci">sc::custom_reaction&lt; EvConfig &gt; reactions</div><div class="ttdef"><b>Definition:</b> Camera.hpp:95</div></div>
+<div class="ttc" id="astructStateMachine_1_1Configuring_html_a7a54037a509f3c19319d8bbdb57ce26d"><div class="ttname"><a href="structStateMachine_1_1Configuring.html#a7a54037a509f3c19319d8bbdb57ce26d">StateMachine::Configuring::react</a></div><div class="ttdeci">sc::result react(const EvConfig &amp;)</div><div class="ttdef"><b>Definition:</b> Camera.cpp:57</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvConfig_html"><div class="ttname"><a href="structStateMachine_1_1EvConfig.html">StateMachine::EvConfig</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:50</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvConfig_html_a45a84c3691b19416b5f8d302f79b7bf1"><div class="ttname"><a href="structStateMachine_1_1EvConfig.html#a45a84c3691b19416b5f8d302f79b7bf1">StateMachine::EvConfig::EvConfig</a></div><div class="ttdeci">EvConfig(std::string str)</div><div class="ttdef"><b>Definition:</b> Camera.hpp:51</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvConfig_html_a97959b98dee34cb0bbb0ae7279b8d67a"><div class="ttname"><a href="structStateMachine_1_1EvConfig.html#a97959b98dee34cb0bbb0ae7279b8d67a">StateMachine::EvConfig::msg</a></div><div class="ttdeci">std::string msg</div><div class="ttdef"><b>Definition:</b> Camera.hpp:56</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterFull_html"><div class="ttname"><a href="structStateMachine_1_1EvShutterFull.html">StateMachine::EvShutterFull</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:30</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterFull_html_a0291388e95dace0d3fa3d9de98dfa1f9"><div class="ttname"><a href="structStateMachine_1_1EvShutterFull.html#a0291388e95dace0d3fa3d9de98dfa1f9">StateMachine::EvShutterFull::EvShutterFull</a></div><div class="ttdeci">EvShutterFull(std::string str)</div><div class="ttdef"><b>Definition:</b> Camera.hpp:31</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterFull_html_aae31d2acac174acf41f4bf66dea04ffb"><div class="ttname"><a href="structStateMachine_1_1EvShutterFull.html#aae31d2acac174acf41f4bf66dea04ffb">StateMachine::EvShutterFull::msg</a></div><div class="ttdeci">std::string msg</div><div class="ttdef"><b>Definition:</b> Camera.hpp:36</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterHalf_html"><div class="ttname"><a href="structStateMachine_1_1EvShutterHalf.html">StateMachine::EvShutterHalf</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:20</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterHalf_html_a0a7642cce60a9c45f4d9f36a46116ee8"><div class="ttname"><a href="structStateMachine_1_1EvShutterHalf.html#a0a7642cce60a9c45f4d9f36a46116ee8">StateMachine::EvShutterHalf::msg</a></div><div class="ttdeci">std::string msg</div><div class="ttdef"><b>Definition:</b> Camera.hpp:26</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterHalf_html_a7eb79e459930bed622f9e0f168201f7f"><div class="ttname"><a href="structStateMachine_1_1EvShutterHalf.html#a7eb79e459930bed622f9e0f168201f7f">StateMachine::EvShutterHalf::EvShutterHalf</a></div><div class="ttdeci">EvShutterHalf(std::string str)</div><div class="ttdef"><b>Definition:</b> Camera.hpp:21</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterRelease_html"><div class="ttname"><a href="structStateMachine_1_1EvShutterRelease.html">StateMachine::EvShutterRelease</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:40</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterRelease_html_a2cd6bae818801f374fb286464c1543e7"><div class="ttname"><a href="structStateMachine_1_1EvShutterRelease.html#a2cd6bae818801f374fb286464c1543e7">StateMachine::EvShutterRelease::EvShutterRelease</a></div><div class="ttdeci">EvShutterRelease(std::string str)</div><div class="ttdef"><b>Definition:</b> Camera.hpp:41</div></div>
+<div class="ttc" id="astructStateMachine_1_1EvShutterRelease_html_a9fa58726ffd37062e2ce2d6aab860803"><div class="ttname"><a href="structStateMachine_1_1EvShutterRelease.html#a9fa58726ffd37062e2ce2d6aab860803">StateMachine::EvShutterRelease::msg</a></div><div class="ttdeci">std::string msg</div><div class="ttdef"><b>Definition:</b> Camera.hpp:46</div></div>
+<div class="ttc" id="astructStateMachine_1_1Idle_html"><div class="ttname"><a href="structStateMachine_1_1Idle.html">StateMachine::Idle</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:88</div></div>
+<div class="ttc" id="astructStateMachine_1_1Idle_html_a476fc48a440db39d169a5ef74afffe5e"><div class="ttname"><a href="structStateMachine_1_1Idle.html#a476fc48a440db39d169a5ef74afffe5e">StateMachine::Idle::reactions</a></div><div class="ttdeci">sc::custom_reaction&lt; EvConfig &gt; reactions</div><div class="ttdef"><b>Definition:</b> Camera.hpp:89</div></div>
+<div class="ttc" id="astructStateMachine_1_1Idle_html_accc71fee9bd0104dc082365640191eef"><div class="ttname"><a href="structStateMachine_1_1Idle.html#accc71fee9bd0104dc082365640191eef">StateMachine::Idle::react</a></div><div class="ttdeci">sc::result react(const EvConfig &amp;)</div><div class="ttdef"><b>Definition:</b> Camera.cpp:49</div></div>
+<div class="ttc" id="astructStateMachine_1_1NotShooting_html"><div class="ttname"><a href="structStateMachine_1_1NotShooting.html">StateMachine::NotShooting</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:79</div></div>
+<div class="ttc" id="astructStateMachine_1_1NotShooting_html_a79e052310f8e075fd85d7d4678eee306"><div class="ttname"><a href="structStateMachine_1_1NotShooting.html#a79e052310f8e075fd85d7d4678eee306">StateMachine::NotShooting::reactions</a></div><div class="ttdeci">boost::mpl::list&lt; sc::custom_reaction&lt; EvShutterFull &gt;, sc::custom_reaction&lt; EvShutterHalf &gt; &gt; reactions</div><div class="ttdef"><b>Definition:</b> Camera.hpp:80</div></div>
+<div class="ttc" id="astructStateMachine_1_1NotShooting_html_aed299c132cf00a6d6ccab692996265cd"><div class="ttname"><a href="structStateMachine_1_1NotShooting.html#aed299c132cf00a6d6ccab692996265cd">StateMachine::NotShooting::react</a></div><div class="ttdeci">sc::result react(const EvShutterFull &amp;)</div><div class="ttdef"><b>Definition:</b> Camera.cpp:26</div></div>
+<div class="ttc" id="astructStateMachine_1_1Shooting_html"><div class="ttname"><a href="structStateMachine_1_1Shooting.html">StateMachine::Shooting</a></div><div class="ttdef"><b>Definition:</b> Camera.hpp:101</div></div>
+<div class="ttc" id="astructStateMachine_1_1Shooting_html_a311871ffc82b72e9cc60a9df8b6e4dc5"><div class="ttname"><a href="structStateMachine_1_1Shooting.html#a311871ffc82b72e9cc60a9df8b6e4dc5">StateMachine::Shooting::react</a></div><div class="ttdeci">sc::result react(const EvShutterRelease &amp;)</div><div class="ttdef"><b>Definition:</b> Camera.cpp:41</div></div>
+<div class="ttc" id="astructStateMachine_1_1Shooting_html_a3c8b58933e0000b7713acff493a83800"><div class="ttname"><a href="structStateMachine_1_1Shooting.html#a3c8b58933e0000b7713acff493a83800">StateMachine::Shooting::reactions</a></div><div class="ttdeci">sc::custom_reaction&lt; EvShutterRelease &gt; reactions</div><div class="ttdef"><b>Definition:</b> Camera.hpp:102</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>
