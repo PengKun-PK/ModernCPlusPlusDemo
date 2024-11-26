@@ -20,6 +20,32 @@ jobs:
       with:
         submodules: recursive
 
+    # Install OpenCL
+    - name: Install OpenCL (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd
+
+    - name: Install OpenCL (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        # 检查是否已安装CUDA
+        if (!(Test-Path "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA")) {
+          # 下载CUDA installer
+          $InstallerUrl = "https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda_12.3.1_546.12_windows.exe"
+          $InstallerPath = "$env:TEMP\cuda_installer.exe"
+          Invoke-WebRequest -Uri $InstallerUrl -OutFile $InstallerPath
+
+          # 静默安装CUDA（只安装必要组件）
+          Start-Process -FilePath $InstallerPath -ArgumentList "-s nvcc_12.3 cudart_12.3 visual_studio_integration_12.3" -Wait
+
+          # 添加CUDA到系统路径
+          echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3" >> $env:GITHUB_ENV
+          echo "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin" >> $env:GITHUB_PATH
+        }
+
     - name: Cache Boost
       id: cache-boost
       uses: actions/cache@v3
@@ -66,29 +92,40 @@ jobs:
         echo "BOOST_ROOT=$BOOST_ROOT"
         echo "BOOST_LIBRARYDIR=$BOOST_LIBRARYDIR"
 
-    - name: Debug Environment
-      shell: bash
-      run: |
-        echo "Current directory: ${{ github.workspace }}"
-        echo "CMake version:"
-        cmake --version
-        echo "BOOST_ROOT: ${{ env.BOOST_ROOT }}"
-        echo "BOOST_LIBRARYDIR: ${{ env.BOOST_LIBRARYDIR }}"
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
-          pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
-        else
-          echo "Contents of BOOST_ROOT:"
-          if [ -d "$BOOST_ROOT" ]; then
-            ls -R "$BOOST_ROOT"
+        - name: Debug Environment
+        shell: bash
+        run: |
+          echo "Current directory: ${{ github.workspace }}"
+          echo "CMake version:"
+          cmake --version
+          echo "BOOST_ROOT: ${{ env.BOOST_ROOT }}"
+          echo "BOOST_LIBRARYDIR: ${{ env.BOOST_LIBRARYDIR }}"
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
+            pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
+            # 检查OpenCL安装
+            pwsh -Command "Write-Host 'OpenCL Status:'; if (Test-Path 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA') { Get-ChildItem 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA' } else { Write-Host 'CUDA not found' }"
           else
-            echo "BOOST_ROOT directory does not exist"
+            echo "Contents of BOOST_ROOT:"
+            if [ -d "$BOOST_ROOT" ]; then
+              ls -R "$BOOST_ROOT"
+            else
+              echo "BOOST_ROOT directory does not exist"
+            fi
+            # 检查OpenCL安装
+            echo "OpenCL Status:"
+            dpkg -l | grep -i opencl
           fi
-        fi
 
     - name: Configure CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=${{ env.BOOST_ROOT }} -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON
+        cmake -B ${{github.workspace}}/build \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBOOST_ROOT=${{ env.BOOST_ROOT }} \
+          -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} \
+          -DBoost_DEBUG=ON \
+          -DBoost_DETAILED_FAILURE_MSG=ON \
+          -DUSE_OPENCL=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config Release

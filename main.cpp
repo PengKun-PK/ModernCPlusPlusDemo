@@ -21,6 +21,7 @@
 #include "ILogger.hpp"
 #include "ObjectFactory.hpp"
 #include "Observer.hpp"
+#include "OpenCLWrapper.hpp"
 #include "Singleton.hpp"
 #include "StateMachine.hpp"
 #include "TemplateClassDemo.hpp"
@@ -342,6 +343,128 @@ void testThreadPool(LoggerWrapper& logger)
     LOG_INFO(logger, "Total tasks processed: " + std::to_string(pool.getTotalTasks()));
 }
 
+void testOpenCLWrapper()
+{
+    try
+    {
+        auto& ocl = OpenCLWrapper::getInstance();
+        ocl.init();
+
+        // 加载内核文件
+        std::cout << "Loading kernels..." << std::endl;
+        ocl.loadKernelsFromDirectory("C:/WorkSpace/ModernCPlusPlusDemo/kernels");
+
+        // 准备数据
+        const size_t dataSize = 1000000;
+        std::cout << "Preparing data with size: " << dataSize << std::endl;
+        std::vector<float> a(dataSize, 1.0f);
+        std::vector<float> b(dataSize, 2.0f);
+        std::vector<float> result(dataSize);
+
+        // 创建缓冲区
+        std::cout << "Creating buffers..." << std::endl;
+        cl_mem bufA = ocl.createBuffer<float>(dataSize, CL_MEM_READ_ONLY);
+        cl_mem bufB = ocl.createBuffer<float>(dataSize, CL_MEM_READ_ONLY);
+        cl_mem bufC = ocl.createBuffer<float>(dataSize, CL_MEM_WRITE_ONLY);
+
+        // 写入数据
+        std::cout << "Writing data to buffers..." << std::endl;
+        ocl.writeBuffer(bufA, a);
+        ocl.writeBuffer(bufB, b);
+
+        // 配置内核执行参数
+        OpenCLWrapper::KernelConfig config;
+        config.globalWorkSize = {dataSize};
+        config.localWorkSize = {256};
+        config.useLocalSize = true;
+
+        // 执行内核
+        std::cout << "Executing kernel..." << std::endl;
+        ocl.executeKernel("vectorAdd", config,
+                          [&]()
+                          {
+                              auto kernel = ocl.getKernel("vectorAdd");
+                              cl_int err;
+
+                              err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &bufA);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 0: " + std::to_string(err));
+
+                              err = clSetKernelArg(kernel, 1, sizeof(cl_mem), &bufB);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 1: " + std::to_string(err));
+
+                              err = clSetKernelArg(kernel, 2, sizeof(cl_mem), &bufC);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 2: " + std::to_string(err));
+                          });
+
+        // 读取结果
+        std::cout << "Reading results..." << std::endl;
+        ocl.readBuffer(bufC, result);
+
+        // 验证结果
+        std::cout << "Validating results..." << std::endl;
+        bool correct = true;
+        int errorCount = 0;
+        const int maxErrorsToPrint = 10;
+
+        for (size_t i = 0; i < dataSize; ++i)
+        {
+            float expected = a[i] + b[i];
+            if (std::abs(result[i] - expected) > 1e-5f)
+            {
+                if (errorCount < maxErrorsToPrint)
+                {
+                    std::cout << "Error at position " << i << ": result = " << result[i] << ", expected = " << expected
+                              << std::endl;
+                }
+                errorCount++;
+                correct = false;
+            }
+        }
+
+        if (correct)
+        {
+            std::cout << "All computations are correct!" << std::endl;
+            // 打印一些示例结果
+            std::cout << "\nSample results (first 5 elements):" << std::endl;
+            for (size_t i = 0; i < 5 && i < dataSize; ++i)
+            {
+                std::cout << a[i] << " + " << b[i] << " = " << result[i] << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Total errors found: " << errorCount << std::endl;
+        }
+
+        // 输出性能统计
+        const auto& stats = ocl.getPerformanceStats();
+        for (const auto& [kernelName, stat] : stats)
+        {
+            std::cout << "\nPerformance statistics for kernel '" << kernelName << "':" << std::endl;
+            std::cout << "  Average execution time: " << (stat.averageTime * 1000) << " ms" << std::endl;
+            std::cout << "  Min execution time: " << (stat.minTime * 1000) << " ms" << std::endl;
+            std::cout << "  Max execution time: " << (stat.maxTime * 1000) << " ms" << std::endl;
+            std::cout << "  Total executions: " << stat.executionCount << std::endl;
+        }
+
+        // 清理缓冲区
+        std::cout << "Cleaning up resources..." << std::endl;
+        clReleaseMemObject(bufA);
+        clReleaseMemObject(bufB);
+        clReleaseMemObject(bufC);
+
+        std::cout << "Program completed successfully!" << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return;
+    }
+}
+
 int main()
 {
     LoggerWrapper logger("Test.txt");
@@ -363,6 +486,9 @@ int main()
 
     // 订阅测试
     complexTestSubscriberSystem(logger);
+
+    // OpenCL测试
+    testOpenCLWrapper();
 
     return 0;
 }
