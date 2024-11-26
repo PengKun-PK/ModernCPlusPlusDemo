@@ -352,7 +352,7 @@ void testOpenCLWrapper()
 
         // 加载内核文件
         std::cout << "Loading kernels..." << std::endl;
-        ocl.loadKernelsFromDirectory("C:/WorkSpace/ModernCPlusPlusDemo/kernels");
+        ocl.loadKernelsFromDirectory("kernels");
 
         // 准备数据
         const size_t dataSize = 1000000;

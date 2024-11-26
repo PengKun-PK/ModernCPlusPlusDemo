@@ -53,7 +53,8 @@ void OpenCLWrapper::init(cl_device_type deviceType)
     m_context = clCreateContext(nullptr, 1, &m_device, nullptr, nullptr, &err);
     checkError(err, "Failed to create context");
 
-    m_queue = clCreateCommandQueue(m_context, m_device, CL_QUEUE_PROFILING_ENABLE, &err);
+    cl_queue_properties properties[] = {CL_QUEUE_PROPERTIES, CL_QUEUE_PROFILING_ENABLE, 0};
+    m_queue = clCreateCommandQueueWithProperties(m_context, m_device, properties, &err);
     checkError(err, "Failed to create command queue");
 
     m_initialized = true;
@@ -62,11 +63,20 @@ void OpenCLWrapper::init(cl_device_type deviceType)
 
 void OpenCLWrapper::loadKernelsFromDirectory(const std::string& directory)
 {
-    namespace fs = std::filesystem;
-    for (const auto& entry : fs::directory_iterator(directory))
+    std::filesystem::path sourceDir = std::filesystem::path(__FILE__).parent_path().parent_path();
+    std::filesystem::path kernelsDir = sourceDir / directory;
+
+    if (!std::filesystem::exists(kernelsDir))
+    {
+        throw std::runtime_error("Kernels directory not found: " + kernelsDir.string());
+    }
+
+    // 遍历加载内核文件
+    for (const auto& entry : std::filesystem::directory_iterator(kernelsDir))
     {
         if (entry.path().extension() == ".cl")
         {
+            std::cout << "Loading kernel: " << entry.path() << std::endl;
             loadKernelFile(entry.path().string());
         }
     }

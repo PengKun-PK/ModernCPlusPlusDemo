@@ -20,6 +20,32 @@ jobs:
       with:
         submodules: recursive
 
+     # Install OpenCL
+    - name: Install OpenCL (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd ocl-icd-dev
+
+    - name: Install OpenCL (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        # 检查是否已安装CUDA
+        if (!(Test-Path "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA")) {
+          # 下载CUDA installer
+          $InstallerUrl = "https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda_12.3.1_546.12_windows.exe"
+          $InstallerPath = "$env:TEMP\cuda_installer.exe"
+          Invoke-WebRequest -Uri $InstallerUrl -OutFile $InstallerPath
+
+          # 静默安装CUDA(只安装必要组件)
+          Start-Process -FilePath $InstallerPath -ArgumentList "-s nvcc_12.3 cudart_12.3 visual_studio_integration_12.3" -Wait
+
+          # 添加CUDA到系统路径
+          echo "CUDA_PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3" >> $env:GITHUB_ENV
+          echo "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin" >> $env:GITHUB_PATH
+        }
+
     - name: Cache Boost
       id: cache-boost
       uses: actions/cache@v3
@@ -86,7 +112,7 @@ jobs:
 
     - name: Configure CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=${{ env.BOOST_ROOT }} -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=${{ env.BOOST_ROOT }} -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DUSE_OPENCL=ON
 
     - name: Build project
       run: cmake --build ${{github.workspace}}/build --config Release
@@ -98,13 +124,16 @@ jobs:
 
         if ($env:RUNNER_OS -eq "Windows") {
           $clang_tidy_cmd = "clang-tidy.exe"
+          $opencl_include = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\include"
         } else {
           $clang_tidy_cmd = "clang-tidy-18"
+          $opencl_include = "/usr/include"
         }
 
         $project_path = "${{ github.workspace }}"
         Write-Output "Using clang-tidy command: $clang_tidy_cmd"
         Write-Output "Project path: $project_path"
+        Write-Output "OpenCL include path: $opencl_include"
 
         # Print clang-tidy version
         & $clang_tidy_cmd --version

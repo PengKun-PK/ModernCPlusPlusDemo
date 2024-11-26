@@ -2,6 +2,7 @@
 
 #include <CL/cl.h>
 #include <functional>
+#include <limits>
 #include <memory>
 #include <string>
 #include <unordered_map>
