@@ -33,8 +33,6 @@ if(WIN32)
             message(WARNING "Unsupported MSVC version: ${MSVC_VERSION}")
         endif()
     endif()
-    include_directories(${BOOST_ROOT})
-    link_directories(${BOOST_LIBRARYDIR})
 else()
     # Linux 特定设置
     set(Boost_USE_STATIC_LIBS OFF)
@@ -58,6 +56,54 @@ else()
     message(FATAL_ERROR "Boost not found. Please install Boost or set BOOST_ROOT.")
 endif()
 
+# OpenCL 配置
+if(WIN32)
+    # Windows 平台配置
+    if(DEFINED ENV{CUDA_PATH})
+        # 如果设置了 CUDA 环境变量
+        set(OpenCL_INCLUDE_DIR "$ENV{CUDA_PATH}/include")
+        set(OpenCL_LIBRARY "$ENV{CUDA_PATH}/lib/x64/OpenCL.lib")
+    else()
+        # 默认 NVIDIA CUDA 路径
+        set(OpenCL_INCLUDE_DIR "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include")
+        set(OpenCL_LIBRARY "C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64/OpenCL.lib")
+    endif()
+else()
+    # Linux 平台配置
+    # Linux 通常通过包管理器安装 OpenCL
+    # 例如 Ubuntu: sudo apt-get install opencl-headers ocl-icd-opencl-dev
+    # CentOS: sudo yum install opencl-headers opencl-utils ocl-icd ocl-icd-devel
+    find_path(OpenCL_INCLUDE_DIR CL/cl.h
+        PATHS
+        "/usr/include"
+        "/usr/local/include"
+        ENV "CPATH"
+    )
+
+    find_library(OpenCL_LIBRARY
+        NAMES OpenCL
+        PATHS
+        "/usr/lib"
+        "/usr/lib64"
+        "/usr/local/lib"
+        "/usr/local/lib64"
+        ENV "LIBRARY_PATH"
+        ENV "LD_LIBRARY_PATH"
+    )
+endif()
+
+find_package(OpenCL REQUIRED)
+
+if(OpenCL_FOUND)
+    message(STATUS "OpenCL_INCLUDE_DIRS = ${OpenCL_INCLUDE_DIRS}")
+    message(STATUS "OpenCL_LIBRARIES = ${OpenCL_LIBRARIES}")
+    message(STATUS "OpenCL_VERSION_STRING = ${OpenCL_VERSION_STRING}")
+
+    include_directories(${OpenCL_INCLUDE_DIRS})
+else()
+    message(FATAL_ERROR "OpenCL not found. Please install OpenCL.")
+endif()
+
 # 定义子目录列表
 set(SUBDIRECTORIES
     StateCharts
@@ -66,6 +112,7 @@ set(SUBDIRECTORIES
     DesignModes
     ThreadPool
     Subscriber
+    OpenCL
 )
 
 # 添加所有子目录
@@ -80,12 +127,14 @@ add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC
     ${Boost_LIBRARIES}
     ${SUBDIRECTORIES}
+    ${OpenCL_LIBRARIES}
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR}/TemplateClassDemo
     ${Boost_INCLUDE_DIRS}
+    ${OpenCL_INCLUDE_DIRS}
 )
 
 # GoogleTest 配置

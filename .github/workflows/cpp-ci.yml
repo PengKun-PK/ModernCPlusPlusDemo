@@ -20,6 +20,85 @@ jobs:
       with:
         submodules: recursive
 
+    # Install OpenCL
+    - name: Install OpenCL (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd
+
+    - name: Install OpenCL (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        Write-Host "Starting OpenCL installation..."
+
+        # 检查是否已安装CUDA
+        $cudaPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3"
+        if (!(Test-Path $cudaPath)) {
+        Write-Host "CUDA not found, installing..."
+        # 下载CUDA installer
+        $InstallerUrl = "https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda_12.3.1_546.12_windows.exe"
+        $InstallerPath = "$env:TEMP\cuda_installer.exe"
+        Invoke-WebRequest -Uri $InstallerUrl -OutFile $InstallerPath
+
+        # 静默安装CUDA（包含OpenCL组件）
+        Write-Host "Installing CUDA..."
+        Start-Process -FilePath $InstallerPath -ArgumentList "-s opencl_12.3" -Wait
+        }
+
+        # 设置CUDA环境变量
+        $env:CUDA_PATH = $cudaPath
+        $env:OPENCL_INCLUDE_DIR = Join-Path $cudaPath "include"
+        $env:OPENCL_LIBRARY_DIR = Join-Path $cudaPath "lib\x64"
+
+        echo "CUDA_PATH=$cudaPath" >> $env:GITHUB_ENV
+        echo "OPENCL_INCLUDE_DIR=$env:OPENCL_INCLUDE_DIR" >> $env:GITHUB_ENV
+        echo "OPENCL_LIBRARY_DIR=$env:OPENCL_LIBRARY_DIR" >> $env:GITHUB_ENV
+        echo "$cudaPath\bin" >> $env:GITHUB_PATH
+
+        # 验证安装
+        Write-Host "Verifying CUDA and OpenCL installation..."
+        Write-Host "CUDA_PATH: $env:CUDA_PATH"
+        Write-Host "OPENCL_INCLUDE_DIR: $env:OPENCL_INCLUDE_DIR"
+        Write-Host "OPENCL_LIBRARY_DIR: $env:OPENCL_LIBRARY_DIR"
+
+        # 检查OpenCL头文件
+        $cl_header = Join-Path $env:OPENCL_INCLUDE_DIR "CL\cl.h"
+        if (!(Test-Path $cl_header)) {
+        Write-Host "OpenCL header not found, downloading Khronos headers..."
+
+        # 创建目录
+        New-Item -ItemType Directory -Force -Path (Join-Path $env:OPENCL_INCLUDE_DIR "CL") | Out-Null
+
+        # 克隆 Khronos OpenCL Headers
+        $headers_temp = Join-Path $env:TEMP "opencl-headers"
+        git clone --depth 1 https://github.com/KhronosGroup/OpenCL-Headers.git $headers_temp
+
+        # 复制头文件
+        Copy-Item (Join-Path $headers_temp "CL\*") (Join-Path $env:OPENCL_INCLUDE_DIR "CL") -Force
+        }
+
+        # 最终验证
+        if (Test-Path $cl_header) {
+        Write-Host "OpenCL header found at: $cl_header"
+        Get-Content $cl_header -Head 5
+        } else {
+        Write-Error "OpenCL setup failed: Headers not found"
+        exit 1
+        }
+
+        # 检查OpenCL库文件
+        $ocl_lib = Join-Path $env:OPENCL_LIBRARY_DIR "OpenCL.lib"
+        if (Test-Path $ocl_lib) {
+        Write-Host "OpenCL library found at: $ocl_lib"
+        } else {
+        Write-Error "OpenCL setup failed: Library not found"
+        exit 1
+        }
+
+        Write-Host "OpenCL Setup Complete"
+
     - name: Cache Boost
       id: cache-boost
       uses: actions/cache@v3
@@ -77,18 +156,31 @@ jobs:
         if [ "$RUNNER_OS" == "Windows" ]; then
           pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
           pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
+          # 检查OpenCL安装
+          pwsh -Command "Write-Host 'OpenCL Status:'; if (Test-Path 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA') { Get-ChildItem 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA' } else { Write-Host 'CUDA not found' }"
         else
           echo "Contents of BOOST_ROOT:"
           if [ -d "$BOOST_ROOT" ]; then
             ls -R "$BOOST_ROOT"
           else
-            echo "BOOST_ROOT directory does not exist"
+            echo "Contents of BOOST_ROOT:"
+            if [ -d "$BOOST_ROOT" ]; then
+              ls -R "$BOOST_ROOT"
+            else
+              echo "BOOST_ROOT directory does not exist"
+            fi
+            # 检查OpenCL安装
+            echo "OpenCL Status:"
+            dpkg -l | grep -i opencl
           fi
+        # 检查OpenCL安装
+        echo "OpenCL Status:"
+        dpkg -l | grep -i opencl
         fi
 
     - name: Configure CMake
       run: |
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=${{ env.BOOST_ROOT }} -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="${{ env.BOOST_ROOT }}" -DBOOST_LIBRARYDIR="${{ env.BOOST_LIBRARYDIR }}" -DBoost_DEBUG=ON -DBoost_DETAILED_FAILURE_MSG=ON -DUSE_OPENCL=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config Release
