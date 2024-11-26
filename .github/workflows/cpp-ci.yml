@@ -92,19 +92,23 @@ jobs:
         echo "BOOST_ROOT=$BOOST_ROOT"
         echo "BOOST_LIBRARYDIR=$BOOST_LIBRARYDIR"
 
-        - name: Debug Environment
-        shell: bash
-        run: |
-          echo "Current directory: ${{ github.workspace }}"
-          echo "CMake version:"
-          cmake --version
-          echo "BOOST_ROOT: ${{ env.BOOST_ROOT }}"
-          echo "BOOST_LIBRARYDIR: ${{ env.BOOST_LIBRARYDIR }}"
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
-            pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
-            # 检查OpenCL安装
-            pwsh -Command "Write-Host 'OpenCL Status:'; if (Test-Path 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA') { Get-ChildItem 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA' } else { Write-Host 'CUDA not found' }"
+    - name: Debug Environment
+      shell: bash
+      run: |
+        echo "Current directory: ${{ github.workspace }}"
+        echo "CMake version:"
+        cmake --version
+        echo "BOOST_ROOT: ${{ env.BOOST_ROOT }}"
+        echo "BOOST_LIBRARYDIR: ${{ env.BOOST_LIBRARYDIR }}"
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
+          pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
+          # 检查OpenCL安装
+          pwsh -Command "Write-Host 'OpenCL Status:'; if (Test-Path 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA') { Get-ChildItem 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA' } else { Write-Host 'CUDA not found' }"
+        else
+          echo "Contents of BOOST_ROOT:"
+          if [ -d "$BOOST_ROOT" ]; then
+            ls -R "$BOOST_ROOT"
           else
             echo "Contents of BOOST_ROOT:"
             if [ -d "$BOOST_ROOT" ]; then
@@ -116,16 +120,21 @@ jobs:
             echo "OpenCL Status:"
             dpkg -l | grep -i opencl
           fi
+        # 检查OpenCL安装
+        echo "OpenCL Status:"
+        dpkg -l | grep -i opencl
+        fi
 
     - name: Configure CMake
+      shell: bash
       run: |
         cmake -B ${{github.workspace}}/build \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DBOOST_ROOT=${{ env.BOOST_ROOT }} \
-          -DBOOST_LIBRARYDIR=${{ env.BOOST_LIBRARYDIR }} \
-          -DBoost_DEBUG=ON \
-          -DBoost_DETAILED_FAILURE_MSG=ON \
-          -DUSE_OPENCL=ON
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBOOST_ROOT="${{ env.BOOST_ROOT }}" \
+        -DBOOST_LIBRARYDIR="${{ env.BOOST_LIBRARYDIR }}" \
+        -DBoost_DEBUG=ON \
+        -DBoost_DETAILED_FAILURE_MSG=ON \
+        -DUSE_OPENCL=ON
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config Release
