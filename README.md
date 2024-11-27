@@ -2,6 +2,7 @@
 
 ![C++](https://img.shields.io/badge/C++-20-blue.svg)
 ![CMake](https://img.shields.io/badge/CMake-3.10+-green.svg)
+![OpenCL](https://img.shields.io/badge/OpenCL-3.0-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 📚 [View Full Documentation](https://pengkun-pk.github.io/ModernCPlusPlusDemo/)
@@ -44,11 +45,12 @@ Modern C++ Demo 是一个展示现代C++开发实践的示例项目。本项目�
 
 - C++20
 - CMake 3.10+
+- OpenCL 3.0
 - Google Test
 - Boost库
 - SPDLog
 - VSCode
-  
+
 ## 🚀 快速开始
 
 ### 前置要求
@@ -60,6 +62,9 @@ Modern C++ Demo 是一个展示现代C++开发实践的示例项目。本项目�
 - 现代C++编译器 (支持C++20)
 - Git
 - boost (1.83.0)
+- OpenCL 3.0 兼容的驱动和 SDK
+- CUDA Toolkit 12.3+ (可选，用于 NVIDIA GPU)
+- 支持 OpenCL 3.0 的 CPU 或 GPU
 
 ### 安装步骤
 
@@ -69,6 +74,17 @@ git clone --recursive https://github.com/PengKun-PK/ModernCPlusPlusDemo.git
 2. 根据.vscode目录下文件开始编译
 
 3. task.json, launch.json, setting.json均已配置好，有问题，可查看json文件里路径是否正确，或者cmakelist里路径是否正确
+
+4. OpenCL 环境配置:
+Ubuntu:
+```bash
+sudo apt-get update
+sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd ocl-icd-dev
+
+Windows:
+NVIDIA GPU: 安装最新 NVIDIA 驱动和 CUDA Toolkit 12.3+
+Intel GPU/CPU: 安装最新的 Intel OpenCL Runtime 和 SDK
+AMD GPU/CPU: 安装最新的 AMD ROCm 平台
 
 ## 📘 使用指南
 
@@ -82,6 +98,7 @@ git clone --recursive https://github.com/PengKun-PK/ModernCPlusPlusDemo.git
 - **状态机**: `StateMachine/` 展示了如何使用Boost库实现状态机。
 - **线程池**: `ThreadPool/` 提供了一个高效的线程池实现。
 - **自定义订阅模式**: `Subscriber/` 展示了我自用的订阅模式实现
+- **OpenCL并行计算**: `OpenCL/` 展示了OpenCL 3.0 功能封装
 
 更多详细信息,请参阅各模块的文档和源代码。
 
