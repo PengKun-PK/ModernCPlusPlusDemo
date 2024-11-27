@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: Test/DataSourceMock.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_37618a71d99bdfed5979e976980d5eec.html">Test</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">DataSourceMock.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="DataSourceMock_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;gmock/gmock.h&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;gtest/gtest.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../StateCharts/IDataSource.hpp&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceStateMachine.html">StateMachine</a></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classStateMachine_1_1DataSourceMock.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="classStateMachine_1_1DataSourceMock.html">DataSourceMock</a> : <span class="keyword">public</span> <a class="code" href="classStateMachine_1_1IDataSource.html">IDataSource</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classStateMachine_1_1DataSourceMock.html#a9e5f8338874b7a8fdd7dd340cdd0a2ac">   14</a></span>&#160;    <a class="code" href="classStateMachine_1_1DataSourceMock.html#a9e5f8338874b7a8fdd7dd340cdd0a2ac">MOCK_METHOD0</a>(<a class="code" href="classStateMachine_1_1IDataSource.html#afbfe0b34b43a1278b54f17ba3f4c2408">GetStringVector</a>, <span class="keyword">const</span> <a class="code" href="namespaceStateMachine.html#a4e205e14a8534413622b00e4b2b7f5ea">strVector</a>&amp;());</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classStateMachine_1_1DataSourceMock.html#abb8a6aaac21b4e6b3517ae23a3ccd0e9">   16</a></span>&#160;    <a class="code" href="classStateMachine_1_1DataSourceMock.html#abb8a6aaac21b4e6b3517ae23a3ccd0e9">MOCK_METHOD1</a>(<a class="code" href="classStateMachine_1_1IDataSource.html#ac78423d8c0e8260259e32d290305da00">InsertToStringVec</a>, std::optional&lt;bool&gt;(std::string infoString));</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classStateMachine_1_1DataSourceMock.html#ab951db2ccae19f35ae6ed260bcd7305b">   18</a></span>&#160;    <a class="code" href="classStateMachine_1_1DataSourceMock.html#ab951db2ccae19f35ae6ed260bcd7305b">MOCK_METHOD0</a>(<a class="code" href="classStateMachine_1_1IDataSource.html#a1418d79fb1dea22ccb9562d76e36582e">ClearStringVector</a>, std::optional&lt;bool&gt;());</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;};</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}  <span class="comment">// namespace StateMachine</span></div>
+<div class="ttc" id="aclassStateMachine_1_1DataSourceMock_html"><div class="ttname"><a href="classStateMachine_1_1DataSourceMock.html">StateMachine::DataSourceMock</a></div><div class="ttdef"><b>Definition:</b> DataSourceMock.hpp:12</div></div>
+<div class="ttc" id="aclassStateMachine_1_1DataSourceMock_html_a9e5f8338874b7a8fdd7dd340cdd0a2ac"><div class="ttname"><a href="classStateMachine_1_1DataSourceMock.html#a9e5f8338874b7a8fdd7dd340cdd0a2ac">StateMachine::DataSourceMock::MOCK_METHOD0</a></div><div class="ttdeci">MOCK_METHOD0(GetStringVector, const strVector &amp;())</div></div>
+<div class="ttc" id="aclassStateMachine_1_1DataSourceMock_html_ab951db2ccae19f35ae6ed260bcd7305b"><div class="ttname"><a href="classStateMachine_1_1DataSourceMock.html#ab951db2ccae19f35ae6ed260bcd7305b">StateMachine::DataSourceMock::MOCK_METHOD0</a></div><div class="ttdeci">MOCK_METHOD0(ClearStringVector, std::optional&lt; bool &gt;())</div></div>
+<div class="ttc" id="aclassStateMachine_1_1DataSourceMock_html_abb8a6aaac21b4e6b3517ae23a3ccd0e9"><div class="ttname"><a href="classStateMachine_1_1DataSourceMock.html#abb8a6aaac21b4e6b3517ae23a3ccd0e9">StateMachine::DataSourceMock::MOCK_METHOD1</a></div><div class="ttdeci">MOCK_METHOD1(InsertToStringVec, std::optional&lt; bool &gt;(std::string infoString))</div></div>
+<div class="ttc" id="aclassStateMachine_1_1IDataSource_html"><div class="ttname"><a href="classStateMachine_1_1IDataSource.html">StateMachine::IDataSource</a></div><div class="ttdef"><b>Definition:</b> IDataSource.hpp:13</div></div>
+<div class="ttc" id="aclassStateMachine_1_1IDataSource_html_a1418d79fb1dea22ccb9562d76e36582e"><div class="ttname"><a href="classStateMachine_1_1IDataSource.html#a1418d79fb1dea22ccb9562d76e36582e">StateMachine::IDataSource::ClearStringVector</a></div><div class="ttdeci">virtual std::optional&lt; bool &gt; ClearStringVector()=0</div></div>
+<div class="ttc" id="aclassStateMachine_1_1IDataSource_html_ac78423d8c0e8260259e32d290305da00"><div class="ttname"><a href="classStateMachine_1_1IDataSource.html#ac78423d8c0e8260259e32d290305da00">StateMachine::IDataSource::InsertToStringVec</a></div><div class="ttdeci">virtual std::optional&lt; bool &gt; InsertToStringVec(std::string infoString)=0</div></div>
+<div class="ttc" id="aclassStateMachine_1_1IDataSource_html_afbfe0b34b43a1278b54f17ba3f4c2408"><div class="ttname"><a href="classStateMachine_1_1IDataSource.html#afbfe0b34b43a1278b54f17ba3f4c2408">StateMachine::IDataSource::GetStringVector</a></div><div class="ttdeci">virtual const strVector &amp; GetStringVector()=0</div></div>
+<div class="ttc" id="anamespaceStateMachine_html"><div class="ttname"><a href="namespaceStateMachine.html">StateMachine</a></div><div class="ttdef"><b>Definition:</b> Camera.cpp:4</div></div>
+<div class="ttc" id="anamespaceStateMachine_html_a4e205e14a8534413622b00e4b2b7f5ea"><div class="ttname"><a href="namespaceStateMachine.html#a4e205e14a8534413622b00e4b2b7f5ea">StateMachine::strVector</a></div><div class="ttdeci">std::vector&lt; std::string &gt; strVector</div><div class="ttdef"><b>Definition:</b> IDataSource.hpp:10</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>

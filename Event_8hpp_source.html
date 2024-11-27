@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: Subscriber/Event.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'搜索','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b2071270a301d8bc93e209439b8ed1f1.html">Subscriber</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Event.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Event_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Subscriber_8hpp.html">Subscriber.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecomm.html">comm</a></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Arguments&gt;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classcomm_1_1EventSync.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="classcomm_1_1EventSync.html">EventSync</a> : <span class="keyword">public</span> <a class="code" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;Arguments...&gt;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classcomm_1_1EventSync.html#af7a210640b5ddacb21d326ee0a2fe75b">   12</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classcomm_1_1Subscribable.html">Interface</a> = <a class="code" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;Arguments...&gt;;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classcomm_1_1EventSync.html#ae7e6e959634a38ce51e54071e82a06b0">   13</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classcomm_1_1EventSync.html">Sync</a> = <a class="code" href="classcomm_1_1EventSync.html">EventSync</a>&lt;Arguments...&gt;;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classcomm_1_1EventSync.html#a2f942953f47c3ea7ea11d44b7b7031a2">   15</a></span>&#160;    <a class="code" href="classcomm_1_1EventSync.html#a2f942953f47c3ea7ea11d44b7b7031a2">EventSync</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classcomm_1_1EventSync.html#aab125ac84f8ef2718a98d2087a527a23">   17</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classcomm_1_1EventSync.html#aab125ac84f8ef2718a98d2087a527a23">notify</a>(<span class="keyword">const</span> Arguments&amp;... arguments)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        this-&gt;<a class="code" href="classcomm_1_1Subscribable.html#a34040cfc21bd57e0621abbca8391f9f5">notifySync</a>(arguments...);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Arguments&gt;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html">   24</a></span>&#160;<span class="keyword">class </span><a class="code" href="classcomm_1_1Event.html">Event</a> : <span class="keyword">public</span> <a class="code" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;Arguments...&gt;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html#a65a277bf9f2d1cee255d98e382d7e19c">   27</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classcomm_1_1Subscribable.html">Interface</a> = <a class="code" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;Arguments...&gt;;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html#ad09c7b890fe4745a7458dc36dee8ed2e">   28</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classcomm_1_1EventSync.html">Sync</a> = <a class="code" href="classcomm_1_1EventSync.html">EventSync</a>&lt;Arguments...&gt;;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html#ab266c2a032688f3d99636c9302f82d46">   30</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classcomm_1_1Event.html#ab266c2a032688f3d99636c9302f82d46">Event</a>(<a class="code" href="classcomm_1_1IInvokeStrategy.html">IInvokeStrategy</a>&amp; strategy)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        : <a class="code" href="classcomm_1_1Event.html#af959a88007d4141fc2cfb3aff775a5f8">m_strategy</a>(strategy)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html#acf3b78b7e915038173174a7e7f19db4e">   35</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classcomm_1_1Event.html#acf3b78b7e915038173174a7e7f19db4e">notify</a>(<span class="keyword">const</span> Arguments&amp;... arguments)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        this-&gt;<a class="code" href="classcomm_1_1Subscribable.html#a6532f4ab2baf2f36cb6d26fe02b893ae">notifyAsync</a>(<a class="code" href="classcomm_1_1Event.html#af959a88007d4141fc2cfb3aff775a5f8">m_strategy</a>, arguments...);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classcomm_1_1Event.html#af959a88007d4141fc2cfb3aff775a5f8">   41</a></span>&#160;    <a class="code" href="classcomm_1_1IInvokeStrategy.html">IInvokeStrategy</a>&amp; <a class="code" href="classcomm_1_1Event.html#af959a88007d4141fc2cfb3aff775a5f8">m_strategy</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}  <span class="comment">// namespace comm</span></div>
+<div class="ttc" id="aSubscriber_8hpp_html"><div class="ttname"><a href="Subscriber_8hpp.html">Subscriber.hpp</a></div></div>
+<div class="ttc" id="aclasscomm_1_1EventSync_html"><div class="ttname"><a href="classcomm_1_1EventSync.html">comm::EventSync</a></div><div class="ttdef"><b>Definition:</b> Event.hpp:10</div></div>
+<div class="ttc" id="aclasscomm_1_1EventSync_html_a2f942953f47c3ea7ea11d44b7b7031a2"><div class="ttname"><a href="classcomm_1_1EventSync.html#a2f942953f47c3ea7ea11d44b7b7031a2">comm::EventSync::EventSync</a></div><div class="ttdeci">EventSync()=default</div></div>
+<div class="ttc" id="aclasscomm_1_1EventSync_html_aab125ac84f8ef2718a98d2087a527a23"><div class="ttname"><a href="classcomm_1_1EventSync.html#aab125ac84f8ef2718a98d2087a527a23">comm::EventSync::notify</a></div><div class="ttdeci">void notify(const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition:</b> Event.hpp:17</div></div>
+<div class="ttc" id="aclasscomm_1_1Event_html"><div class="ttname"><a href="classcomm_1_1Event.html">comm::Event</a></div><div class="ttdef"><b>Definition:</b> Event.hpp:25</div></div>
+<div class="ttc" id="aclasscomm_1_1Event_html_ab266c2a032688f3d99636c9302f82d46"><div class="ttname"><a href="classcomm_1_1Event.html#ab266c2a032688f3d99636c9302f82d46">comm::Event::Event</a></div><div class="ttdeci">Event(IInvokeStrategy &amp;strategy)</div><div class="ttdef"><b>Definition:</b> Event.hpp:30</div></div>
+<div class="ttc" id="aclasscomm_1_1Event_html_acf3b78b7e915038173174a7e7f19db4e"><div class="ttname"><a href="classcomm_1_1Event.html#acf3b78b7e915038173174a7e7f19db4e">comm::Event::notify</a></div><div class="ttdeci">void notify(const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition:</b> Event.hpp:35</div></div>
+<div class="ttc" id="aclasscomm_1_1Event_html_af959a88007d4141fc2cfb3aff775a5f8"><div class="ttname"><a href="classcomm_1_1Event.html#af959a88007d4141fc2cfb3aff775a5f8">comm::Event::m_strategy</a></div><div class="ttdeci">IInvokeStrategy &amp; m_strategy</div><div class="ttdef"><b>Definition:</b> Event.hpp:41</div></div>
+<div class="ttc" id="aclasscomm_1_1IInvokeStrategy_html"><div class="ttname"><a href="classcomm_1_1IInvokeStrategy.html">comm::IInvokeStrategy</a></div><div class="ttdef"><b>Definition:</b> Subscriber.hpp:15</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html"><div class="ttname"><a href="classcomm_1_1Subscribable.html">comm::Subscribable</a></div><div class="ttdef"><b>Definition:</b> Subscriber.hpp:23</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html_a34040cfc21bd57e0621abbca8391f9f5"><div class="ttname"><a href="classcomm_1_1Subscribable.html#a34040cfc21bd57e0621abbca8391f9f5">comm::Subscribable&lt; Arguments... &gt;::notifySync</a></div><div class="ttdeci">void notifySync(const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition:</b> Subscriber.hpp:78</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html_a6532f4ab2baf2f36cb6d26fe02b893ae"><div class="ttname"><a href="classcomm_1_1Subscribable.html#a6532f4ab2baf2f36cb6d26fe02b893ae">comm::Subscribable&lt; Arguments... &gt;::notifyAsync</a></div><div class="ttdeci">void notifyAsync(IInvokeStrategy &amp;strategy, const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition:</b> Subscriber.hpp:100</div></div>
+<div class="ttc" id="anamespacecomm_html"><div class="ttname"><a href="namespacecomm.html">comm</a></div><div class="ttdef"><b>Definition:</b> Attribute.hpp:7</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>
