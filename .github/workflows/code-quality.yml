@@ -234,7 +234,7 @@ jobs:
         & $clang_tidy_cmd --version
 
         # 定义排除目录
-        $exclude_dirs = @("test", "lib", "build", "boost_install")
+        $exclude_dirs = @("test", "lib", "build", "boost_install", "boost_1_83_0")
 
         # 获取所有源文件
         $source_files = @()
@@ -252,7 +252,10 @@ jobs:
             $source_files | ForEach-Object { Write-Output $_.FullName }
 
             foreach ($file in $source_files) {
-            if ($file.FullName -notlike "*boost_install*" -and $file.FullName -notlike "*\lib\*") {
+            if ($file.FullName -notlike "*boost_install*" -and
+                $file.FullName -notlike "*\lib\*" -and
+                $file.FullName -notlike "*boost_1_83_0*" -and
+                $file.FullName -notlike "*boost*") {
                 Write-Output "Running clang-tidy on $($file.FullName)"
                 & $clang_tidy_cmd $file.FullName `
                 -p="$project_path/build" `
@@ -278,15 +281,6 @@ jobs:
         }
 
         Write-Output "Clang-tidy check completed."
-
-    - name: Run clang-tidy-pr-comments
-      if: github.event_name == 'pull_request'
-      uses: platisd/clang-tidy-pr-comments@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        clang_tidy_fixes: clang-tidy-fixes.yml
-        buildpath: build
-        extensions: 'cpp,hpp'
 
     - name: Upload CMake logs
       if: always()
