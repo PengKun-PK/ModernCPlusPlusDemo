@@ -399,6 +399,25 @@ void testOpenCLWrapper()
                                   throw std::runtime_error("Failed to set kernel arg 2: " + std::to_string(err));
                           });
 
+        ocl.executeKernel("vectorAddEx", config,
+                          [&]()
+                          {
+                              auto kernel = ocl.getKernel("vectorAddEx");
+                              cl_int err;
+
+                              err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &bufA);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 0: " + std::to_string(err));
+
+                              err = clSetKernelArg(kernel, 1, sizeof(cl_mem), &bufB);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 1: " + std::to_string(err));
+
+                              err = clSetKernelArg(kernel, 2, sizeof(cl_mem), &bufC);
+                              if (err != CL_SUCCESS)
+                                  throw std::runtime_error("Failed to set kernel arg 2: " + std::to_string(err));
+                          });
+
         // 读取结果
         std::cout << "Reading results..." << std::endl;
         ocl.readBuffer(bufC, result);

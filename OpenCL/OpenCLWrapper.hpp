@@ -36,6 +36,10 @@ public:
     OpenCLWrapper(const OpenCLWrapper&) = delete;
     OpenCLWrapper& operator=(const OpenCLWrapper&) = delete;
 
+    // 禁止移动
+    OpenCLWrapper(OpenCLWrapper&&) = delete;
+    OpenCLWrapper& operator=(OpenCLWrapper&&) = delete;
+
     // 公共接口
     void init(cl_device_type deviceType = CL_DEVICE_TYPE_GPU);
     void loadKernelsFromDirectory(const std::string& directory);

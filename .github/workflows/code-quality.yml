@@ -19,6 +19,12 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: recursive
+        fetch-depth: 0  # 获取所有历史记录
+
+    - name: Fetch base branch
+      if: github.event_name == 'pull_request'
+      run: |
+        git fetch origin ${{ github.base_ref }}
 
     # Install OpenCL
     - name: Install OpenCL (Ubuntu)
@@ -36,68 +42,21 @@ jobs:
         # 检查是否已安装CUDA
         $cudaPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3"
         if (!(Test-Path $cudaPath)) {
-        Write-Host "CUDA not found, installing..."
-        # 下载CUDA installer
-        $InstallerUrl = "https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda_12.3.1_546.12_windows.exe"
-        $InstallerPath = "$env:TEMP\cuda_installer.exe"
-        Invoke-WebRequest -Uri $InstallerUrl -OutFile $InstallerPath
+            Write-Host "CUDA not found, downloading Khronos headers..."
 
-        # 静默安装CUDA（包含OpenCL组件）
-        Write-Host "Installing CUDA..."
-        Start-Process -FilePath $InstallerPath -ArgumentList "-s opencl_12.3" -Wait
+            # 创建目录
+            New-Item -ItemType Directory -Force -Path "$cudaPath\include\CL" | Out-Null
+
+            # 克隆 Khronos OpenCL Headers
+            $headers_temp = Join-Path $env:TEMP "opencl-headers"
+            git clone --depth 1 https://github.com/KhronosGroup/OpenCL-Headers.git $headers_temp
+
+            # 复制头文件
+            Copy-Item "$headers_temp\CL\*" "$cudaPath\include\CL" -Force
         }
 
-        # 设置CUDA环境变量
-        $env:CUDA_PATH = $cudaPath
-        $env:OPENCL_INCLUDE_DIR = Join-Path $cudaPath "include"
-        $env:OPENCL_LIBRARY_DIR = Join-Path $cudaPath "lib\x64"
-
-        echo "CUDA_PATH=$cudaPath" >> $env:GITHUB_ENV
-        echo "OPENCL_INCLUDE_DIR=$env:OPENCL_INCLUDE_DIR" >> $env:GITHUB_ENV
-        echo "OPENCL_LIBRARY_DIR=$env:OPENCL_LIBRARY_DIR" >> $env:GITHUB_ENV
-        echo "$cudaPath\bin" >> $env:GITHUB_PATH
-
-        # 验证安装
-        Write-Host "Verifying CUDA and OpenCL installation..."
-        Write-Host "CUDA_PATH: $env:CUDA_PATH"
-        Write-Host "OPENCL_INCLUDE_DIR: $env:OPENCL_INCLUDE_DIR"
-        Write-Host "OPENCL_LIBRARY_DIR: $env:OPENCL_LIBRARY_DIR"
-
-        # 检查OpenCL头文件
-        $cl_header = Join-Path $env:OPENCL_INCLUDE_DIR "CL\cl.h"
-        if (!(Test-Path $cl_header)) {
-        Write-Host "OpenCL header not found, downloading Khronos headers..."
-
-        # 创建目录
-        New-Item -ItemType Directory -Force -Path (Join-Path $env:OPENCL_INCLUDE_DIR "CL") | Out-Null
-
-        # 克隆 Khronos OpenCL Headers
-        $headers_temp = Join-Path $env:TEMP "opencl-headers"
-        git clone --depth 1 https://github.com/KhronosGroup/OpenCL-Headers.git $headers_temp
-
-        # 复制头文件
-        Copy-Item (Join-Path $headers_temp "CL\*") (Join-Path $env:OPENCL_INCLUDE_DIR "CL") -Force
-        }
-
-        # 最终验证
-        if (Test-Path $cl_header) {
-        Write-Host "OpenCL header found at: $cl_header"
-        Get-Content $cl_header -Head 5
-        } else {
-        Write-Error "OpenCL setup failed: Headers not found"
-        exit 1
-        }
-
-        # 检查OpenCL库文件
-        $ocl_lib = Join-Path $env:OPENCL_LIBRARY_DIR "OpenCL.lib"
-        if (Test-Path $ocl_lib) {
-        Write-Host "OpenCL library found at: $ocl_lib"
-        } else {
-        Write-Error "OpenCL setup failed: Library not found"
-        exit 1
-        }
-
-        Write-Host "OpenCL Setup Complete"
+        # 设置环境变量
+        echo "OPENCL_INCLUDE_DIR=$cudaPath\include" >> $env:GITHUB_ENV
 
     - name: Cache Boost
       id: cache-boost
@@ -159,51 +118,23 @@ jobs:
       if: runner.os == 'Windows'
       shell: pwsh
       run: |
-        Write-Host "Installing/Verifying LLVM..."
-        try {
-        # 检查现有版本
-        $llvmVersion = (Get-Command clang -ErrorAction SilentlyContinue).Version
-        if ($llvmVersion) {
-            Write-Host "LLVM version $llvmVersion is already installed"
-        } else {
-            # 尝试安装 LLVM，使用 --force 允许降级
-            choco install llvm --force -y
-        }
-        } catch {
-        Write-Host "Error checking LLVM version: $_"
-        # 作为备份选项强制安装
         choco install llvm --force -y
-        }
-
-        Write-Host "Setting up CMake..."
-        try {
-        # 检查是否已安装 Visual Studio CMake
-        $vsCmakePath = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin"
-        if (Test-Path "$vsCmakePath\cmake.exe") {
-            Write-Host "Using Visual Studio CMake"
-            echo "$vsCmakePath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        } else {
-            Write-Host "Installing CMake via chocolatey..."
-            choco install cmake.install --installargs 'ADD_CMAKE_TO_PATH=System' -y
-        }
-        } catch {
-        Write-Host "Error during CMake setup: $_"
-        # 作为备份选项尝试安装便携版
-        choco install cmake.portable -y
-        }
-
-        # 验证安装
-        Write-Host "Verifying installations..."
-        try {
-        clang --version
-        cmake --version
-        } catch {
-        Write-Host "Error during verification: $_"
-        exit 1
-        }
-
-        # 设置环境变量
+        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
         echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: Install GitHub CLI (Ubuntu)
+      if: runner.os == 'Linux' && github.event_name == 'pull_request'
+      run: |
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+        sudo apt update
+        sudo apt install gh
+
+    - name: Install GitHub CLI (Windows)
+      if: runner.os == 'Windows' && github.event_name == 'pull_request'
+      shell: pwsh
+      run: |
+        choco install gh -y
 
     - name: Configure CMake
       run: |
@@ -212,93 +143,135 @@ jobs:
     - name: Build project
       run: cmake --build ${{github.workspace}}/build --config Release
 
-    - name: Run clang-tidy
+    - name: Run clang-tidy with annotations
       shell: pwsh
       run: |
         $ErrorActionPreference = "Stop"
 
-        if ($env:RUNNER_OS -eq "Windows") {
-            $clang_tidy_cmd = "clang-tidy.exe"
-            $opencl_include = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\include"
+        # 创建输出目录
+        New-Item -ItemType Directory -Force -Path "clang-tidy-output"
+
+        # 获取需要检查的文件
+        $files_to_check = @()
+        if ($env:GITHUB_EVENT_NAME -eq 'pull_request') {
+            # 对于PR，获取更改的文件
+            Write-Host "Getting changed files for PR..."
+            git fetch origin ${{ github.base_ref }}
+            $mergeBase = git merge-base HEAD origin/${{ github.base_ref }}
+            $files_to_check = git diff --name-only $mergeBase HEAD | Where-Object {
+                $_ -match '\.(cpp|hpp)$' -and
+                -not ($_ -match '^(test|lib|build|boost_install)/')
+            }
         } else {
-            $clang_tidy_cmd = "clang-tidy-18"
-            $opencl_include = "/usr/include"
+            # 对于push，检查所有源文件
+            Write-Host "Getting all source files..."
+            $exclude_dirs = @("test", "lib", "build", "boost_install")
+            Get-ChildItem -Path ${{ github.workspace }} -Recurse -Include *.cpp,*.hpp |
+                Where-Object {
+                    $path = $_.FullName
+                    -not ($exclude_dirs | Where-Object { $path -like "*\$_\*" })
+                } |
+                ForEach-Object { $files_to_check += $_.FullName }
         }
 
-        $project_path = "${{ github.workspace }}"
-        Write-Output "Using clang-tidy command: $clang_tidy_cmd"
-        Write-Output "Project path: $project_path"
-        Write-Output "OpenCL include path: $opencl_include"
+        Write-Host "Files to check:"
+        $files_to_check | ForEach-Object { Write-Host $_ }
 
-        # Print clang-tidy version
-        & $clang_tidy_cmd --version
+        if ($files_to_check.Count -eq 0) {
+            Write-Host "No files to check, skipping clang-tidy analysis"
+            exit 0
+        }
 
-        # 定义排除目录
-        $exclude_dirs = @("test", "lib", "build", "boost_install")
+        foreach ($file in $files_to_check) {
+            if (Test-Path $file) {
+                Write-Host "Analyzing: $file"
 
-        # 获取所有源文件
-        $source_files = @()
-        Get-ChildItem -Path $project_path -Directory |
-            Where-Object { $exclude_dirs -notcontains $_.Name } |
-            ForEach-Object {
-            $source_files += Get-ChildItem -Path $_.FullName -Recurse -Include *.cpp,*.hpp
-            }
-
-        # 添加根目录的源文件
-        $source_files += Get-ChildItem -Path $project_path -File -Include *.cpp,*.hpp
-
-        if ($source_files) {
-            Write-Output "Found source files:"
-            $source_files | ForEach-Object { Write-Output $_.FullName }
-
-            foreach ($file in $source_files) {
-            if ($file.FullName -notlike "*boost_install*" -and $file.FullName -notlike "*\lib\*") {
-                Write-Output "Running clang-tidy on $($file.FullName)"
-                & $clang_tidy_cmd $file.FullName `
-                -p="$project_path/build" `
-                --config-file="$project_path/.clang-tidy" `
-                --extra-arg=-std=c++20 `
-                --extra-arg=-I"$opencl_include" `
-                --extra-arg=-I"${{ env.BOOST_ROOT }}" `
-                --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" `
-                --extra-arg=-I"$project_path/lib/splog/include" `
-                --extra-arg=-I"$project_path" `
-                --checks="-*,modernize-*,readability-*,-modernize-use-trailing-return-type,-readability-magic-numbers,-readability-identifier-length"
-
-                if ($LASTEXITCODE -ne 0) {
-                Write-Output "Warning: Clang-tidy reported issues for $($file.FullName)"
-                # 不退出，继续检查其他文件
-                # exit 1
+                # 运行 clang-tidy
+                $clang_tidy_cmd = if ($env:RUNNER_OS -eq "Windows") { "clang-tidy.exe" } else { "clang-tidy-18" }
+                $opencl_include = if ($env:RUNNER_OS -eq "Windows") {
+                    "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\include"
+                } else {
+                    "/usr/include"
                 }
+
+                $output = & $clang_tidy_cmd $file `
+                    -p="${{ github.workspace }}/build" `
+                    --config-file="${{ github.workspace }}/.clang-tidy" `
+                    --extra-arg=-std=c++20 `
+                    --extra-arg=-I"$opencl_include" `
+                    --extra-arg=-I"${{ env.BOOST_ROOT }}" `
+                    --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" `
+                    --extra-arg=-I"${{ github.workspace }}/lib/splog/include" `
+                    --extra-arg=-I"${{ github.workspace }}" `
+                    --checks="-*,modernize-*,readability-*,-modernize-use-trailing-return-type,-readability-magic-numbers,-readability-identifier-length" 2>&1
+
+                # 处理输出
+                $output | ForEach-Object {
+                    if ($_ -match '(.*):(\d+):(\d+): (warning|error): (.*)') {
+                        $filePath = $matches[1]
+                        $line = $matches[2]
+                        $col = $matches[3]
+                        $level = $matches[4]
+                        $message = $matches[5]
+
+                        # 创建 GitHub 注释
+                        Write-Host "::$level file=$filePath,line=$line,col=$col::$message"
+
+                        # 保存到文件
+                        @{
+                            file = $filePath
+                            line = $line
+                            column = $col
+                            level = $level
+                            message = $message
+                        } | ConvertTo-Json | Add-Content -Path "clang-tidy-output/issues.json"
+                    } else {
+                        # 输出其他信息作为调试信息
+                        Write-Host "Debug: $_"
+                    }
+                }
+            } else {
+                Write-Host "Warning: File not found: $file"
             }
-            }
-        } else {
-            Write-Output "No source files found in the project directories"
-            exit 1
         }
 
-        Write-Output "Clang-tidy check completed."
+        # 如果是PR且有发现问题，创建PR评论
+        if ($env:GITHUB_EVENT_NAME -eq 'pull_request' -and (Test-Path "clang-tidy-output/issues.json")) {
+            $issues = Get-Content "clang-tidy-output/issues.json" | ConvertFrom-Json
+            if ($issues) {
+                $body = "## Clang-Tidy Analysis Results`n`n"
+                if ($issues -is [array]) {
+                    $issues | ForEach-Object {
+                        $body += "* **$($_.file):$($_.line):$($_.column)** - $($_.level): $($_.message)`n"
+                    }
+                } else {
+                    $body += "* **$($issues.file):$($issues.line):$($issues.column)** - $($issues.level): $($issues.message)`n"
+                }
+                $body | gh pr comment ${{ github.event.pull_request.number }} --body-file -
+            }
+        }
 
-    - name: Run clang-tidy-pr-comments
-      if: github.event_name == 'pull_request'
-      uses: platisd/clang-tidy-pr-comments@master
+        Write-Host "Clang-tidy analysis completed"
+
+    - name: Upload analysis results
+      if: always()
+      uses: actions/upload-artifact@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        clang_tidy_fixes: clang-tidy-fixes.yml
-        buildpath: build
-        extensions: 'cpp,hpp'
+        name: clang-tidy-results-${{ matrix.os }}
+        path: clang-tidy-output/
 
     - name: Upload CMake logs
       if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: cmake-logs-${{ runner.os }}
+        name: cmake-logs-${{ matrix.os }}
         path: |
           ${{github.workspace}}/build/CMakeFiles/CMakeOutput.log
           ${{github.workspace}}/build/CMakeFiles/CMakeError.log
 
     - name: Upload build artifacts
+      if: always()
       uses: actions/upload-artifact@v3
       with:
-        name: build-${{ runner.os }}
+        name: build-${{ matrix.os }}
         path: ${{github.workspace}}/build

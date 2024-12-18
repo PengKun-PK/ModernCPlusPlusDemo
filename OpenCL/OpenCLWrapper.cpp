@@ -265,6 +265,9 @@ void OpenCLWrapper::printDeviceInfo()
     clGetDeviceInfo(m_device, CL_DEVICE_VENDOR, sizeof(buffer), buffer, nullptr);
     std::cout << "Vendor: " << buffer << std::endl;
 
+    clGetDeviceInfo(m_device, CL_DEVICE_VERSION, sizeof(buffer), buffer, nullptr);
+    std::cout << "Version: " << buffer << std::endl;
+
     cl_uint compute_units;
     clGetDeviceInfo(m_device, CL_DEVICE_MAX_COMPUTE_UNITS, sizeof(compute_units), &compute_units, nullptr);
     std::cout << "Compute units: " << compute_units << std::endl;
