@@ -110,19 +110,24 @@ jobs:
     - name: Install Boost (Ubuntu)
       if: runner.os == 'Linux' && steps.cache-boost.outputs.cache-hit != 'true'
       run: |
-        wget https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz
-        tar -xzf boost_1_83_0.tar.gz
-        cd boost_1_83_0
-        ./bootstrap.sh --prefix=${{ github.workspace }}/boost_install
-        ./b2 install --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json
-        cd ..
+        echo "使用 apt 安装 Boost"
+        sudo apt-get update
+        sudo apt-get install -y libboost-all-dev
+
+        # 验证安装
+        dpkg -l | grep libboost
+
+        # 设置环境变量
+        echo "BOOST_ROOT=/usr" >> $GITHUB_ENV
+        echo "BOOST_LIBRARYDIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
 
     - name: Install Boost (Windows)
+    # 修改后的 Windows 安装脚本
       if: runner.os == 'Windows' && steps.cache-boost.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         $Env:BOOST_ROOT = "${{ github.workspace }}\boost_install"
-        $Env:BOOST_URL = "https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.zip"
+        $Env:BOOST_URL = "https://sourceforge.net/projects/boost/files/boost/1.83.0/boost_1_83_0.zip/download"
         $Env:BOOST_ZIP = "${{ runner.temp }}\boost.zip"
         Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP
         Expand-Archive -Path $Env:BOOST_ZIP -DestinationPath ${{ runner.temp }}
@@ -284,7 +289,7 @@ jobs:
 
     - name: Upload CMake logs
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cmake-logs-${{ runner.os }}
         path: |
@@ -292,7 +297,7 @@ jobs:
           ${{github.workspace}}/build/CMakeFiles/CMakeError.log
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-${{ runner.os }}
         path: ${{github.workspace}}/build

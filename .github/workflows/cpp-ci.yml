@@ -110,26 +110,97 @@ jobs:
     - name: Install Boost (Ubuntu)
       if: runner.os == 'Linux' && steps.cache-boost.outputs.cache-hit != 'true'
       run: |
-        wget https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz
-        tar -xzf boost_1_83_0.tar.gz
-        cd boost_1_83_0
-        ./bootstrap.sh --prefix=${{ github.workspace }}/boost_install
-        ./b2 install --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json
-        cd ..
+        echo "使用 apt 安装 Boost"
+        sudo apt-get update
+        sudo apt-get install -y libboost-all-dev
+
+        # 验证安装
+        dpkg -l | grep libboost
+
+        # 设置环境变量
+        echo "BOOST_ROOT=/usr" >> $GITHUB_ENV
+        echo "BOOST_LIBRARYDIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
 
     - name: Install Boost (Windows)
+    # 修改后的 Windows 安装脚本，添加了设置 Visual Studio 编译环境的步骤
       if: runner.os == 'Windows' && steps.cache-boost.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         $Env:BOOST_ROOT = "${{ github.workspace }}\boost_install"
-        $Env:BOOST_URL = "https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.zip"
+        $Env:BOOST_URL = "https://sourceforge.net/projects/boost/files/boost/1.83.0/boost_1_83_0.zip/download"
         $Env:BOOST_ZIP = "${{ runner.temp }}\boost.zip"
-        Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP
+
+        Write-Host "Downloading Boost source..."
+        Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP -TimeoutSec 300 # Increased timeout just in case
+
+        Write-Host "Expanding Boost archive..."
+        # Expand-Archive 可能不支持 SourceForge 的某些重定向，如果这里失败，可以尝试其他解压方法或SourceForge的直链
+        # 确保解压目录干净
+        if (Test-Path "${{ runner.temp }}\boost_1_83_0") { Remove-Item "${{ runner.temp }}\boost_1_83_0" -Recurse -Force }
         Expand-Archive -Path $Env:BOOST_ZIP -DestinationPath ${{ runner.temp }}
+
+        Write-Host "Moving Boost source to install location..."
+        # 确保目标目录不存在或者可以被覆盖
+        if (Test-Path $Env:BOOST_ROOT) { Remove-Item $Env:BOOST_ROOT -Recurse -Force }
         Move-Item -Path "${{ runner.temp }}\boost_1_83_0" -Destination $Env:BOOST_ROOT
+
+        Write-Host "Setting location to Boost root: $Env:BOOST_ROOT"
         Set-Location $Env:BOOST_ROOT
-        .\bootstrap.bat
-        .\b2 --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json
+
+        Write-Host "Configuring Visual Studio build environment and running Boost build..."
+
+        # --- 添加的关键步骤：设置 Visual Studio 编译环境并执行构建命令 ---
+
+        # 在 GitHub Actions Windows runner 上，通常可以通过 VS 的环境变量找到 vcvarsall.bat
+        # 优先使用 VS 2022 (VS170COMNTOOLS)，如果找不到再尝试 VS 2019 (VS160COMNTOOLS)
+        $vsComnTools = $Env:VS170COMNTOOLS
+        if (-not $vsComnTools) {
+            $vsComnTools = $Env:VS160COMNTOOLS
+            Write-Host "VS170COMNTOOLS not found, trying VS160COMNTOOLS..."
+        }
+
+        if (-not $vsComnTools) {
+            Write-Error "Could not find Visual Studio Common Tools environment variable (VS170COMNTOOLS or VS160COMNTOOLS). Ensure VS Build Tools are installed."
+            exit 1 # Exit the step with an error
+        }
+
+        # 构建 vcvarsall.bat 的完整路径
+        $vcvarsallPath = Join-Path (Split-Path $vsComnTools -Parent) "VC\Auxiliary\Build\vcvarsall.bat"
+
+        if (-not (Test-Path $vcvarsallPath)) {
+            Write-Error "Could not find vcvarsall.bat at '$vcvarsallPath'. Check Visual Studio installation."
+            exit 1 # Exit the step with an error
+        }
+
+        Write-Host "Found vcvarsall.bat at: $vcvarsallPath"
+        Write-Host "Running bootstrap and b2 using MSVC (x64)..."
+
+        # 使用 cmd.exe /c 来执行一个命令链：
+        # 1. 调用 vcvarsall.bat x64 来设置 x64 架构的 VS 编译环境
+        # 2. 切换到 Boost 根目录 (`cd /d` 用于跨驱动器切换)
+        # 3. 执行 .\bootstrap.bat
+        # 4. 执行 .\b2 ... 构建指定库
+        # 使用 `&&` 符号连接命令，确保前一个命令成功后才执行下一个
+        $cmdCommand = "`"$vcvarsallPath`" x64 && cd /d `"$Env:BOOST_ROOT`" && .\bootstrap.bat && .\b2 --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json link=static variant=release"
+
+        # 执行这个 cmd 命令链，并捕获退出码
+        & cmd.exe /c $cmdCommand
+        $lastExitCode = $LASTEXITCODE # 捕获 cmd.exe 的退出码
+
+        # 检查构建是否成功
+        if ($lastExitCode -ne 0) {
+            Write-Error "Boost build failed with exit code $lastExitCode. Check the build log for details."
+            exit $lastExitCode # Exit the step with the failure code
+        }
+
+        Write-Host "Boost build completed successfully."
+
+        # --- 结束添加的关键步骤 ---
+
+        # 后续您可能还需要将编译好的库文件 (通常在 $Env:BOOST_ROOT\stage\lib) 添加到您的项目链接器路径中
+        # 或者将 $Env:BOOST_ROOT\stage\lib 添加到 PATH 环境变量中 (如果构建了动态库)
+        Write-Host "Boost libraries built successfully. Located in: $Env:BOOST_ROOT\stage\lib"
+        Write-Host "You may need to add '$Env:BOOST_ROOT\stage\lib' to your project's library search paths."
 
     - name: Set Boost environment variables
       shell: bash
@@ -196,7 +267,7 @@ jobs:
 
     - name: Upload CMake logs
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: cmake-logs-${{ runner.os }}
         path: |
@@ -204,7 +275,7 @@ jobs:
           ${{github.workspace}}/build/CMakeFiles/CMakeError.log
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: build-${{ runner.os }}
         path: ${{github.workspace}}/build
