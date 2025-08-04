@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  cpp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Windows 用户使用默认值，Linux/macOS 用户可以设置环境变量
+        - USER_ID=${USER_ID:-1000}
+        - GROUP_ID=${GROUP_ID:-1000}
+    container_name: cpp-dev-container
+    volumes:
+      # 将当前目录挂载到容器的 /workspace
+      # Windows: D:\Source\repos\ModernCPlusPlusDemo -> /workspace
+      # Linux/macOS: /path/to/project -> /workspace
+      - .:/workspace
+      # 可选：挂载 Docker socket (如果需要在容器内使用 Docker)
+      # - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /workspace
+    # 保持容器运行
+    tty: true
+    stdin_open: true
+    # 可选：端口映射 (如果项目有web服务)
+    # ports:
+    #   - "8080:8080"
+    environment:
+      # 与 CI 保持一致的 Boost 环境变量
+      - BOOST_ROOT=/usr
+      - BOOST_LIBRARYDIR=/usr/lib/x86_64-linux-gnu
+      - LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:${LD_LIBRARY_PATH}
+    # 如果需要 GPU 支持（仅限 Linux 主机）
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
