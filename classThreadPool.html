@@ -1,0 +1,696 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: ThreadPool类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pri-methods">Private 成员函数</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="classThreadPool-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">ThreadPool类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="ThreadPool_8hpp_source.html">ThreadPool.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:ac34faaa0c275a69d4ab00aabe06faf10" id="r_ac34faaa0c275a69d4ab00aabe06faf10"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#ac34faaa0c275a69d4ab00aabe06faf10">ThreadPool</a> (size_t numThreads)</td></tr>
+<tr class="separator:ac34faaa0c275a69d4ab00aabe06faf10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac30c1b50991e65e30e64c2b93c40508f" id="r_ac30c1b50991e65e30e64c2b93c40508f"><td class="memTemplParams" colspan="2">template&lt;typename F , typename... Args&gt; </td></tr>
+<tr class="memitem:ac30c1b50991e65e30e64c2b93c40508f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classThreadPool.html#ac30c1b50991e65e30e64c2b93c40508f">enqueue</a> (F &amp;&amp;f, Args &amp;&amp;... args) -&gt; std::future&lt; std::invoke_result_t&lt; F, Args... &gt; &gt;</td></tr>
+<tr class="separator:ac30c1b50991e65e30e64c2b93c40508f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d3d2ab618970605e684efc216655eb" id="r_a44d3d2ab618970605e684efc216655eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a44d3d2ab618970605e684efc216655eb">~ThreadPool</a> ()</td></tr>
+<tr class="separator:a44d3d2ab618970605e684efc216655eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c89613058391aa301c46ae46a241692" id="r_a7c89613058391aa301c46ae46a241692"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a7c89613058391aa301c46ae46a241692">getIdleThreads</a> () const</td></tr>
+<tr class="separator:a7c89613058391aa301c46ae46a241692"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d47a6717f601479cba605e2f27d1daa" id="r_a9d47a6717f601479cba605e2f27d1daa"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a9d47a6717f601479cba605e2f27d1daa">getActiveThreads</a> () const</td></tr>
+<tr class="separator:a9d47a6717f601479cba605e2f27d1daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7e68d6dc476dcc2e788f12f92c9db44" id="r_af7e68d6dc476dcc2e788f12f92c9db44"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#af7e68d6dc476dcc2e788f12f92c9db44">getQueueSize</a> () const</td></tr>
+<tr class="separator:af7e68d6dc476dcc2e788f12f92c9db44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e04e66a7ce84e683cc7535c3e56340c" id="r_a9e04e66a7ce84e683cc7535c3e56340c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a9e04e66a7ce84e683cc7535c3e56340c">getTotalTasks</a> () const</td></tr>
+<tr class="separator:a9e04e66a7ce84e683cc7535c3e56340c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbde140855f81e67b1ef49d7df224dbe" id="r_afbde140855f81e67b1ef49d7df224dbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#afbde140855f81e67b1ef49d7df224dbe">getStats</a> (double &amp;avgTime, double &amp;minTime, double &amp;maxTime) const</td></tr>
+<tr class="separator:afbde140855f81e67b1ef49d7df224dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb5730bb571bd3b2f94aef33acb71b11" id="r_abb5730bb571bd3b2f94aef33acb71b11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#abb5730bb571bd3b2f94aef33acb71b11">resetStats</a> ()</td></tr>
+<tr class="separator:abb5730bb571bd3b2f94aef33acb71b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:afebde5e28224c8d9ba9ef54c9a96ebab" id="r_afebde5e28224c8d9ba9ef54c9a96ebab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#afebde5e28224c8d9ba9ef54c9a96ebab">updateStats</a> (double taskTime)</td></tr>
+<tr class="separator:afebde5e28224c8d9ba9ef54c9a96ebab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a9ef531ca4b7d046f3acaf4b5b36cdeff" id="r_a9ef531ca4b7d046f3acaf4b5b36cdeff"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a9ef531ca4b7d046f3acaf4b5b36cdeff">workers</a></td></tr>
+<tr class="separator:a9ef531ca4b7d046f3acaf4b5b36cdeff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecd2f98ff952b12bcd21102df80bdfe9" id="r_aecd2f98ff952b12bcd21102df80bdfe9"><td class="memItemLeft" align="right" valign="top">std::queue&lt; std::function&lt; void()&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#aecd2f98ff952b12bcd21102df80bdfe9">tasks</a></td></tr>
+<tr class="separator:aecd2f98ff952b12bcd21102df80bdfe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf76c928f148e8fdcd7e34c2bbaa97e3" id="r_adf76c928f148e8fdcd7e34c2bbaa97e3"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#adf76c928f148e8fdcd7e34c2bbaa97e3">queue_mutex</a></td></tr>
+<tr class="separator:adf76c928f148e8fdcd7e34c2bbaa97e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f8164e4860fe1c79bfa6755e2fbd66e" id="r_a9f8164e4860fe1c79bfa6755e2fbd66e"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a9f8164e4860fe1c79bfa6755e2fbd66e">stats_mutex</a></td></tr>
+<tr class="separator:a9f8164e4860fe1c79bfa6755e2fbd66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dd0c005d9bc726e976def8d6ac2d2a7" id="r_a6dd0c005d9bc726e976def8d6ac2d2a7"><td class="memItemLeft" align="right" valign="top">std::condition_variable&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a6dd0c005d9bc726e976def8d6ac2d2a7">condition</a></td></tr>
+<tr class="separator:a6dd0c005d9bc726e976def8d6ac2d2a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a683bda7e44d619f6eb0dc8ae1747edd3" id="r_a683bda7e44d619f6eb0dc8ae1747edd3"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a683bda7e44d619f6eb0dc8ae1747edd3">stop</a></td></tr>
+<tr class="separator:a683bda7e44d619f6eb0dc8ae1747edd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc7bdf21093119a386220e43ece52a65" id="r_afc7bdf21093119a386220e43ece52a65"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#afc7bdf21093119a386220e43ece52a65">idleThreads</a></td></tr>
+<tr class="separator:afc7bdf21093119a386220e43ece52a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a66b22c2d969ebd848c285fdeb69ccc" id="r_a5a66b22c2d969ebd848c285fdeb69ccc"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a5a66b22c2d969ebd848c285fdeb69ccc">activeThreads</a></td></tr>
+<tr class="separator:a5a66b22c2d969ebd848c285fdeb69ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa44d72c96618b628ebb100ca51c004da" id="r_aa44d72c96618b628ebb100ca51c004da"><td class="memItemLeft" align="right" valign="top">std::atomic&lt; size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#aa44d72c96618b628ebb100ca51c004da">totalTasks</a></td></tr>
+<tr class="separator:aa44d72c96618b628ebb100ca51c004da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dfd6f7b14ff73bef904425f3ebf5fe5" id="r_a4dfd6f7b14ff73bef904425f3ebf5fe5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a4dfd6f7b14ff73bef904425f3ebf5fe5">totalTaskTime</a> = 0</td></tr>
+<tr class="separator:a4dfd6f7b14ff73bef904425f3ebf5fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43313b8e00c8e3acd8eddb67d26466f2" id="r_a43313b8e00c8e3acd8eddb67d26466f2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a43313b8e00c8e3acd8eddb67d26466f2">minTaskTime</a> = std::numeric_limits&lt;double&gt;::max()</td></tr>
+<tr class="separator:a43313b8e00c8e3acd8eddb67d26466f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81019ba8dc48bab25c3276ffc77fc028" id="r_a81019ba8dc48bab25c3276ffc77fc028"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classThreadPool.html#a81019ba8dc48bab25c3276ffc77fc028">maxTaskTime</a> = 0</td></tr>
+<tr class="separator:a81019ba8dc48bab25c3276ffc77fc028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">构造及析构函数说明</h2>
+<a id="ac34faaa0c275a69d4ab00aabe06faf10" name="ac34faaa0c275a69d4ab00aabe06faf10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac34faaa0c275a69d4ab00aabe06faf10">&#9670;&#160;</a></span>ThreadPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ThreadPool::ThreadPool </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>numThreads</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a44d3d2ab618970605e684efc216655eb" name="a44d3d2ab618970605e684efc216655eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44d3d2ab618970605e684efc216655eb">&#9670;&#160;</a></span>~ThreadPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ThreadPool::~ThreadPool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="ac30c1b50991e65e30e64c2b93c40508f" name="ac30c1b50991e65e30e64c2b93c40508f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac30c1b50991e65e30e64c2b93c40508f">&#9670;&#160;</a></span>enqueue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename F , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto ThreadPool::enqueue </td>
+          <td>(</td>
+          <td class="paramtype">F &amp;&amp;&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> -&gt; std::future&lt;std::invoke_result_t&lt;F, Args...&gt;&gt;
+    </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9d47a6717f601479cba605e2f27d1daa" name="a9d47a6717f601479cba605e2f27d1daa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d47a6717f601479cba605e2f27d1daa">&#9670;&#160;</a></span>getActiveThreads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ThreadPool::getActiveThreads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7c89613058391aa301c46ae46a241692" name="a7c89613058391aa301c46ae46a241692"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c89613058391aa301c46ae46a241692">&#9670;&#160;</a></span>getIdleThreads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ThreadPool::getIdleThreads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af7e68d6dc476dcc2e788f12f92c9db44" name="af7e68d6dc476dcc2e788f12f92c9db44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7e68d6dc476dcc2e788f12f92c9db44">&#9670;&#160;</a></span>getQueueSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ThreadPool::getQueueSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afbde140855f81e67b1ef49d7df224dbe" name="afbde140855f81e67b1ef49d7df224dbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbde140855f81e67b1ef49d7df224dbe">&#9670;&#160;</a></span>getStats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ThreadPool::getStats </td>
+          <td>(</td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>avgTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>minTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>maxTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9e04e66a7ce84e683cc7535c3e56340c" name="a9e04e66a7ce84e683cc7535c3e56340c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e04e66a7ce84e683cc7535c3e56340c">&#9670;&#160;</a></span>getTotalTasks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t ThreadPool::getTotalTasks </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abb5730bb571bd3b2f94aef33acb71b11" name="abb5730bb571bd3b2f94aef33acb71b11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb5730bb571bd3b2f94aef33acb71b11">&#9670;&#160;</a></span>resetStats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ThreadPool::resetStats </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afebde5e28224c8d9ba9ef54c9a96ebab" name="afebde5e28224c8d9ba9ef54c9a96ebab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afebde5e28224c8d9ba9ef54c9a96ebab">&#9670;&#160;</a></span>updateStats()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ThreadPool::updateStats </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>taskTime</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a5a66b22c2d969ebd848c285fdeb69ccc" name="a5a66b22c2d969ebd848c285fdeb69ccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a66b22c2d969ebd848c285fdeb69ccc">&#9670;&#160;</a></span>activeThreads</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;size_t&gt; ThreadPool::activeThreads</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6dd0c005d9bc726e976def8d6ac2d2a7" name="a6dd0c005d9bc726e976def8d6ac2d2a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd0c005d9bc726e976def8d6ac2d2a7">&#9670;&#160;</a></span>condition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::condition_variable ThreadPool::condition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afc7bdf21093119a386220e43ece52a65" name="afc7bdf21093119a386220e43ece52a65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc7bdf21093119a386220e43ece52a65">&#9670;&#160;</a></span>idleThreads</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;size_t&gt; ThreadPool::idleThreads</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a81019ba8dc48bab25c3276ffc77fc028" name="a81019ba8dc48bab25c3276ffc77fc028"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81019ba8dc48bab25c3276ffc77fc028">&#9670;&#160;</a></span>maxTaskTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ThreadPool::maxTaskTime = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a43313b8e00c8e3acd8eddb67d26466f2" name="a43313b8e00c8e3acd8eddb67d26466f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43313b8e00c8e3acd8eddb67d26466f2">&#9670;&#160;</a></span>minTaskTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ThreadPool::minTaskTime = std::numeric_limits&lt;double&gt;::max()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adf76c928f148e8fdcd7e34c2bbaa97e3" name="adf76c928f148e8fdcd7e34c2bbaa97e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf76c928f148e8fdcd7e34c2bbaa97e3">&#9670;&#160;</a></span>queue_mutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex ThreadPool::queue_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f8164e4860fe1c79bfa6755e2fbd66e" name="a9f8164e4860fe1c79bfa6755e2fbd66e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f8164e4860fe1c79bfa6755e2fbd66e">&#9670;&#160;</a></span>stats_mutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex ThreadPool::stats_mutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a683bda7e44d619f6eb0dc8ae1747edd3" name="a683bda7e44d619f6eb0dc8ae1747edd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a683bda7e44d619f6eb0dc8ae1747edd3">&#9670;&#160;</a></span>stop</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;bool&gt; ThreadPool::stop</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aecd2f98ff952b12bcd21102df80bdfe9" name="aecd2f98ff952b12bcd21102df80bdfe9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecd2f98ff952b12bcd21102df80bdfe9">&#9670;&#160;</a></span>tasks</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::queue&lt;std::function&lt;void()&gt; &gt; ThreadPool::tasks</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa44d72c96618b628ebb100ca51c004da" name="aa44d72c96618b628ebb100ca51c004da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa44d72c96618b628ebb100ca51c004da">&#9670;&#160;</a></span>totalTasks</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic&lt;size_t&gt; ThreadPool::totalTasks</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4dfd6f7b14ff73bef904425f3ebf5fe5" name="a4dfd6f7b14ff73bef904425f3ebf5fe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dfd6f7b14ff73bef904425f3ebf5fe5">&#9670;&#160;</a></span>totalTaskTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double ThreadPool::totalTaskTime = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9ef531ca4b7d046f3acaf4b5b36cdeff" name="a9ef531ca4b7d046f3acaf4b5b36cdeff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ef531ca4b7d046f3acaf4b5b36cdeff">&#9670;&#160;</a></span>workers</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::thread&gt; ThreadPool::workers</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>ThreadPool/<a class="el" href="ThreadPool_8hpp_source.html">ThreadPool.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

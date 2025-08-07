@@ -1,0 +1,751 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: Trace::SpdLogger类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceTrace.html">Trace</a></li><li class="navelem"><a class="el" href="classTrace_1_1SpdLogger.html">SpdLogger</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pri-methods">Private 成员函数</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="classTrace_1_1SpdLogger-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">Trace::SpdLogger类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="SPDLogEx_8hpp_source.html">SPDLogEx.hpp</a>&gt;</code></p>
+<div class="dynheader">
+类 Trace::SpdLogger 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classTrace_1_1SpdLogger.png" usemap="#Trace::SpdLogger_map" alt=""/>
+  <map id="Trace::SpdLogger_map" name="Trace::SpdLogger_map">
+<area href="classTrace_1_1ILogger.html" alt="Trace::ILogger" shape="rect" coords="0,0,113,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a3fb7858e11a718624ea066df01707605" id="r_a3fb7858e11a718624ea066df01707605"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a3fb7858e11a718624ea066df01707605">SpdLogger</a> (const std::string &amp;logFilePath, size_t queueSize=8192, size_t threadCount=1)</td></tr>
+<tr class="separator:a3fb7858e11a718624ea066df01707605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b74b3e75b552b389af77cace3fb397a" id="r_a6b74b3e75b552b389af77cace3fb397a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a6b74b3e75b552b389af77cace3fb397a">setLevel</a> (<a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level) override</td></tr>
+<tr class="separator:a6b74b3e75b552b389af77cace3fb397a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc1b41474f11066ed15c07882803106b" id="r_adc1b41474f11066ed15c07882803106b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#adc1b41474f11066ed15c07882803106b">setFilePath</a> (const std::string &amp;<a class="el" href="classTrace_1_1SpdLogger.html#a6e94e49c997333cd50f77ec150714db4">filePath</a>) override</td></tr>
+<tr class="separator:adc1b41474f11066ed15c07882803106b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe85cb3d9a959d3b2643652d38d06ca9" id="r_abe85cb3d9a959d3b2643652d38d06ca9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#abe85cb3d9a959d3b2643652d38d06ca9">log</a> (<a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level, const std::string &amp;message, const std::string &amp;fileName, int lineNumber) override</td></tr>
+<tr class="separator:abe85cb3d9a959d3b2643652d38d06ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada76a80efd0b8b30e756119d301c8eab" id="r_ada76a80efd0b8b30e756119d301c8eab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#ada76a80efd0b8b30e756119d301c8eab">trace</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:ada76a80efd0b8b30e756119d301c8eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8f12b529a0212fa79a67325cf0b6664" id="r_af8f12b529a0212fa79a67325cf0b6664"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#af8f12b529a0212fa79a67325cf0b6664">debug</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:af8f12b529a0212fa79a67325cf0b6664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf5af031932cfa686b505dd9f98f2a53" id="r_abf5af031932cfa686b505dd9f98f2a53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#abf5af031932cfa686b505dd9f98f2a53">info</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:abf5af031932cfa686b505dd9f98f2a53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a024e4c3f51847f546cf9804dc8f3645a" id="r_a024e4c3f51847f546cf9804dc8f3645a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a024e4c3f51847f546cf9804dc8f3645a">warn</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:a024e4c3f51847f546cf9804dc8f3645a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a81b7892a00e8f21676073c827ea81" id="r_aa6a81b7892a00e8f21676073c827ea81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#aa6a81b7892a00e8f21676073c827ea81">error</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:aa6a81b7892a00e8f21676073c827ea81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1eb16fca86e073680d872e12af0b5db" id="r_aa1eb16fca86e073680d872e12af0b5db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#aa1eb16fca86e073680d872e12af0b5db">critical</a> (const std::string &amp;msg, const char *file=&quot;&quot;, int line=0) override</td></tr>
+<tr class="separator:aa1eb16fca86e073680d872e12af0b5db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classTrace_1_1ILogger"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classTrace_1_1ILogger')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classTrace_1_1ILogger.html">Trace::ILogger</a></td></tr>
+<tr class="memitem:a45e46ee038d2e10167df150aedc1b155 inherit pub_methods_classTrace_1_1ILogger" id="r_a45e46ee038d2e10167df150aedc1b155"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1ILogger.html#a45e46ee038d2e10167df150aedc1b155">~ILogger</a> ()=default</td></tr>
+<tr class="separator:a45e46ee038d2e10167df150aedc1b155 inherit pub_methods_classTrace_1_1ILogger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942a45de519036ed02f2831b4d1fc93a inherit pub_methods_classTrace_1_1ILogger" id="r_a942a45de519036ed02f2831b4d1fc93a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1ILogger.html#a942a45de519036ed02f2831b4d1fc93a">ILogger</a> (const <a class="el" href="classTrace_1_1ILogger.html">ILogger</a> &amp;)=delete</td></tr>
+<tr class="separator:a942a45de519036ed02f2831b4d1fc93a inherit pub_methods_classTrace_1_1ILogger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d02fd13e3545c7de16208ea0103aa6 inherit pub_methods_classTrace_1_1ILogger" id="r_aa7d02fd13e3545c7de16208ea0103aa6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classTrace_1_1ILogger.html">ILogger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1ILogger.html#aa7d02fd13e3545c7de16208ea0103aa6">operator=</a> (const <a class="el" href="classTrace_1_1ILogger.html">ILogger</a> &amp;)=delete</td></tr>
+<tr class="separator:aa7d02fd13e3545c7de16208ea0103aa6 inherit pub_methods_classTrace_1_1ILogger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:a4657b7a71c73221dd9ce0e3fd8d07d56" id="r_a4657b7a71c73221dd9ce0e3fd8d07d56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a4657b7a71c73221dd9ce0e3fd8d07d56">logWithLocation</a> (<a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level, const std::string &amp;msg, const char *file, int line)</td></tr>
+<tr class="separator:a4657b7a71c73221dd9ce0e3fd8d07d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b0ed93217dc7980a6e6814681a661f" id="r_a18b0ed93217dc7980a6e6814681a661f"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a18b0ed93217dc7980a6e6814681a661f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a18b0ed93217dc7980a6e6814681a661f">logFormat</a> (<a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level, const char *file, int line, spdlog::format_string_t&lt; Args... &gt; fmt, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a18b0ed93217dc7980a6e6814681a661f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5030163dae3866d8b01ef593716fdb90" id="r_a5030163dae3866d8b01ef593716fdb90"><td class="memItemLeft" align="right" valign="top">spdlog::level::level_enum&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a5030163dae3866d8b01ef593716fdb90">levelToSpdlogLevel</a> (<a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level)</td></tr>
+<tr class="separator:a5030163dae3866d8b01ef593716fdb90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a11e6be50030f1f3e9b282cf983769b30" id="r_a11e6be50030f1f3e9b282cf983769b30"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; spdlog::logger &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a11e6be50030f1f3e9b282cf983769b30">logger</a></td></tr>
+<tr class="separator:a11e6be50030f1f3e9b282cf983769b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e94e49c997333cd50f77ec150714db4" id="r_a6e94e49c997333cd50f77ec150714db4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1SpdLogger.html#a6e94e49c997333cd50f77ec150714db4">filePath</a></td></tr>
+<tr class="separator:a6e94e49c997333cd50f77ec150714db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+额外继承的成员函数</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classTrace_1_1ILogger"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classTrace_1_1ILogger')"><img src="closed.png" alt="-"/>&#160;静态 Public 成员函数 继承自 <a class="el" href="classTrace_1_1ILogger.html">Trace::ILogger</a></td></tr>
+<tr class="memitem:a5114f28220352cfc98ce7e5133513641 inherit pub_static_methods_classTrace_1_1ILogger" id="r_a5114f28220352cfc98ce7e5133513641"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; <a class="el" href="classTrace_1_1ILogger.html">ILogger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1ILogger.html#a5114f28220352cfc98ce7e5133513641">getLogger</a> (const std::string &amp;logFilePath=&quot;logs/log.txt&quot;)</td></tr>
+<tr class="separator:a5114f28220352cfc98ce7e5133513641 inherit pub_static_methods_classTrace_1_1ILogger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classTrace_1_1ILogger"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classTrace_1_1ILogger')"><img src="closed.png" alt="-"/>&#160;Protected 成员函数 继承自 <a class="el" href="classTrace_1_1ILogger.html">Trace::ILogger</a></td></tr>
+<tr class="memitem:a7769df275478b58a9754a5ec5be71f87 inherit pro_methods_classTrace_1_1ILogger" id="r_a7769df275478b58a9754a5ec5be71f87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTrace_1_1ILogger.html#a7769df275478b58a9754a5ec5be71f87">ILogger</a> ()=default</td></tr>
+<tr class="separator:a7769df275478b58a9754a5ec5be71f87 inherit pro_methods_classTrace_1_1ILogger"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a3fb7858e11a718624ea066df01707605" name="a3fb7858e11a718624ea066df01707605"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb7858e11a718624ea066df01707605">&#9670;&#160;</a></span>SpdLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SpdLogger::SpdLogger </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>logFilePath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>queueSize</em> = <code>8192</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>threadCount</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="aa1eb16fca86e073680d872e12af0b5db" name="aa1eb16fca86e073680d872e12af0b5db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1eb16fca86e073680d872e12af0b5db">&#9670;&#160;</a></span>critical()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::critical </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#ac37dc74069e1653dfb67f8f386ed5499">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="af8f12b529a0212fa79a67325cf0b6664" name="af8f12b529a0212fa79a67325cf0b6664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8f12b529a0212fa79a67325cf0b6664">&#9670;&#160;</a></span>debug()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::debug </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#a2a0383c01089152a8d04d739b5545e29">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="aa6a81b7892a00e8f21676073c827ea81" name="aa6a81b7892a00e8f21676073c827ea81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a81b7892a00e8f21676073c827ea81">&#9670;&#160;</a></span>error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::error </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#a472cd524612befda505bad614b56f0ef">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="abf5af031932cfa686b505dd9f98f2a53" name="abf5af031932cfa686b505dd9f98f2a53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf5af031932cfa686b505dd9f98f2a53">&#9670;&#160;</a></span>info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::info </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#a2c3d7c8985944072c220bd0b00012013">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="a5030163dae3866d8b01ef593716fdb90" name="a5030163dae3866d8b01ef593716fdb90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5030163dae3866d8b01ef593716fdb90">&#9670;&#160;</a></span>levelToSpdlogLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">spdlog::level::level_enum SpdLogger::levelToSpdlogLevel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a>&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abe85cb3d9a959d3b2643652d38d06ca9" name="abe85cb3d9a959d3b2643652d38d06ca9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe85cb3d9a959d3b2643652d38d06ca9">&#9670;&#160;</a></span>log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::log </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a>&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fileName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>lineNumber</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#a5026b151e054e1e24f62c2c74b023b74">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="a18b0ed93217dc7980a6e6814681a661f" name="a18b0ed93217dc7980a6e6814681a661f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18b0ed93217dc7980a6e6814681a661f">&#9670;&#160;</a></span>logFormat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::logFormat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a>&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">spdlog::format_string_t&lt; Args... &gt;&#160;</td>
+          <td class="paramname"><em>fmt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4657b7a71c73221dd9ce0e3fd8d07d56" name="a4657b7a71c73221dd9ce0e3fd8d07d56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4657b7a71c73221dd9ce0e3fd8d07d56">&#9670;&#160;</a></span>logWithLocation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::logWithLocation </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a>&#160;</td>
+          <td class="paramname"><em>level</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adc1b41474f11066ed15c07882803106b" name="adc1b41474f11066ed15c07882803106b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc1b41474f11066ed15c07882803106b">&#9670;&#160;</a></span>setFilePath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::setFilePath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#aa00731addc9b5ae025e80de7efd29a85">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="a6b74b3e75b552b389af77cace3fb397a" name="a6b74b3e75b552b389af77cace3fb397a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b74b3e75b552b389af77cace3fb397a">&#9670;&#160;</a></span>setLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::setLevel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a>&#160;</td>
+          <td class="paramname"><em>level</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#ac7eeb8e3285ff1e1af9cb285ad3edc76">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="ada76a80efd0b8b30e756119d301c8eab" name="ada76a80efd0b8b30e756119d301c8eab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada76a80efd0b8b30e756119d301c8eab">&#9670;&#160;</a></span>trace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::trace </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#ab906073084ff030e407218e50fa7a205">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<a id="a024e4c3f51847f546cf9804dc8f3645a" name="a024e4c3f51847f546cf9804dc8f3645a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a024e4c3f51847f546cf9804dc8f3645a">&#9670;&#160;</a></span>warn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SpdLogger::warn </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>line</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>实现了 <a class="el" href="classTrace_1_1ILogger.html#a8ebf729f8beed898515bdb32e1e616b4">Trace::ILogger</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a6e94e49c997333cd50f77ec150714db4" name="a6e94e49c997333cd50f77ec150714db4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e94e49c997333cd50f77ec150714db4">&#9670;&#160;</a></span>filePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Trace::SpdLogger::filePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a11e6be50030f1f3e9b282cf983769b30" name="a11e6be50030f1f3e9b282cf983769b30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11e6be50030f1f3e9b282cf983769b30">&#9670;&#160;</a></span>logger</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;spdlog::logger&gt; Trace::SpdLogger::logger</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>SPDLogEx/<a class="el" href="SPDLogEx_8hpp_source.html">SPDLogEx.hpp</a></li>
+<li>SPDLogEx/<a class="el" href="SPDLogEx_8cpp.html">SPDLogEx.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>
