@@ -16,88 +16,72 @@
         {
             "label": "Clean",
             "type": "shell",
-            "windows": {
-                "command": "if (Test-Path ${workspaceFolder}\\build) { Remove-Item -Recurse -Force ${workspaceFolder}\\build }"
-            },
+            "command": "rm",
+            "args": [
+                "-rf",
+                "${workspaceFolder}/build"
+            ],
             "problemMatcher": []
         },
         {
             "label": "Create Build Folder",
             "type": "shell",
-            "windows": {
-                "command": "New-Item -ItemType Directory -Force -Path ${workspaceFolder}\\build"
-            },
+            "command": "mkdir",
+            "args": [
+                "-p",
+                "${workspaceFolder}/build"
+            ],
             "problemMatcher": []
         },
         {
             "label": "Build",
             "type": "shell",
-            "windows": {
-                "command": "powershell",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-Command",
-                    "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType}"
-                ]
-            },
+            "command": "bash",
+            "args": [
+                "-c",
+                "cd ${workspaceFolder}/build && cmake .. && cmake --build . --config ${input:buildType}"
+            ],
             "dependsOn": "Create Build Folder",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [
-                "$msCompile"
+                "$gcc"
             ]
         },
         {
             "label": "Rebuild",
             "type": "shell",
-            "windows": {
-                "command": "powershell",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-Command",
-                    "cd ${workspaceFolder}\\build; cmake ..; cmake --build . --config ${input:buildType} --clean-first"
-                ]
-            },
+            "command": "bash",
+            "args": [
+                "-c",
+                "cd ${workspaceFolder}/build && cmake .. && cmake --build . --config ${input:buildType} --clean-first"
+            ],
             "dependsOn": "Create Build Folder",
             "problemMatcher": [
-                "$msCompile"
+                "$gcc"
             ]
         },
         {
             "label": "Run ModernCPlusPlusDemo",
             "type": "shell",
-            "windows": {
-                "command": "powershell",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-Command",
-                    "cd ${workspaceFolder}\\build\\${input:buildType}; .\\ModernCPlusPlusDemo.exe"
-                ]
-            },
+            "command": "bash",
+            "args": [
+                "-c",
+                "cd ${workspaceFolder}/build && ./ModernCPlusPlusDemo"
+            ],
             "dependsOn": "Build",
             "problemMatcher": []
         },
         {
             "label": "Run Google Tests",
             "type": "shell",
-            "windows": {
-                "command": "powershell",
-                "args": [
-                    "-NoProfile",
-                    "-ExecutionPolicy",
-                    "Bypass",
-                    "-Command",
-                    "cd ${workspaceFolder}\\build\\${input:buildType}; .\\gtest_unitTest.exe"
-                ]
-            },
+            "command": "bash",
+            "args": [
+                "-c",
+                "cd ${workspaceFolder}/build && ./gtest_unitTest"
+            ],
             "dependsOn": "Build",
             "problemMatcher": []
         }
