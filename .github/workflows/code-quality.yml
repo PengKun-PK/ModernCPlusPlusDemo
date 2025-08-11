@@ -8,12 +8,7 @@ on:
 
 jobs:
   clang-tidy-check:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -21,94 +16,21 @@ jobs:
         submodules: recursive
 
     # Install OpenCL
-    - name: Install OpenCL (Ubuntu)
-      if: runner.os == 'Linux'
+    - name: Install OpenCL
       run: |
         sudo apt-get update
         sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd ocl-icd-dev
-
-    - name: Install OpenCL (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        Write-Host "Starting OpenCL installation..."
-
-        # 检查是否已安装CUDA
-        $cudaPath = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3"
-        if (!(Test-Path $cudaPath)) {
-        Write-Host "CUDA not found, installing..."
-        # 下载CUDA installer
-        $InstallerUrl = "https://developer.download.nvidia.com/compute/cuda/12.3.1/local_installers/cuda_12.3.1_546.12_windows.exe"
-        $InstallerPath = "$env:TEMP\cuda_installer.exe"
-        Invoke-WebRequest -Uri $InstallerUrl -OutFile $InstallerPath
-
-        # 静默安装CUDA（包含OpenCL组件）
-        Write-Host "Installing CUDA..."
-        Start-Process -FilePath $InstallerPath -ArgumentList "-s opencl_12.3" -Wait
-        }
-
-        # 设置CUDA环境变量
-        $env:CUDA_PATH = $cudaPath
-        $env:OPENCL_INCLUDE_DIR = Join-Path $cudaPath "include"
-        $env:OPENCL_LIBRARY_DIR = Join-Path $cudaPath "lib\x64"
-
-        echo "CUDA_PATH=$cudaPath" >> $env:GITHUB_ENV
-        echo "OPENCL_INCLUDE_DIR=$env:OPENCL_INCLUDE_DIR" >> $env:GITHUB_ENV
-        echo "OPENCL_LIBRARY_DIR=$env:OPENCL_LIBRARY_DIR" >> $env:GITHUB_ENV
-        echo "$cudaPath\bin" >> $env:GITHUB_PATH
-
-        # 验证安装
-        Write-Host "Verifying CUDA and OpenCL installation..."
-        Write-Host "CUDA_PATH: $env:CUDA_PATH"
-        Write-Host "OPENCL_INCLUDE_DIR: $env:OPENCL_INCLUDE_DIR"
-        Write-Host "OPENCL_LIBRARY_DIR: $env:OPENCL_LIBRARY_DIR"
-
-        # 检查OpenCL头文件
-        $cl_header = Join-Path $env:OPENCL_INCLUDE_DIR "CL\cl.h"
-        if (!(Test-Path $cl_header)) {
-        Write-Host "OpenCL header not found, downloading Khronos headers..."
-
-        # 创建目录
-        New-Item -ItemType Directory -Force -Path (Join-Path $env:OPENCL_INCLUDE_DIR "CL") | Out-Null
-
-        # 克隆 Khronos OpenCL Headers
-        $headers_temp = Join-Path $env:TEMP "opencl-headers"
-        git clone --depth 1 https://github.com/KhronosGroup/OpenCL-Headers.git $headers_temp
-
-        # 复制头文件
-        Copy-Item (Join-Path $headers_temp "CL\*") (Join-Path $env:OPENCL_INCLUDE_DIR "CL") -Force
-        }
-
-        # 最终验证
-        if (Test-Path $cl_header) {
-        Write-Host "OpenCL header found at: $cl_header"
-        Get-Content $cl_header -Head 5
-        } else {
-        Write-Error "OpenCL setup failed: Headers not found"
-        exit 1
-        }
-
-        # 检查OpenCL库文件
-        $ocl_lib = Join-Path $env:OPENCL_LIBRARY_DIR "OpenCL.lib"
-        if (Test-Path $ocl_lib) {
-        Write-Host "OpenCL library found at: $ocl_lib"
-        } else {
-        Write-Error "OpenCL setup failed: Library not found"
-        exit 1
-        }
-
-        Write-Host "OpenCL Setup Complete"
 
     - name: Cache Boost
       id: cache-boost
       uses: actions/cache@v3
       with:
         path: ${{ github.workspace }}/boost_install
-        key: ${{ runner.os }}-boost-1.83.0-${{ hashFiles('**/CMakeLists.txt') }}
-        restore-keys: ${{ runner.os }}-boost-1.83.0-
+        key: ubuntu-boost-1.83.0-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: ubuntu-boost-1.83.0-
 
-    - name: Install Boost (Ubuntu)
-      if: runner.os == 'Linux' && steps.cache-boost.outputs.cache-hit != 'true'
+    - name: Install Boost
+      if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
         echo "使用 apt 安装 Boost"
         sudo apt-get update
@@ -121,128 +43,15 @@ jobs:
         echo "BOOST_ROOT=/usr" >> $GITHUB_ENV
         echo "BOOST_LIBRARYDIR=/usr/lib/x86_64-linux-gnu" >> $GITHUB_ENV
 
-    - name: Install Boost (Windows)
-      if: runner.os == 'Windows' && steps.cache-boost.outputs.cache-hit != 'true'
-      shell: pwsh
-      run: |
-        $Env:BOOST_ROOT = "${{ github.workspace }}\boost_install"
-        # 修改：使用GitHub官方发布的zip文件，更稳定
-        $Env:BOOST_URL = "https://github.com/boostorg/boost/releases/download/boost-1.83.0/boost-1.83.0.zip"
-        $Env:BOOST_ZIP = "${{ runner.temp }}\boost.zip"
-
-        Write-Host "Downloading Boost source from GitHub releases..."
-        try {
-            Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP -TimeoutSec 600
-            Write-Host "Download completed successfully"
-        }
-        catch {
-            Write-Error "Failed to download Boost: $($_.Exception.Message)"
-            # 如果GitHub下载失败，尝试备用链接
-            Write-Host "Trying alternative download source..."
-            $Env:BOOST_URL = "https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.zip"
-            Invoke-WebRequest -Uri $Env:BOOST_URL -OutFile $Env:BOOST_ZIP -TimeoutSec 600
-        }
-
-        Write-Host "Expanding Boost archive..."
-        # 确保解压目录干净
-        $extractPath = "${{ runner.temp }}\boost_extract"
-        if (Test-Path $extractPath) { Remove-Item $extractPath -Recurse -Force }
-
-        try {
-            # 使用.NET方法解压，更可靠
-            Add-Type -AssemblyName System.IO.Compression.FileSystem
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($Env:BOOST_ZIP, $extractPath)
-            Write-Host "Archive extracted successfully"
-        }
-        catch {
-            Write-Error "Failed to extract archive: $($_.Exception.Message)"
-            exit 1
-        }
-
-        Write-Host "Moving Boost source to install location..."
-        # 查找提取的Boost目录（可能是boost-1.83.0或boost_1_83_0）
-        $extractedDirs = Get-ChildItem -Path $extractPath -Directory | Where-Object { $_.Name -like "*boost*" }
-        if ($extractedDirs.Count -eq 0) {
-            Write-Error "No Boost directory found in extracted archive"
-            exit 1
-        }
-
-        $boostSourceDir = $extractedDirs[0].FullName
-        Write-Host "Found Boost source directory: $boostSourceDir"
-
-        # 确保目标目录不存在或者可以被覆盖
-        if (Test-Path $Env:BOOST_ROOT) { Remove-Item $Env:BOOST_ROOT -Recurse -Force }
-        Move-Item -Path $boostSourceDir -Destination $Env:BOOST_ROOT
-
-        Write-Host "Setting location to Boost root: $Env:BOOST_ROOT"
-        Set-Location $Env:BOOST_ROOT
-
-        Write-Host "Configuring Visual Studio build environment and running Boost build..."
-
-        # 查找Visual Studio安装路径
-        $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-        if (Test-Path $vswhere) {
-            $vsPath = & $vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-            if ($vsPath) {
-                $vcvarsallPath = Join-Path $vsPath "VC\Auxiliary\Build\vcvarsall.bat"
-                Write-Host "Found Visual Studio at: $vsPath"
-            }
-        }
-
-        # 如果vswhere找不到，使用环境变量方法
-        if (-not $vcvarsallPath -or -not (Test-Path $vcvarsallPath)) {
-            $vsComnTools = $Env:VS170COMNTOOLS
-            if (-not $vsComnTools) {
-                $vsComnTools = $Env:VS160COMNTOOLS
-                Write-Host "VS170COMNTOOLS not found, trying VS160COMNTOOLS..."
-            }
-
-            if (-not $vsComnTools) {
-                Write-Error "Could not find Visual Studio installation"
-                exit 1
-            }
-
-            $vcvarsallPath = Join-Path (Split-Path $vsComnTools -Parent) "VC\Auxiliary\Build\vcvarsall.bat"
-        }
-
-        if (-not (Test-Path $vcvarsallPath)) {
-            Write-Error "Could not find vcvarsall.bat at '$vcvarsallPath'"
-            exit 1
-        }
-
-        Write-Host "Found vcvarsall.bat at: $vcvarsallPath"
-        Write-Host "Running bootstrap and b2 using MSVC (x64)..."
-
-        # 执行构建命令
-        $cmdCommand = "`"$vcvarsallPath`" x64 && cd /d `"$Env:BOOST_ROOT`" && .\bootstrap.bat && .\b2 --with-system --with-filesystem --with-regex --with-iostreams --with-program_options --with-date_time --with-json link=static variant=release threading=multi address-model=64 -j2"
-
-        & cmd.exe /c $cmdCommand
-        $lastExitCode = $LASTEXITCODE
-
-        if ($lastExitCode -ne 0) {
-            Write-Error "Boost build failed with exit code $lastExitCode"
-            exit $lastExitCode
-        }
-
-        Write-Host "Boost build completed successfully."
-        Write-Host "Boost libraries built in: $Env:BOOST_ROOT\stage\lib"
-
     - name: Set Boost environment variables
-      shell: bash
       run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          echo "BOOST_ROOT=${{ github.workspace }}/boost_install" >> $GITHUB_ENV
-          echo "BOOST_LIBRARYDIR=${{ github.workspace }}/boost_install/stage/lib" >> $GITHUB_ENV
-        else
-          echo "BOOST_ROOT=${{ github.workspace }}/boost_install" >> $GITHUB_ENV
-          echo "BOOST_LIBRARYDIR=${{ github.workspace }}/boost_install/lib" >> $GITHUB_ENV
-        fi
+        echo "BOOST_ROOT=${{ github.workspace }}/boost_install" >> $GITHUB_ENV
+        echo "BOOST_LIBRARYDIR=${{ github.workspace }}/boost_install/lib" >> $GITHUB_ENV
         echo "Setting Boost variables:"
         echo "BOOST_ROOT=$BOOST_ROOT"
         echo "BOOST_LIBRARYDIR=$BOOST_LIBRARYDIR"
 
-    - name: Install LLVM and Clang (Ubuntu)
-      if: runner.os == 'Linux'
+    - name: Install LLVM and Clang
       run: |
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
@@ -251,84 +60,27 @@ jobs:
         sudo apt-get install -y clang-tidy-18 clang-18 llvm-18 llvm-18-dev libclang-18-dev
         sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100
 
-    - name: Install LLVM and Clang (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        Write-Host "Installing/Verifying LLVM..."
-        try {
-          # 检查现有版本
-          $llvmVersion = (Get-Command clang -ErrorAction SilentlyContinue).Version
-          if ($llvmVersion) {
-              Write-Host "LLVM version $llvmVersion is already installed"
-          } else {
-              # 尝试安装 LLVM，使用 --force 允许降级
-              choco install llvm --force -y
-          }
-        } catch {
-          Write-Host "Error checking LLVM version: $_"
-          # 作为备份选项强制安装
-          choco install llvm --force -y
-        }
-
-        Write-Host "Setting up CMake..."
-        try {
-          # 检查是否已安装 Visual Studio CMake
-          $vsCmakePath = "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin"
-          if (Test-Path "$vsCmakePath\cmake.exe") {
-              Write-Host "Using Visual Studio CMake"
-              echo "$vsCmakePath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          } else {
-              Write-Host "Installing CMake via chocolatey..."
-              choco install cmake.install --installargs 'ADD_CMAKE_TO_PATH=System' -y
-          }
-        } catch {
-          Write-Host "Error during CMake setup: $_"
-          # 作为备份选项尝试安装便携版
-          choco install cmake.portable -y
-        }
-
-        # 验证安装
-        Write-Host "Verifying installations..."
-        try {
-          clang --version
-          cmake --version
-        } catch {
-          Write-Host "Error during verification: $_"
-          exit 1
-        }
-
-        # 设置环境变量
-        echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
     - name: Debug Environment
-      shell: bash
       run: |
         echo "Current directory: ${{ github.workspace }}"
         echo "CMake version:"
         cmake --version
         echo "BOOST_ROOT: ${{ env.BOOST_ROOT }}"
         echo "BOOST_LIBRARYDIR: ${{ env.BOOST_LIBRARYDIR }}"
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          pwsh -Command "Write-Host 'Contents of BOOST_ROOT:'; if (Test-Path $env:BOOST_ROOT) { Get-ChildItem $env:BOOST_ROOT } else { Write-Host 'BOOST_ROOT directory does not exist' }"
-          pwsh -Command "Write-Host 'Contents of BOOST_LIBRARYDIR:'; if (Test-Path $env:BOOST_LIBRARYDIR) { Get-ChildItem $env:BOOST_LIBRARYDIR } else { Write-Host 'BOOST_LIBRARYDIR directory does not exist' }"
-          pwsh -Command "Write-Host 'OpenCL Status:'; if (Test-Path 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA') { Get-ChildItem 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA' } else { Write-Host 'CUDA not found' }"
+        echo "Contents of BOOST_ROOT:"
+        if [ -d "$BOOST_ROOT" ]; then
+          ls -la "$BOOST_ROOT"
         else
-          echo "Contents of BOOST_ROOT:"
-          if [ -d "$BOOST_ROOT" ]; then
-            ls -la "$BOOST_ROOT"
-          else
-            echo "BOOST_ROOT directory does not exist"
-          fi
-          echo "Contents of BOOST_LIBRARYDIR:"
-          if [ -d "$BOOST_LIBRARYDIR" ]; then
-            ls -la "$BOOST_LIBRARYDIR"
-          else
-            echo "BOOST_LIBRARYDIR directory does not exist"
-          fi
-          echo "OpenCL Status:"
-          dpkg -l | grep -i opencl
+          echo "BOOST_ROOT directory does not exist"
         fi
+        echo "Contents of BOOST_LIBRARYDIR:"
+        if [ -d "$BOOST_LIBRARYDIR" ]; then
+          ls -la "$BOOST_LIBRARYDIR"
+        else
+          echo "BOOST_LIBRARYDIR directory does not exist"
+        fi
+        echo "OpenCL Status:"
+        dpkg -l | grep -i opencl
 
     - name: Configure CMake
       run: |
@@ -338,80 +90,86 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config Release
 
     - name: Run clang-tidy
-      shell: pwsh
       run: |
-        $ErrorActionPreference = "Stop"
+        set -e
 
-        if ($env:RUNNER_OS -eq "Windows") {
-            $clang_tidy_cmd = "clang-tidy.exe"
-            $opencl_include = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\include"
-        } else {
-            $clang_tidy_cmd = "clang-tidy-18"
-            $opencl_include = "/usr/include"
-        }
+        clang_tidy_cmd="clang-tidy-18"
+        opencl_include="/usr/include"
+        project_path="${{ github.workspace }}"
 
-        $project_path = "${{ github.workspace }}"
-        Write-Output "Using clang-tidy command: $clang_tidy_cmd"
-        Write-Output "Project path: $project_path"
-        Write-Output "OpenCL include path: $opencl_include"
+        echo "Using clang-tidy command: $clang_tidy_cmd"
+        echo "Project path: $project_path"
+        echo "OpenCL include path: $opencl_include"
 
         # Print clang-tidy version
-        & $clang_tidy_cmd --version
+        $clang_tidy_cmd --version
 
         # 定义排除目录
-        $exclude_dirs = @("test", "lib", "build", "boost_install", "boost_1_83_0")
+        exclude_dirs=("test" "lib" "build" "boost_install" "boost_1_83_0")
 
         # 获取所有源文件
-        $source_files = @()
-        Get-ChildItem -Path $project_path -Directory |
-            Where-Object { $exclude_dirs -notcontains $_.Name } |
-            ForEach-Object {
-            $source_files += Get-ChildItem -Path $_.FullName -Recurse -Include *.cpp,*.hpp
-            }
+        source_files=()
+        for dir in "$project_path"/*; do
+          if [[ -d "$dir" ]]; then
+            dir_name=$(basename "$dir")
+            skip_dir=false
+            for exclude in "${exclude_dirs[@]}"; do
+              if [[ "$dir_name" == "$exclude" ]]; then
+                skip_dir=true
+                break
+              fi
+            done
+
+            if [[ "$skip_dir" == false ]]; then
+              while IFS= read -r -d '' file; do
+                source_files+=("$file")
+              done < <(find "$dir" -type f \( -name "*.cpp" -o -name "*.hpp" \) -print0)
+            fi
+          fi
+        done
 
         # 添加根目录的源文件
-        $source_files += Get-ChildItem -Path $project_path -File -Include *.cpp,*.hpp
+        while IFS= read -r -d '' file; do
+          source_files+=("$file")
+        done < <(find "$project_path" -maxdepth 1 -type f \( -name "*.cpp" -o -name "*.hpp" \) -print0)
 
-        if ($source_files) {
-            Write-Output "Found source files:"
-            $source_files | ForEach-Object { Write-Output $_.FullName }
+        if [[ ${#source_files[@]} -gt 0 ]]; then
+          echo "Found source files:"
+          printf '%s\n' "${source_files[@]}"
 
-            foreach ($file in $source_files) {
-            if ($file.FullName -notlike "*boost_install*" -and
-                $file.FullName -notlike "*\lib\*" -and
-                $file.FullName -notlike "*boost_1_83_0*" -and
-                $file.FullName -notlike "*boost*") {
-                Write-Output "Running clang-tidy on $($file.FullName)"
-                & $clang_tidy_cmd $file.FullName `
-                -p="$project_path/build" `
-                --config-file="$project_path/.clang-tidy" `
-                --extra-arg=-std=c++20 `
-                --extra-arg=-I"$opencl_include" `
-                --extra-arg=-I"${{ env.BOOST_ROOT }}" `
-                --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" `
-                --extra-arg=-I"$project_path/lib/splog/include" `
-                --extra-arg=-I"$project_path" `
-                --checks="-*,modernize-*,readability-*,-modernize-use-trailing-return-type,-readability-magic-numbers,-readability-identifier-length"
-
-                if ($LASTEXITCODE -ne 0) {
-                Write-Output "Warning: Clang-tidy reported issues for $($file.FullName)"
+          for file in "${source_files[@]}"; do
+            if [[ "$file" != *"boost_install"* && \
+                  "$file" != *"/lib/"* && \
+                  "$file" != *"boost_1_83_0"* && \
+                  "$file" != *"boost"* ]]; then
+              echo "Running clang-tidy on $file"
+              $clang_tidy_cmd "$file" \
+                -p="$project_path/build" \
+                --config-file="$project_path/.clang-tidy" \
+                --extra-arg=-std=c++20 \
+                --extra-arg=-I"$opencl_include" \
+                --extra-arg=-I"${{ env.BOOST_ROOT }}" \
+                --extra-arg=-I"${{ env.BOOST_ROOT }}/boost" \
+                --extra-arg=-I"$project_path/lib/splog/include" \
+                --extra-arg=-I"$project_path" \
+                --checks="-*,modernize-*,readability-*,-modernize-use-trailing-return-type,-readability-magic-numbers,-readability-identifier-length" || {
+                echo "Warning: Clang-tidy reported issues for $file"
                 # 不退出，继续检查其他文件
-                # exit 1
-                }
-            }
-            }
-        } else {
-            Write-Output "No source files found in the project directories"
-            exit 1
-        }
+              }
+            fi
+          done
+        else
+          echo "No source files found in the project directories"
+          exit 1
+        fi
 
-        Write-Output "Clang-tidy check completed."
+        echo "Clang-tidy check completed."
 
     - name: Upload CMake logs
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: cmake-logs-${{ runner.os }}
+        name: cmake-logs-ubuntu
         path: |
           ${{github.workspace}}/build/CMakeFiles/CMakeOutput.log
           ${{github.workspace}}/build/CMakeFiles/CMakeError.log
@@ -419,5 +177,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-${{ runner.os }}
+        name: build-ubuntu
         path: ${{github.workspace}}/build
