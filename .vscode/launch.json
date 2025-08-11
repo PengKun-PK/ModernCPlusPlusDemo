@@ -3,26 +3,42 @@
     "configurations": [
         {
             "name": "Debug ModernCPlusPlusDemo",
-            "type": "cppvsdbg",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${command:cmake.buildType}/ModernCPlusPlusDemo.exe",
+            "program": "${workspaceFolder}/build/ModernCPlusPlusDemo",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/${command:cmake.buildType}",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
-            "console": "integratedTerminal",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
             "preLaunchTask": "Build"
         },
         {
             "name": "Debug Google Tests",
-            "type": "cppvsdbg",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/${command:cmake.buildType}/gtest_unitTest.exe",
+            "program": "${workspaceFolder}/build/gtest_unitTest",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/${command:cmake.buildType}",
+            "cwd": "${workspaceFolder}/build",
             "environment": [],
-            "console": "integratedTerminal",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
             "preLaunchTask": "Build"
         }
     ]

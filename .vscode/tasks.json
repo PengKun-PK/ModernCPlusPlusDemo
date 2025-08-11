@@ -39,7 +39,8 @@
             "command": "bash",
             "args": [
                 "-c",
-                "cd ${workspaceFolder}/build && cmake .. && cmake --build . --config ${input:buildType}"
+                // 這裡修改為使用 ${input:buildType} 變量
+                "cd ${workspaceFolder}/build && cmake -DCMAKE_BUILD_TYPE=${input:buildType} .. && cmake --build . --config ${input:buildType}"
             ],
             "dependsOn": "Create Build Folder",
             "group": {
@@ -56,7 +57,8 @@
             "command": "bash",
             "args": [
                 "-c",
-                "cd ${workspaceFolder}/build && cmake .. && cmake --build . --config ${input:buildType} --clean-first"
+                // 這裡也修改為使用 ${input:buildType} 變量
+                "cd ${workspaceFolder}/build && cmake -DCMAKE_BUILD_TYPE=${input:buildType} .. && cmake --build . --config ${input:buildType} --clean-first"
             ],
             "dependsOn": "Create Build Folder",
             "problemMatcher": [
