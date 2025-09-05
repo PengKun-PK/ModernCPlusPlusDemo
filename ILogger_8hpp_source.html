@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: SPDLogEx/ILogger.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_1464aa3687c5fe71cc931b9cdef679a8.html">SPDLogEx</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">ILogger.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="ILogger_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;sstream&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespaceTrace.html">   12</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceTrace.html">Trace</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// 日志级别枚举</span></div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">   16</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a04a75036e9d520bb983c5ed03b8d0182">trace</a>,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0aad42f6697b035b7580e4fef93be20b4d">debug</a>,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0acaf9b6b99962bf5c2264824231d7a40c">info</a>,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a1ea4c3ab05ee0c6d4de30740443769cb">warn</a>,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a56bd7107802ebe56c6918992f0608ec6">err</a>,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a7e85bcb66fb9a809d5ab4f62a8b8bea8">critical</a>,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a3262d48df5d75e3452f0f16b313b7808">off</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
+</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// 日志接口类</span></div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html">   28</a></span><span class="keyword">class </span><a class="code hl_class" href="classTrace_1_1ILogger.html">ILogger</a></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a45e46ee038d2e10167df150aedc1b155">   31</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a45e46ee038d2e10167df150aedc1b155">~ILogger</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#ac7eeb8e3285ff1e1af9cb285ad3edc76">   33</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#ac7eeb8e3285ff1e1af9cb285ad3edc76">setLevel</a>(<a class="code hl_enumeration" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level) = 0;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#aa00731addc9b5ae025e80de7efd29a85">   34</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#aa00731addc9b5ae025e80de7efd29a85">setFilePath</a>(<span class="keyword">const</span> std::string&amp; filePath) = 0;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a5026b151e054e1e24f62c2c74b023b74">   35</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a5026b151e054e1e24f62c2c74b023b74">log</a>(<a class="code hl_enumeration" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level, <span class="keyword">const</span> std::string&amp; message, <span class="keyword">const</span> std::string&amp; fileName, <span class="keywordtype">int</span> lineNumber) = 0;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#ab906073084ff030e407218e50fa7a205">   37</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#ab906073084ff030e407218e50fa7a205">trace</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a2a0383c01089152a8d04d739b5545e29">   38</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a2a0383c01089152a8d04d739b5545e29">debug</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a2c3d7c8985944072c220bd0b00012013">   39</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a2c3d7c8985944072c220bd0b00012013">info</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a8ebf729f8beed898515bdb32e1e616b4">   40</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a8ebf729f8beed898515bdb32e1e616b4">warn</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a472cd524612befda505bad614b56f0ef">   41</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#a472cd524612befda505bad614b56f0ef">error</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#ac37dc74069e1653dfb67f8f386ed5499">   42</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1ILogger.html#ac37dc74069e1653dfb67f8f386ed5499">critical</a>(<span class="keyword">const</span> std::string&amp; msg, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = <span class="stringliteral">&quot;&quot;</span>, <span class="keywordtype">int</span> line = 0) = 0;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// 获取日志记录器实例（惰性初始化）</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">static</span> std::shared_ptr&lt;ILogger&gt; <a class="code hl_function" href="classTrace_1_1ILogger.html#a5114f28220352cfc98ce7e5133513641">getLogger</a>(<span class="keyword">const</span> std::string&amp; logFilePath = <span class="stringliteral">&quot;logs/log.txt&quot;</span>);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// 禁用拷贝构造和赋值操作符</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a942a45de519036ed02f2831b4d1fc93a">   48</a></span>    <a class="code hl_function" href="classTrace_1_1ILogger.html#a942a45de519036ed02f2831b4d1fc93a">ILogger</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTrace_1_1ILogger.html">ILogger</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#aa7d02fd13e3545c7de16208ea0103aa6">   49</a></span>    <a class="code hl_class" href="classTrace_1_1ILogger.html">ILogger</a>&amp; <a class="code hl_function" href="classTrace_1_1ILogger.html#aa7d02fd13e3545c7de16208ea0103aa6">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTrace_1_1ILogger.html">ILogger</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// 允许子类构造</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classTrace_1_1ILogger.html#a7769df275478b58a9754a5ec5be71f87">   53</a></span>    <a class="code hl_function" href="classTrace_1_1ILogger.html#a7769df275478b58a9754a5ec5be71f87">ILogger</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>};</div>
+</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html">   56</a></span><span class="keyword">class </span><a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="}">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#af9858dcce6bbbceaa87711780dd838cb">   59</a></span>    <span class="keyword">explicit</span> <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#af9858dcce6bbbceaa87711780dd838cb">LoggerWrapper</a>(<span class="keyword">const</span> std::string&amp; filename)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        : <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>(<a class="code hl_class" href="classTrace_1_1ILogger.html">ILogger</a>::getLogger(filename))</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;setLevel(<a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0aad42f6697b035b7580e4fef93be20b4d">LogLevel::debug</a>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;setFilePath(<span class="stringliteral">&quot;Logs/&quot;</span> + <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a9f6251281da1606362143065ad0a61eb">getCurrentDateTime</a>() + <span class="stringliteral">&quot;.txt&quot;</span>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#a193a9971d3585f632e2f301b88268996">   66</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a193a9971d3585f632e2f301b88268996">log</a>(<span class="keyword">const</span> std::string&amp; message, <a class="code hl_enumeration" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">LogLevel</a> level = <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0acaf9b6b99962bf5c2264824231d7a40c">LogLevel::info</a>, <span class="keyword">const</span> <span class="keywordtype">char</span>* file = __FILE__,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>             <span class="keywordtype">int</span> line = __LINE__)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">switch</span> (level)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a04a75036e9d520bb983c5ed03b8d0182">LogLevel::trace</a>:</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;trace(message, file, line);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0aad42f6697b035b7580e4fef93be20b4d">LogLevel::debug</a>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;debug(message, file, line);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0acaf9b6b99962bf5c2264824231d7a40c">LogLevel::info</a>:</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;info(message, file, line);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a1ea4c3ab05ee0c6d4de30740443769cb">LogLevel::warn</a>:</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;warn(message, file, line);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a56bd7107802ebe56c6918992f0608ec6">LogLevel::err</a>:</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;error(message, file, line);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a7e85bcb66fb9a809d5ab4f62a8b8bea8">LogLevel::critical</a>:</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;critical(message, file, line);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordflow">default</span>:</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>-&gt;info(message, file, line);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">// 禁用拷贝构造和赋值操作符</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#a65c60bb4d6626394dce0f72ea1e7d621">   95</a></span>    <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a65c60bb4d6626394dce0f72ea1e7d621">LoggerWrapper</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#a168b95c34532bf7916381f4d0b716bc7">   96</a></span>    <a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp; <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a168b95c34532bf7916381f4d0b716bc7">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="comment">// 允许移动构造和赋值</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#a882fb74cdbfd52cda92ec1b25a9c4c7c">   99</a></span>    <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a882fb74cdbfd52cda92ec1b25a9c4c7c">LoggerWrapper</a>(<a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#aa56ba45743f11bb87d7a917253844337">  100</a></span>    <a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp; <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#aa56ba45743f11bb87d7a917253844337">operator=</a>(<a class="code hl_class" href="classTrace_1_1LoggerWrapper.html">LoggerWrapper</a>&amp;&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">  103</a></span>    std::shared_ptr&lt;ILogger&gt; <a class="code hl_variable" href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">m_logger</a>;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="foldopen" id="foldopen00105" data-start="{" data-end="}">
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="classTrace_1_1LoggerWrapper.html#a9f6251281da1606362143065ad0a61eb">  105</a></span>    <span class="keyword">static</span> std::string <a class="code hl_function" href="classTrace_1_1LoggerWrapper.html#a9f6251281da1606362143065ad0a61eb">getCurrentDateTime</a>()</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">auto</span> now = std::chrono::system_clock::now();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keyword">auto</span> in_time_t = std::chrono::system_clock::to_time_t(now);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        std::stringstream ss;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        ss &lt;&lt; std::put_time(std::localtime(&amp;in_time_t), <span class="stringliteral">&quot;%Y_%m_%d_%H_%M_%S&quot;</span>);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">return</span> ss.str();</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
+</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>};</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="ILogger_8hpp.html#a0c30634de010bc24deacc2cb5a123bec">  115</a></span><span class="preprocessor">#define LOG_INFO(logger, message) logger.log(message, LogLevel::info, __FILE__, __LINE__)</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="ILogger_8hpp.html#adb268ee8276a4b312d31ed9db04e9926">  116</a></span><span class="preprocessor">#define LOG_DEBUG(logger, message) logger.log(message, LogLevel::debug, __FILE__, __LINE__)</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="ILogger_8hpp.html#a28dc2131837f1e081fa1e29e430bd267">  117</a></span><span class="preprocessor">#define LOG_WARN(logger, message) logger.log(message, LogLevel::warn, __FILE__, __LINE__)</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="ILogger_8hpp.html#ab3dff3a4b05f59968670e28caf19134b">  118</a></span><span class="preprocessor">#define LOG_ERROR(logger, message) logger.log(message, LogLevel::err, __FILE__, __LINE__)</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="ILogger_8hpp.html#a656f8a5712181b7a2d41cce4aae27b81">  119</a></span><span class="preprocessor">#define LOG_CRITICAL(logger, message) logger.log(message, LogLevel::critical, __FILE__, __LINE__)</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>};  <span class="comment">// namespace Trace</span></div>
+</div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html"><div class="ttname"><a href="classTrace_1_1ILogger.html">Trace::ILogger</a></div><div class="ttdef"><b>Definition</b> ILogger.hpp:29</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a2a0383c01089152a8d04d739b5545e29"><div class="ttname"><a href="classTrace_1_1ILogger.html#a2a0383c01089152a8d04d739b5545e29">Trace::ILogger::debug</a></div><div class="ttdeci">virtual void debug(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a2c3d7c8985944072c220bd0b00012013"><div class="ttname"><a href="classTrace_1_1ILogger.html#a2c3d7c8985944072c220bd0b00012013">Trace::ILogger::info</a></div><div class="ttdeci">virtual void info(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a45e46ee038d2e10167df150aedc1b155"><div class="ttname"><a href="classTrace_1_1ILogger.html#a45e46ee038d2e10167df150aedc1b155">Trace::ILogger::~ILogger</a></div><div class="ttdeci">virtual ~ILogger()=default</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a472cd524612befda505bad614b56f0ef"><div class="ttname"><a href="classTrace_1_1ILogger.html#a472cd524612befda505bad614b56f0ef">Trace::ILogger::error</a></div><div class="ttdeci">virtual void error(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a5026b151e054e1e24f62c2c74b023b74"><div class="ttname"><a href="classTrace_1_1ILogger.html#a5026b151e054e1e24f62c2c74b023b74">Trace::ILogger::log</a></div><div class="ttdeci">virtual void log(LogLevel level, const std::string &amp;message, const std::string &amp;fileName, int lineNumber)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a5114f28220352cfc98ce7e5133513641"><div class="ttname"><a href="classTrace_1_1ILogger.html#a5114f28220352cfc98ce7e5133513641">Trace::ILogger::getLogger</a></div><div class="ttdeci">static std::shared_ptr&lt; ILogger &gt; getLogger(const std::string &amp;logFilePath=&quot;logs/log.txt&quot;)</div><div class="ttdef"><b>Definition</b> ILogger.cpp:6</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a7769df275478b58a9754a5ec5be71f87"><div class="ttname"><a href="classTrace_1_1ILogger.html#a7769df275478b58a9754a5ec5be71f87">Trace::ILogger::ILogger</a></div><div class="ttdeci">ILogger()=default</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a8ebf729f8beed898515bdb32e1e616b4"><div class="ttname"><a href="classTrace_1_1ILogger.html#a8ebf729f8beed898515bdb32e1e616b4">Trace::ILogger::warn</a></div><div class="ttdeci">virtual void warn(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_a942a45de519036ed02f2831b4d1fc93a"><div class="ttname"><a href="classTrace_1_1ILogger.html#a942a45de519036ed02f2831b4d1fc93a">Trace::ILogger::ILogger</a></div><div class="ttdeci">ILogger(const ILogger &amp;)=delete</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_aa00731addc9b5ae025e80de7efd29a85"><div class="ttname"><a href="classTrace_1_1ILogger.html#aa00731addc9b5ae025e80de7efd29a85">Trace::ILogger::setFilePath</a></div><div class="ttdeci">virtual void setFilePath(const std::string &amp;filePath)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_aa7d02fd13e3545c7de16208ea0103aa6"><div class="ttname"><a href="classTrace_1_1ILogger.html#aa7d02fd13e3545c7de16208ea0103aa6">Trace::ILogger::operator=</a></div><div class="ttdeci">ILogger &amp; operator=(const ILogger &amp;)=delete</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_ab906073084ff030e407218e50fa7a205"><div class="ttname"><a href="classTrace_1_1ILogger.html#ab906073084ff030e407218e50fa7a205">Trace::ILogger::trace</a></div><div class="ttdeci">virtual void trace(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_ac37dc74069e1653dfb67f8f386ed5499"><div class="ttname"><a href="classTrace_1_1ILogger.html#ac37dc74069e1653dfb67f8f386ed5499">Trace::ILogger::critical</a></div><div class="ttdeci">virtual void critical(const std::string &amp;msg, const char *file=&quot;&quot;, int line=0)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1ILogger_html_ac7eeb8e3285ff1e1af9cb285ad3edc76"><div class="ttname"><a href="classTrace_1_1ILogger.html#ac7eeb8e3285ff1e1af9cb285ad3edc76">Trace::ILogger::setLevel</a></div><div class="ttdeci">virtual void setLevel(LogLevel level)=0</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html">Trace::LoggerWrapper</a></div><div class="ttdef"><b>Definition</b> ILogger.hpp:57</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_a168b95c34532bf7916381f4d0b716bc7"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#a168b95c34532bf7916381f4d0b716bc7">Trace::LoggerWrapper::operator=</a></div><div class="ttdeci">LoggerWrapper &amp; operator=(const LoggerWrapper &amp;)=delete</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_a193a9971d3585f632e2f301b88268996"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#a193a9971d3585f632e2f301b88268996">Trace::LoggerWrapper::log</a></div><div class="ttdeci">void log(const std::string &amp;message, LogLevel level=LogLevel::info, const char *file=__FILE__, int line=__LINE__)</div><div class="ttdef"><b>Definition</b> ILogger.hpp:66</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_a65c60bb4d6626394dce0f72ea1e7d621"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#a65c60bb4d6626394dce0f72ea1e7d621">Trace::LoggerWrapper::LoggerWrapper</a></div><div class="ttdeci">LoggerWrapper(const LoggerWrapper &amp;)=delete</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_a882fb74cdbfd52cda92ec1b25a9c4c7c"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#a882fb74cdbfd52cda92ec1b25a9c4c7c">Trace::LoggerWrapper::LoggerWrapper</a></div><div class="ttdeci">LoggerWrapper(LoggerWrapper &amp;&amp;)=default</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_a9f6251281da1606362143065ad0a61eb"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#a9f6251281da1606362143065ad0a61eb">Trace::LoggerWrapper::getCurrentDateTime</a></div><div class="ttdeci">static std::string getCurrentDateTime()</div><div class="ttdef"><b>Definition</b> ILogger.hpp:105</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_aa1e06cfcba82794f08c6c6fc52488061"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#aa1e06cfcba82794f08c6c6fc52488061">Trace::LoggerWrapper::m_logger</a></div><div class="ttdeci">std::shared_ptr&lt; ILogger &gt; m_logger</div><div class="ttdef"><b>Definition</b> ILogger.hpp:103</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_aa56ba45743f11bb87d7a917253844337"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#aa56ba45743f11bb87d7a917253844337">Trace::LoggerWrapper::operator=</a></div><div class="ttdeci">LoggerWrapper &amp; operator=(LoggerWrapper &amp;&amp;)=default</div></div>
+<div class="ttc" id="aclassTrace_1_1LoggerWrapper_html_af9858dcce6bbbceaa87711780dd838cb"><div class="ttname"><a href="classTrace_1_1LoggerWrapper.html#af9858dcce6bbbceaa87711780dd838cb">Trace::LoggerWrapper::LoggerWrapper</a></div><div class="ttdeci">LoggerWrapper(const std::string &amp;filename)</div><div class="ttdef"><b>Definition</b> ILogger.hpp:59</div></div>
+<div class="ttc" id="anamespaceTrace_html"><div class="ttname"><a href="namespaceTrace.html">Trace</a></div><div class="ttdef"><b>Definition</b> ILogger.hpp:13</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0">Trace::LogLevel</a></div><div class="ttdeci">LogLevel</div><div class="ttdef"><b>Definition</b> ILogger.hpp:17</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0a04a75036e9d520bb983c5ed03b8d0182"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a04a75036e9d520bb983c5ed03b8d0182">Trace::LogLevel::trace</a></div><div class="ttdeci">@ trace</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0a1ea4c3ab05ee0c6d4de30740443769cb"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a1ea4c3ab05ee0c6d4de30740443769cb">Trace::LogLevel::warn</a></div><div class="ttdeci">@ warn</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0a3262d48df5d75e3452f0f16b313b7808"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a3262d48df5d75e3452f0f16b313b7808">Trace::LogLevel::off</a></div><div class="ttdeci">@ off</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0a56bd7107802ebe56c6918992f0608ec6"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a56bd7107802ebe56c6918992f0608ec6">Trace::LogLevel::err</a></div><div class="ttdeci">@ err</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0a7e85bcb66fb9a809d5ab4f62a8b8bea8"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0a7e85bcb66fb9a809d5ab4f62a8b8bea8">Trace::LogLevel::critical</a></div><div class="ttdeci">@ critical</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0aad42f6697b035b7580e4fef93be20b4d"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0aad42f6697b035b7580e4fef93be20b4d">Trace::LogLevel::debug</a></div><div class="ttdeci">@ debug</div></div>
+<div class="ttc" id="anamespaceTrace_html_a0bb67a6cbce7cc78b56628b27419b1b0acaf9b6b99962bf5c2264824231d7a40c"><div class="ttname"><a href="namespaceTrace.html#a0bb67a6cbce7cc78b56628b27419b1b0acaf9b6b99962bf5c2264824231d7a40c">Trace::LogLevel::info</a></div><div class="ttdeci">@ info</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>
