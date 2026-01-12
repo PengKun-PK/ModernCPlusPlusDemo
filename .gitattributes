@@ -1,0 +1,26 @@
+# 1. 默认设置：所有文本文件自动处理换行符，检出时统一为 LF
+* text=auto eol=lf
+
+# 2. 明确指定常见的源代码文件为文本
+*.cpp text
+*.h text
+*.hpp text
+*.cmake text
+*.txt text
+*.yml text
+*.yaml text
+*.md text
+
+# 3. 核心：强制二进制文件不进行转换（防止损坏）
+# 这些文件如果按文本处理，换行符转换会直接导致文件损坏无法运行
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.bin binary
+*.pyc binary
+
+# 4. Windows 特有文件保持不变（可选）
+*.sln text eol=crlf
+*.vcxproj text eol=crlf
