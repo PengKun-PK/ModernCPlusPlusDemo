@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: Subscriber/Attribute.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_b2071270a301d8bc93e209439b8ed1f1.html">Subscriber</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">Attribute.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="Attribute_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="Subscriber_8hpp.html">Subscriber.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="foldopen" id="foldopen00006" data-start="{" data-end="}">
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="namespacecomm.html">    6</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecomm.html">comm</a></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt;</div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="classcomm_1_1AttributeSync.html">AttributeSync</a> : <span class="keyword">public</span> <a class="code hl_class" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;ValueType&gt;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a05032a519986626c1e9504df16dcacb8">   13</a></span>    <span class="keyword">using </span><a class="code hl_class" href="classcomm_1_1Subscribable.html">Interface</a> = <a class="code hl_class" href="classcomm_1_1Subscribable.html">Subscribable&lt;ValueType&gt;</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a42dae9f03131b426f235d3750feb907a">   14</a></span>    <span class="keyword">using </span><a class="code hl_class" href="classcomm_1_1AttributeSync.html">Sync</a> = <a class="code hl_class" href="classcomm_1_1AttributeSync.html">AttributeSync&lt;ValueType&gt;</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a9b5d4d07cec9560f6c6b219875e0f6b1">   16</a></span>    <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a9b5d4d07cec9560f6c6b219875e0f6b1">AttributeSync</a>(<span class="keyword">const</span> ValueType&amp; defaultValue = ValueType(), <span class="keywordtype">bool</span> notifyIfNotChanged = <span class="keyword">false</span>)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        : <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">m_value</a>(defaultValue)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        , <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#abf85d0cafc5bc5141de57d80fe7c08da">m_notifyIfNotChanged</a>(notifyIfNotChanged)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    }</div>
+</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">   22</a></span>    ValueType <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">value</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        std::shared_lock lock(<a class="code hl_variable" href="classcomm_1_1AttributeSync.html#afc5cd3b101d560a12531088b60df5899">m_mutex</a>);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">m_value</a>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a66ed8f76304089350b62cac45cd7522a">   28</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a66ed8f76304089350b62cac45cd7522a">setValue</a>(<span class="keyword">const</span> ValueType&amp; <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">value</a>)</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        std::unique_lock lock(<a class="code hl_variable" href="classcomm_1_1AttributeSync.html#afc5cd3b101d560a12531088b60df5899">m_mutex</a>);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">m_value</a> == <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">value</a> &amp;&amp; !<a class="code hl_variable" href="classcomm_1_1AttributeSync.html#abf85d0cafc5bc5141de57d80fe7c08da">m_notifyIfNotChanged</a>)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">m_value</a> = <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">value</a>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        lock.unlock();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a19194ebad3c20ca05a049189c22de0d7">notify</a>();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    }</div>
+</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#a19194ebad3c20ca05a049189c22de0d7">   42</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcomm_1_1AttributeSync.html#a19194ebad3c20ca05a049189c22de0d7">notify</a>()</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        this-&gt;<a class="code hl_function" href="classcomm_1_1Subscribable.html#a34040cfc21bd57e0621abbca8391f9f5">notifySync</a>(<a class="code hl_function" href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">value</a>());</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#afc5cd3b101d560a12531088b60df5899">   48</a></span>    <span class="keyword">mutable</span> std::shared_mutex <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#afc5cd3b101d560a12531088b60df5899">m_mutex</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">   49</a></span>    ValueType <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">m_value</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classcomm_1_1AttributeSync.html#abf85d0cafc5bc5141de57d80fe7c08da">   50</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="classcomm_1_1AttributeSync.html#abf85d0cafc5bc5141de57d80fe7c08da">m_notifyIfNotChanged</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> ValueType&gt;</div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="};">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html">   54</a></span><span class="keyword">class </span><a class="code hl_class" href="classcomm_1_1Attribute.html">Attribute</a> : <span class="keyword">public</span> <a class="code hl_class" href="classcomm_1_1Subscribable.html">Subscribable</a>&lt;ValueType&gt;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a528c2e8f3bfa302aadf880638dcbf85a">   57</a></span>    <span class="keyword">using </span><a class="code hl_class" href="classcomm_1_1Subscribable.html">Interface</a> = <a class="code hl_class" href="classcomm_1_1Subscribable.html">Subscribable&lt;ValueType&gt;</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a885e96cb79372d449e45e42807429e82">   58</a></span>    <span class="keyword">using </span><a class="code hl_class" href="classcomm_1_1AttributeSync.html">Sync</a> = <a class="code hl_class" href="classcomm_1_1AttributeSync.html">AttributeSync&lt;ValueType&gt;</a>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#ae05b0ca9248d11ded8fa23b870b717a3">   60</a></span>    <a class="code hl_function" href="classcomm_1_1Attribute.html#ae05b0ca9248d11ded8fa23b870b717a3">Attribute</a>(<a class="code hl_class" href="classcomm_1_1IInvokeStrategy.html">IInvokeStrategy</a>&amp; strategy, <span class="keyword">const</span> ValueType&amp; defaultValue = ValueType(), <span class="keywordtype">bool</span> notifyIfNotChanged = <span class="keyword">false</span>)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        : <a class="code hl_variable" href="classcomm_1_1Attribute.html#a9889f453ab95971bd0c752d42838e605">m_strategy</a>(strategy)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        , <a class="code hl_variable" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">m_value</a>(defaultValue)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        , <a class="code hl_variable" href="classcomm_1_1Attribute.html#a2038188708976762aa29f51cae7a59d9">m_notifyIfNotChanged</a>(notifyIfNotChanged)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    }</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="}">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">   67</a></span>    ValueType <a class="code hl_function" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">value</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        std::shared_lock lock(<a class="code hl_variable" href="classcomm_1_1Attribute.html#af48e680c64e4980c7c69096c39ff912f">m_mutex</a>);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">m_value</a>;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
+</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#afa8d19a884a02460a4b765f6b9cec91a">   73</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classcomm_1_1Attribute.html#afa8d19a884a02460a4b765f6b9cec91a">setValue</a>(<span class="keyword">const</span> ValueType&amp; <a class="code hl_function" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">value</a>)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        std::unique_lock lock(<a class="code hl_variable" href="classcomm_1_1Attribute.html#af48e680c64e4980c7c69096c39ff912f">m_mutex</a>);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">m_value</a> == <a class="code hl_function" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">value</a> &amp;&amp; !<a class="code hl_variable" href="classcomm_1_1Attribute.html#a2038188708976762aa29f51cae7a59d9">m_notifyIfNotChanged</a>)</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        }</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <a class="code hl_variable" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">m_value</a> = <a class="code hl_function" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">value</a>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        lock.unlock();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_function" href="classcomm_1_1Attribute.html#af2610ea0b3a8354fac8555665dc215f6">notify</a>();</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
+</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="keyword">protected</span>:</div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#af2610ea0b3a8354fac8555665dc215f6">   87</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcomm_1_1Attribute.html#af2610ea0b3a8354fac8555665dc215f6">notify</a>()</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        this-&gt;<a class="code hl_function" href="classcomm_1_1Subscribable.html#a6532f4ab2baf2f36cb6d26fe02b893ae">notifyAsync</a>(<a class="code hl_variable" href="classcomm_1_1Attribute.html#a9889f453ab95971bd0c752d42838e605">m_strategy</a>, <a class="code hl_function" href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">value</a>());</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    }</div>
+</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a9889f453ab95971bd0c752d42838e605">   93</a></span>    <a class="code hl_class" href="classcomm_1_1IInvokeStrategy.html">IInvokeStrategy</a>&amp; <a class="code hl_variable" href="classcomm_1_1Attribute.html#a9889f453ab95971bd0c752d42838e605">m_strategy</a>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#af48e680c64e4980c7c69096c39ff912f">   94</a></span>    <span class="keyword">mutable</span> std::shared_mutex <a class="code hl_variable" href="classcomm_1_1Attribute.html#af48e680c64e4980c7c69096c39ff912f">m_mutex</a>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">   95</a></span>    ValueType <a class="code hl_variable" href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">m_value</a>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classcomm_1_1Attribute.html#a2038188708976762aa29f51cae7a59d9">   96</a></span>    <span class="keywordtype">bool</span> <a class="code hl_variable" href="classcomm_1_1Attribute.html#a2038188708976762aa29f51cae7a59d9">m_notifyIfNotChanged</a>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>};</div>
+</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="};">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html">   99</a></span><span class="keyword">class </span><a class="code hl_class" href="classcomm_1_1Subscriptions.html">Subscriptions</a></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>{</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#aa85dd3a9242ac81e4a801a76563afab9">  102</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classcomm_1_1Subscriptions.html#aa85dd3a9242ac81e4a801a76563afab9">add</a>(<span class="keyword">typename</span> <a class="code hl_typedef" href="classcomm_1_1Subscribable.html#a699be5d8b5fdf0f5e2d5a6c637315273">Subscribable&lt;&gt;::SubscriptionPtr</a> subscription)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">m_mutex</a>);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <a class="code hl_variable" href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">m_subscriptions</a>.push_back(std::move(subscription));</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    }</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> SubscribableType&gt;</div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#a8b3265eb354ce0febbc2878ad64fbf81">  109</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classcomm_1_1Subscriptions.html#a8b3265eb354ce0febbc2878ad64fbf81">subscribe</a>(SubscribableType&amp; subscribable, <span class="keyword">typename</span> SubscribableType::Listener listener)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <a class="code hl_function" href="classcomm_1_1Subscriptions.html#aa85dd3a9242ac81e4a801a76563afab9">add</a>(subscribable.subscribe(std::move(listener)));</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
+</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="foldopen" id="foldopen00114" data-start="{" data-end="}">
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#a9a671e1c9938532f4d5a825c2299d1a8">  114</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classcomm_1_1Subscriptions.html#a9a671e1c9938532f4d5a825c2299d1a8">unsubscribe</a>()</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">m_mutex</a>);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <a class="code hl_variable" href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">m_subscriptions</a>.clear();</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#a671093086376f47ba4d68f58301bc09a">  120</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_function" href="classcomm_1_1Subscriptions.html#a671093086376f47ba4d68f58301bc09a">size</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        std::lock_guard&lt;std::mutex&gt; lock(<a class="code hl_variable" href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">m_mutex</a>);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">m_subscriptions</a>.size();</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">  127</a></span>    <span class="keyword">mutable</span> std::mutex <a class="code hl_variable" href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">m_mutex</a>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">  128</a></span>    std::vector&lt;typename Subscribable&lt;&gt;::SubscriptionPtr&gt; <a class="code hl_variable" href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">m_subscriptions</a>;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>};</div>
+</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>}  <span class="comment">// namespace comm</span></div>
+</div>
+<div class="ttc" id="aSubscriber_8hpp_html"><div class="ttname"><a href="Subscriber_8hpp.html">Subscriber.hpp</a></div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html"><div class="ttname"><a href="classcomm_1_1AttributeSync.html">comm::AttributeSync</a></div><div class="ttdef"><b>Definition</b> Attribute.hpp:11</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_a19194ebad3c20ca05a049189c22de0d7"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#a19194ebad3c20ca05a049189c22de0d7">comm::AttributeSync::notify</a></div><div class="ttdeci">virtual void notify()</div><div class="ttdef"><b>Definition</b> Attribute.hpp:42</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_a668f3aa89ef94edf247f2714027d614e"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#a668f3aa89ef94edf247f2714027d614e">comm::AttributeSync::value</a></div><div class="ttdeci">ValueType value() const</div><div class="ttdef"><b>Definition</b> Attribute.hpp:22</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_a66ed8f76304089350b62cac45cd7522a"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#a66ed8f76304089350b62cac45cd7522a">comm::AttributeSync::setValue</a></div><div class="ttdeci">bool setValue(const ValueType &amp;value)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:28</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_a9b5d4d07cec9560f6c6b219875e0f6b1"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#a9b5d4d07cec9560f6c6b219875e0f6b1">comm::AttributeSync::AttributeSync</a></div><div class="ttdeci">AttributeSync(const ValueType &amp;defaultValue=ValueType(), bool notifyIfNotChanged=false)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:16</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_ab478f01ebf21b3581d7e98ecf7dc9018"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#ab478f01ebf21b3581d7e98ecf7dc9018">comm::AttributeSync::m_value</a></div><div class="ttdeci">ValueType m_value</div><div class="ttdef"><b>Definition</b> Attribute.hpp:49</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_abf85d0cafc5bc5141de57d80fe7c08da"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#abf85d0cafc5bc5141de57d80fe7c08da">comm::AttributeSync::m_notifyIfNotChanged</a></div><div class="ttdeci">bool m_notifyIfNotChanged</div><div class="ttdef"><b>Definition</b> Attribute.hpp:50</div></div>
+<div class="ttc" id="aclasscomm_1_1AttributeSync_html_afc5cd3b101d560a12531088b60df5899"><div class="ttname"><a href="classcomm_1_1AttributeSync.html#afc5cd3b101d560a12531088b60df5899">comm::AttributeSync::m_mutex</a></div><div class="ttdeci">std::shared_mutex m_mutex</div><div class="ttdef"><b>Definition</b> Attribute.hpp:48</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html"><div class="ttname"><a href="classcomm_1_1Attribute.html">comm::Attribute</a></div><div class="ttdef"><b>Definition</b> Attribute.hpp:55</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_a2038188708976762aa29f51cae7a59d9"><div class="ttname"><a href="classcomm_1_1Attribute.html#a2038188708976762aa29f51cae7a59d9">comm::Attribute::m_notifyIfNotChanged</a></div><div class="ttdeci">bool m_notifyIfNotChanged</div><div class="ttdef"><b>Definition</b> Attribute.hpp:96</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_a2844aebff7752b3127892932ca1deb05"><div class="ttname"><a href="classcomm_1_1Attribute.html#a2844aebff7752b3127892932ca1deb05">comm::Attribute::value</a></div><div class="ttdeci">ValueType value() const</div><div class="ttdef"><b>Definition</b> Attribute.hpp:67</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_a7dc703da5ecf8c4103333db33f6869f7"><div class="ttname"><a href="classcomm_1_1Attribute.html#a7dc703da5ecf8c4103333db33f6869f7">comm::Attribute::m_value</a></div><div class="ttdeci">ValueType m_value</div><div class="ttdef"><b>Definition</b> Attribute.hpp:95</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_a9889f453ab95971bd0c752d42838e605"><div class="ttname"><a href="classcomm_1_1Attribute.html#a9889f453ab95971bd0c752d42838e605">comm::Attribute::m_strategy</a></div><div class="ttdeci">IInvokeStrategy &amp; m_strategy</div><div class="ttdef"><b>Definition</b> Attribute.hpp:93</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_ae05b0ca9248d11ded8fa23b870b717a3"><div class="ttname"><a href="classcomm_1_1Attribute.html#ae05b0ca9248d11ded8fa23b870b717a3">comm::Attribute::Attribute</a></div><div class="ttdeci">Attribute(IInvokeStrategy &amp;strategy, const ValueType &amp;defaultValue=ValueType(), bool notifyIfNotChanged=false)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:60</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_af2610ea0b3a8354fac8555665dc215f6"><div class="ttname"><a href="classcomm_1_1Attribute.html#af2610ea0b3a8354fac8555665dc215f6">comm::Attribute::notify</a></div><div class="ttdeci">virtual void notify()</div><div class="ttdef"><b>Definition</b> Attribute.hpp:87</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_af48e680c64e4980c7c69096c39ff912f"><div class="ttname"><a href="classcomm_1_1Attribute.html#af48e680c64e4980c7c69096c39ff912f">comm::Attribute::m_mutex</a></div><div class="ttdeci">std::shared_mutex m_mutex</div><div class="ttdef"><b>Definition</b> Attribute.hpp:94</div></div>
+<div class="ttc" id="aclasscomm_1_1Attribute_html_afa8d19a884a02460a4b765f6b9cec91a"><div class="ttname"><a href="classcomm_1_1Attribute.html#afa8d19a884a02460a4b765f6b9cec91a">comm::Attribute::setValue</a></div><div class="ttdeci">bool setValue(const ValueType &amp;value)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:73</div></div>
+<div class="ttc" id="aclasscomm_1_1IInvokeStrategy_html"><div class="ttname"><a href="classcomm_1_1IInvokeStrategy.html">comm::IInvokeStrategy</a></div><div class="ttdef"><b>Definition</b> Subscriber.hpp:15</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html"><div class="ttname"><a href="classcomm_1_1Subscribable.html">comm::Subscribable</a></div><div class="ttdef"><b>Definition</b> Subscriber.hpp:23</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html_a34040cfc21bd57e0621abbca8391f9f5"><div class="ttname"><a href="classcomm_1_1Subscribable.html#a34040cfc21bd57e0621abbca8391f9f5">comm::Subscribable&lt; ValueType &gt;::notifySync</a></div><div class="ttdeci">void notifySync(const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition</b> Subscriber.hpp:78</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html_a6532f4ab2baf2f36cb6d26fe02b893ae"><div class="ttname"><a href="classcomm_1_1Subscribable.html#a6532f4ab2baf2f36cb6d26fe02b893ae">comm::Subscribable&lt; ValueType &gt;::notifyAsync</a></div><div class="ttdeci">void notifyAsync(IInvokeStrategy &amp;strategy, const Arguments &amp;... arguments) const</div><div class="ttdef"><b>Definition</b> Subscriber.hpp:100</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscribable_html_a699be5d8b5fdf0f5e2d5a6c637315273"><div class="ttname"><a href="classcomm_1_1Subscribable.html#a699be5d8b5fdf0f5e2d5a6c637315273">comm::Subscribable::SubscriptionPtr</a></div><div class="ttdeci">std::shared_ptr&lt; Subscription &gt; SubscriptionPtr</div><div class="ttdef"><b>Definition</b> Subscriber.hpp:28</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html"><div class="ttname"><a href="classcomm_1_1Subscriptions.html">comm::Subscriptions</a></div><div class="ttdef"><b>Definition</b> Attribute.hpp:100</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_a671093086376f47ba4d68f58301bc09a"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#a671093086376f47ba4d68f58301bc09a">comm::Subscriptions::size</a></div><div class="ttdeci">size_t size() const</div><div class="ttdef"><b>Definition</b> Attribute.hpp:120</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_a831b070362a1965e477610ab0f283225"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#a831b070362a1965e477610ab0f283225">comm::Subscriptions::m_subscriptions</a></div><div class="ttdeci">std::vector&lt; typename Subscribable&lt;&gt;::SubscriptionPtr &gt; m_subscriptions</div><div class="ttdef"><b>Definition</b> Attribute.hpp:128</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_a8b3265eb354ce0febbc2878ad64fbf81"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#a8b3265eb354ce0febbc2878ad64fbf81">comm::Subscriptions::subscribe</a></div><div class="ttdeci">void subscribe(SubscribableType &amp;subscribable, typename SubscribableType::Listener listener)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:109</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_a9a671e1c9938532f4d5a825c2299d1a8"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#a9a671e1c9938532f4d5a825c2299d1a8">comm::Subscriptions::unsubscribe</a></div><div class="ttdeci">void unsubscribe()</div><div class="ttdef"><b>Definition</b> Attribute.hpp:114</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_aa85dd3a9242ac81e4a801a76563afab9"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#aa85dd3a9242ac81e4a801a76563afab9">comm::Subscriptions::add</a></div><div class="ttdeci">void add(typename Subscribable&lt;&gt;::SubscriptionPtr subscription)</div><div class="ttdef"><b>Definition</b> Attribute.hpp:102</div></div>
+<div class="ttc" id="aclasscomm_1_1Subscriptions_html_acab75d08a990d4c4fbd5e4a6a6a27fde"><div class="ttname"><a href="classcomm_1_1Subscriptions.html#acab75d08a990d4c4fbd5e4a6a6a27fde">comm::Subscriptions::m_mutex</a></div><div class="ttdeci">std::mutex m_mutex</div><div class="ttdef"><b>Definition</b> Attribute.hpp:127</div></div>
+<div class="ttc" id="anamespacecomm_html"><div class="ttname"><a href="namespacecomm.html">comm</a></div><div class="ttdef"><b>Definition</b> Attribute.hpp:7</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

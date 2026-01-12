@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: ObjectFactory类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">类</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pri-methods">Private 成员函数</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="#friends">友元</a> &#124;
+<a href="classObjectFactory-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">ObjectFactory类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="ObjectFactory_8hpp_source.html">ObjectFactory.hpp</a>&gt;</code></p>
+<div class="dynheader">
+类 ObjectFactory 继承关系图:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classObjectFactory.png" usemap="#ObjectFactory_map" alt=""/>
+  <map id="ObjectFactory_map" name="ObjectFactory_map">
+<area href="classSingleton.html" alt="Singleton&lt; ObjectFactory &gt;" shape="rect" coords="0,0,169,24"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+类</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObjectFactory_1_1Deleter.html">Deleter</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObjectFactory_1_1ObjectInfo.html">ObjectInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structObjectFactory_1_1TypeInfo.html">TypeInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:a1b99e007876c1ca1a996147eb2ed6aef" id="r_a1b99e007876c1ca1a996147eb2ed6aef"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
+<tr class="memitem:a1b99e007876c1ca1a996147eb2ed6aef"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a1b99e007876c1ca1a996147eb2ed6aef">create</a> (Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a1b99e007876c1ca1a996147eb2ed6aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4d451c37a6490833c6d82e3f2fc278e" id="r_ad4d451c37a6490833c6d82e3f2fc278e"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
+<tr class="memitem:ad4d451c37a6490833c6d82e3f2fc278e"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#ad4d451c37a6490833c6d82e3f2fc278e">createByName</a> (const std::string &amp;typeName, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ad4d451c37a6490833c6d82e3f2fc278e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a332d338411e4ed90a449dee52626afd0" id="r_a332d338411e4ed90a449dee52626afd0"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a332d338411e4ed90a449dee52626afd0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a332d338411e4ed90a449dee52626afd0">registerType</a> (const std::string &amp;typeName)</td></tr>
+<tr class="separator:a332d338411e4ed90a449dee52626afd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44a1cf25781d225355864d6d0bcc127b" id="r_a44a1cf25781d225355864d6d0bcc127b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a44a1cf25781d225355864d6d0bcc127b"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T * &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a44a1cf25781d225355864d6d0bcc127b">getObjects</a> () const</td></tr>
+<tr class="separator:a44a1cf25781d225355864d6d0bcc127b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae528e3201aa37309ec8a23df89ab92e8" id="r_ae528e3201aa37309ec8a23df89ab92e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#ae528e3201aa37309ec8a23df89ab92e8">deleteObject</a> (void *ptr)</td></tr>
+<tr class="separator:ae528e3201aa37309ec8a23df89ab92e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04a1138c18e740b8f0fd580b3d52af1c" id="r_a04a1138c18e740b8f0fd580b3d52af1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a04a1138c18e740b8f0fd580b3d52af1c">~ObjectFactory</a> ()</td></tr>
+<tr class="separator:a04a1138c18e740b8f0fd580b3d52af1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classSingleton"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classSingleton')"><img src="closed.png" alt="-"/>&#160;Public 成员函数 继承自 <a class="el" href="classSingleton.html">Singleton&lt; ObjectFactory &gt;</a></td></tr>
+<tr class="memitem:a23b2407170cc04f6746874704b928044 inherit pub_methods_classSingleton" id="r_a23b2407170cc04f6746874704b928044"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#a23b2407170cc04f6746874704b928044">Singleton</a> (const <a class="el" href="classSingleton.html">Singleton</a> &amp;)=delete</td></tr>
+<tr class="separator:a23b2407170cc04f6746874704b928044 inherit pub_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad55e7dce6e55238fdfb80c980acded28 inherit pub_methods_classSingleton" id="r_ad55e7dce6e55238fdfb80c980acded28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#ad55e7dce6e55238fdfb80c980acded28">Singleton</a> (<a class="el" href="classSingleton.html">Singleton</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:ad55e7dce6e55238fdfb80c980acded28 inherit pub_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77024ec0dcc861c2d5f4a848d726e2ad inherit pub_methods_classSingleton" id="r_a77024ec0dcc861c2d5f4a848d726e2ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSingleton.html">Singleton</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#a77024ec0dcc861c2d5f4a848d726e2ad">operator=</a> (const <a class="el" href="classSingleton.html">Singleton</a> &amp;)=delete</td></tr>
+<tr class="separator:a77024ec0dcc861c2d5f4a848d726e2ad inherit pub_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a912467bc509a71c1c88599a9cb48ec13 inherit pub_methods_classSingleton" id="r_a912467bc509a71c1c88599a9cb48ec13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classSingleton.html">Singleton</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#a912467bc509a71c1c88599a9cb48ec13">operator=</a> (<a class="el" href="classSingleton.html">Singleton</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:a912467bc509a71c1c88599a9cb48ec13 inherit pub_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Private 成员函数</h2></td></tr>
+<tr class="memitem:ac9a7b09f3460dfb852f4b6167d46dfaa" id="r_ac9a7b09f3460dfb852f4b6167d46dfaa"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
+<tr class="memitem:ac9a7b09f3460dfb852f4b6167d46dfaa"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#ac9a7b09f3460dfb852f4b6167d46dfaa">createImpl</a> (const std::string &amp;typeName, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:ac9a7b09f3460dfb852f4b6167d46dfaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94a018a67cc96441aff3eaa9c0f7952a" id="r_a94a018a67cc96441aff3eaa9c0f7952a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a94a018a67cc96441aff3eaa9c0f7952a">ObjectFactory</a> ()=default</td></tr>
+<tr class="separator:a94a018a67cc96441aff3eaa9c0f7952a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a82d1eaa0ce0d093ef13d80251cce9b5d" id="r_a82d1eaa0ce0d093ef13d80251cce9b5d"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="structObjectFactory_1_1TypeInfo.html">TypeInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a82d1eaa0ce0d093ef13d80251cce9b5d">m_typeInfo</a></td></tr>
+<tr class="separator:a82d1eaa0ce0d093ef13d80251cce9b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f0930ab63f5b9d267f3944905c4f5c6" id="r_a1f0930ab63f5b9d267f3944905c4f5c6"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; void *, <a class="el" href="structObjectFactory_1_1ObjectInfo.html">ObjectInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a1f0930ab63f5b9d267f3944905c4f5c6">m_objects</a></td></tr>
+<tr class="separator:a1f0930ab63f5b9d267f3944905c4f5c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+友元</h2></td></tr>
+<tr class="memitem:a2781c2060df83993fd38b55d8c3ca16d" id="r_a2781c2060df83993fd38b55d8c3ca16d"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classObjectFactory.html#a2781c2060df83993fd38b55d8c3ca16d">Singleton&lt; ObjectFactory &gt;</a></td></tr>
+<tr class="separator:a2781c2060df83993fd38b55d8c3ca16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+额外继承的成员函数</h2></td></tr>
+<tr class="inherit_header pub_static_methods_classSingleton"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classSingleton')"><img src="closed.png" alt="-"/>&#160;静态 Public 成员函数 继承自 <a class="el" href="classSingleton.html">Singleton&lt; ObjectFactory &gt;</a></td></tr>
+<tr class="memitem:adb13676b8c1a4f17dc930222b9a1dda9 inherit pub_static_methods_classSingleton" id="r_adb13676b8c1a4f17dc930222b9a1dda9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classObjectFactory.html">ObjectFactory</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#adb13676b8c1a4f17dc930222b9a1dda9">s_getInstance</a> ()</td></tr>
+<tr class="separator:adb13676b8c1a4f17dc930222b9a1dda9 inherit pub_static_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classSingleton"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classSingleton')"><img src="closed.png" alt="-"/>&#160;Protected 成员函数 继承自 <a class="el" href="classSingleton.html">Singleton&lt; ObjectFactory &gt;</a></td></tr>
+<tr class="memitem:adb1b554fec7ae6065fe0e09111f3581f inherit pro_methods_classSingleton" id="r_adb1b554fec7ae6065fe0e09111f3581f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#adb1b554fec7ae6065fe0e09111f3581f">Singleton</a> ()=default</td></tr>
+<tr class="separator:adb1b554fec7ae6065fe0e09111f3581f inherit pro_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb600cf10389b0bff6147aeee786c87 inherit pro_methods_classSingleton" id="r_abfb600cf10389b0bff6147aeee786c87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSingleton.html#abfb600cf10389b0bff6147aeee786c87">~Singleton</a> ()=default</td></tr>
+<tr class="separator:abfb600cf10389b0bff6147aeee786c87 inherit pro_methods_classSingleton"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">构造及析构函数说明</h2>
+<a id="a04a1138c18e740b8f0fd580b3d52af1c" name="a04a1138c18e740b8f0fd580b3d52af1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04a1138c18e740b8f0fd580b3d52af1c">&#9670;&#160;</a></span>~ObjectFactory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ObjectFactory::~ObjectFactory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a94a018a67cc96441aff3eaa9c0f7952a" name="a94a018a67cc96441aff3eaa9c0f7952a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94a018a67cc96441aff3eaa9c0f7952a">&#9670;&#160;</a></span>ObjectFactory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ObjectFactory::ObjectFactory </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a1b99e007876c1ca1a996147eb2ed6aef" name="a1b99e007876c1ca1a996147eb2ed6aef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b99e007876c1ca1a996147eb2ed6aef">&#9670;&#160;</a></span>create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * ObjectFactory::create </td>
+          <td>(</td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad4d451c37a6490833c6d82e3f2fc278e" name="ad4d451c37a6490833c6d82e3f2fc278e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4d451c37a6490833c6d82e3f2fc278e">&#9670;&#160;</a></span>createByName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * ObjectFactory::createByName </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>typeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac9a7b09f3460dfb852f4b6167d46dfaa" name="ac9a7b09f3460dfb852f4b6167d46dfaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9a7b09f3460dfb852f4b6167d46dfaa">&#9670;&#160;</a></span>createImpl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * ObjectFactory::createImpl </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>typeName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae528e3201aa37309ec8a23df89ab92e8" name="ae528e3201aa37309ec8a23df89ab92e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae528e3201aa37309ec8a23df89ab92e8">&#9670;&#160;</a></span>deleteObject()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ObjectFactory::deleteObject </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a44a1cf25781d225355864d6d0bcc127b" name="a44a1cf25781d225355864d6d0bcc127b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44a1cf25781d225355864d6d0bcc127b">&#9670;&#160;</a></span>getObjects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; T * &gt; ObjectFactory::getObjects </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a332d338411e4ed90a449dee52626afd0" name="a332d338411e4ed90a449dee52626afd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a332d338411e4ed90a449dee52626afd0">&#9670;&#160;</a></span>registerType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ObjectFactory::registerType </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>typeName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">友元及相关函数文档</h2>
+<a id="a2781c2060df83993fd38b55d8c3ca16d" name="a2781c2060df83993fd38b55d8c3ca16d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2781c2060df83993fd38b55d8c3ca16d">&#9670;&#160;</a></span>Singleton&lt; ObjectFactory &gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classSingleton.html">Singleton</a>&lt; <a class="el" href="classObjectFactory.html">ObjectFactory</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a1f0930ab63f5b9d267f3944905c4f5c6" name="a1f0930ab63f5b9d267f3944905c4f5c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f0930ab63f5b9d267f3944905c4f5c6">&#9670;&#160;</a></span>m_objects</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;void*, <a class="el" href="structObjectFactory_1_1ObjectInfo.html">ObjectInfo</a>&gt; ObjectFactory::m_objects</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a82d1eaa0ce0d093ef13d80251cce9b5d" name="a82d1eaa0ce0d093ef13d80251cce9b5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82d1eaa0ce0d093ef13d80251cce9b5d">&#9670;&#160;</a></span>m_typeInfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="structObjectFactory_1_1TypeInfo.html">TypeInfo</a>&gt; ObjectFactory::m_typeInfo</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>DesignModes/<a class="el" href="ObjectFactory_8hpp_source.html">ObjectFactory.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: Modern C++ Demo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div><div class="header">
+  <div class="headertitle"><div class="title">Modern C++ Demo</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a> <img src="https://img.shields.io/badge/C++-20-blue.svg" alt="C++" style="pointer-events: none;" class="inline"/> <img src="https://img.shields.io/badge/CMake-3.10+-green.svg" alt="CMake" style="pointer-events: none;" class="inline"/> <img src="https://img.shields.io/badge/OpenCL-3.0-orange.svg" alt="OpenCL" style="pointer-events: none;" class="inline"/> <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License" style="pointer-events: none;" class="inline"/></p>
+<p>📚 <a href="https://pengkun-pk.github.io/ModernCPlusPlusDemo/">View Full Documentation</a></p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+目录</h1>
+<ul>
+<li>项目简介</li>
+<li>主要特性</li>
+<li>技术栈</li>
+<li>快速开始<ul>
+<li>前置要求</li>
+<li>安装步骤</li>
+</ul>
+</li>
+<li>使用指南</li>
+<li>运行测试</li>
+<li>持续更新计划</li>
+<li>贡献</li>
+<li>许可证</li>
+<li>联系方式</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md2"></a>
+项目简介</h1>
+<p>Modern C++ Demo 是一个展示现代C++开发实践的示例项目。本项目旨在演示如何在VSCode中使用CMake进行C++开发,并整合了多种先进的C++特性和常用库。无论您是C++新手还是经验丰富的开发者,这个项目都能为您提供宝贵的学习资源和参考。</p>
+<h1><a class="anchor" id="autotoc_md3"></a>
+🌟 主要特性</h1>
+<ul>
+<li>基于VSCode和CMake的现代C++开发环境</li>
+<li>单例模式模板类实现(线程安全）</li>
+<li>event-bus事件总线模式模板类实现及demo</li>
+<li>观察者模式模板类实现</li>
+<li>工厂模式(CRTP派生于单例)模板类实现</li>
+<li>集成Google Test框架,支持单元测试</li>
+<li>使用SPDLog实现高效日志记录</li>
+<li>基于Boost库的状态机实现</li>
+<li>自定义线程池模板类实现</li>
+<li>自用事件，属性订阅模式模板类实现</li>
+<li>充分利用C++20新特性</li>
+<li>持续优化和更新的各个模块</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md4"></a>
+🛠️ 技术栈</h1>
+<ul>
+<li>C++20</li>
+<li>CMake 3.10+</li>
+<li>OpenCL 3.0</li>
+<li>Google Test</li>
+<li>Boost库</li>
+<li>SPDLog</li>
+<li>VSCode</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md5"></a>
+🚀 快速开始</h1>
+<h2><a class="anchor" id="autotoc_md6"></a>
+前置要求</h2>
+<p>确保您的系统已安装以下工具:</p>
+<ul>
+<li>VSCode</li>
+<li>CMake (3.10+)</li>
+<li>现代C++编译器 (支持C++20)</li>
+<li>Git</li>
+<li>boost (1.83.0)</li>
+<li>OpenCL 3.0 兼容的驱动和 SDK</li>
+<li>CUDA Toolkit 12.3+ (可选，用于 NVIDIA GPU)</li>
+<li>支持 OpenCL 3.0 的 CPU 或 GPU</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md7"></a>
+安装步骤</h2>
+<ol type="1">
+<li>克隆仓库: git clone &ndash;recursive <a href="https://github.com/PengKun-PK/ModernCPlusPlusDemo.git">https://github.com/PengKun-PK/ModernCPlusPlusDemo.git</a></li>
+<li>根据.vscode目录下文件开始编译</li>
+<li>task.json, launch.json, setting.json均已配置好，有问题，可查看json文件里路径是否正确，或者cmakelist里路径是否正确</li>
+<li><p class="startli">OpenCL 环境配置:</p>
+<p class="startli">Ubuntu: </p><div class="fragment"><div class="line">sudo apt-get update</div>
+<div class="line">sudo apt-get install -y opencl-headers ocl-icd-opencl-dev pocl-opencl-icd ocl-icd-dev</div>
+</div><!-- fragment --><p class="startli">Windows:</p><ul>
+<li>NVIDIA GPU: 安装最新 NVIDIA 驱动和 CUDA Toolkit 12.3+</li>
+<li>Intel GPU/CPU: 安装最新的 Intel OpenCL Runtime 和 SDK</li>
+<li>AMD GPU/CPU: 安装最新的 AMD ROCm 平台</li>
+</ul>
+</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md8"></a>
+📘 使用指南</h1>
+<p>本项目包含多个模块,每个模块都有其特定的用途和示例。以下是一些主要模块的简要说明:</p>
+<ul>
+<li><b>单例模式</b>: <code><a class="el" href="Singleton_8hpp.html">DesignModes/Singleton.hpp</a></code> 展示了线程安全的懒汉式单例模式实现。</li>
+<li><b>工厂模式</b>: <code><a class="el" href="ObjectFactory_8hpp.html">DesignModes/ObjectFactory.hpp</a></code> 展示了工厂模式模板类实现</li>
+<li><b>事件总线模式</b>: <code><a class="el" href="EventBus_8hpp.html">DesignModes/EventBus.hpp</a></code> 展示了事件总线模式实现</li>
+<li><b>观察者模式</b>: <code><a class="el" href="Observer_8hpp.html">DesignModes/Observer.hpp</a></code> 展示了观察者模式实现</li>
+<li><b>日志系统</b>: <code>SPDLogEx/</code> 目录下包含了SPDLog的集成和使用示例。</li>
+<li><b>状态机</b>: <code>StateMachine/</code> 展示了如何使用Boost库实现状态机。</li>
+<li><b>线程池</b>: <code>ThreadPool/</code> 提供了一个高效的线程池实现。</li>
+<li><b>自定义订阅模式</b>: <code>Subscriber/</code> 展示了我自用的订阅模式实现</li>
+<li><b>OpenCL并行计算</b>: <code>OpenCL/</code> 展示了OpenCL 3.0 功能封装</li>
+</ul>
+<p>更多详细信息,请参阅各模块的文档和源代码。</p>
+<h1><a class="anchor" id="autotoc_md9"></a>
+🧪 运行测试</h1>
+<p>本项目使用Google Test进行单元测试。要运行测试,请在构建目录中执行(Run Google Tests)，目前只加了个别模块的单元测试，后续会慢慢更新</p>
+<h1><a class="anchor" id="autotoc_md10"></a>
+📈 持续更新计划</h1>
+<p>我们正在持续改进和扩展这个项目。以下是一些计划中的更新:</p>
+<ul>
+<li>增加更多设计模式示例</li>
+<li>改进线程池性能</li>
+<li>添加并发编程示例</li>
+<li>集成更多现代C++库(C++23/26)</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md11"></a>
+🤝 贡献</h1>
+<p>我们欢迎任何形式的贡献!如果您有任何改进意见或新功能建议,请随时提出issue或pull request。</p>
+<h1><a class="anchor" id="autotoc_md12"></a>
+📄 许可证</h1>
+<p>本项目采用MIT许可证。详情请见 [LICENSE](LICENSE) 文件。</p>
+<h1><a class="anchor" id="autotoc_md13"></a>
+📮 联系方式</h1>
+<p>如有任何问题或建议,请通过GitHub Issues与我们联系。</p>
+<hr  />
+<p>感谢您对Modern C++ Demo的关注。让我们一起探索现代C++的魅力! </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

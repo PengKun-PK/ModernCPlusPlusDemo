@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: EventBus&lt; EventBaseType &gt; 模板类 参考</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">类</a> &#124;
+<a href="#pub-types">Public 类型</a> &#124;
+<a href="#pub-methods">Public 成员函数</a> &#124;
+<a href="#pri-types">Private 类型</a> &#124;
+<a href="#pri-attribs">Private 属性</a> &#124;
+<a href="classEventBus-members.html">所有成员列表</a>  </div>
+  <div class="headertitle"><div class="title">EventBus&lt; EventBaseType &gt; 模板类 参考</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="EventBus_8hpp_source.html">EventBus.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+类</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEventBus_1_1Subscriber.html">Subscriber</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public 类型</h2></td></tr>
+<tr class="memitem:a9ccab0659fd2002fc95afc2dc2a6537d" id="r_a9ccab0659fd2002fc95afc2dc2a6537d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> = size_t</td></tr>
+<tr class="separator:a9ccab0659fd2002fc95afc2dc2a6537d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public 成员函数</h2></td></tr>
+<tr class="memitem:aef0e5217af46c5e562c9e3d76173c0a5" id="r_aef0e5217af46c5e562c9e3d76173c0a5"><td class="memTemplParams" colspan="2">template&lt;typename EventType , typename Callback &gt; </td></tr>
+<tr class="memitem:aef0e5217af46c5e562c9e3d76173c0a5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classEventBus.html#aef0e5217af46c5e562c9e3d76173c0a5">subscribe</a> (Callback &amp;&amp;callback)</td></tr>
+<tr class="separator:aef0e5217af46c5e562c9e3d76173c0a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06af2ada4648c32c47d1aec22ba340a4" id="r_a06af2ada4648c32c47d1aec22ba340a4"><td class="memTemplParams" colspan="2">template&lt;typename EventType &gt; </td></tr>
+<tr class="memitem:a06af2ada4648c32c47d1aec22ba340a4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classEventBus.html#a06af2ada4648c32c47d1aec22ba340a4">publish</a> (const EventType &amp;event) const</td></tr>
+<tr class="separator:a06af2ada4648c32c47d1aec22ba340a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecef6d2989fed42c373d44bf259f587e" id="r_aecef6d2989fed42c373d44bf259f587e"><td class="memTemplParams" colspan="2">template&lt;typename EventType &gt; </td></tr>
+<tr class="memitem:aecef6d2989fed42c373d44bf259f587e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classEventBus.html#aecef6d2989fed42c373d44bf259f587e">unsubscribeAll</a> ()</td></tr>
+<tr class="separator:aecef6d2989fed42c373d44bf259f587e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad638ed68a0a0b321d20424c48fb39e65" id="r_ad638ed68a0a0b321d20424c48fb39e65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#ad638ed68a0a0b321d20424c48fb39e65">unsubscribe</a> (<a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> id)</td></tr>
+<tr class="separator:ad638ed68a0a0b321d20424c48fb39e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-types" name="pri-types"></a>
+Private 类型</h2></td></tr>
+<tr class="memitem:ac86d7f0a63b05f5719abbbbc74221496" id="r_ac86d7f0a63b05f5719abbbbc74221496"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">SubscriberList</a> = std::vector&lt; <a class="el" href="structEventBus_1_1Subscriber.html">Subscriber</a> &gt;</td></tr>
+<tr class="separator:ac86d7f0a63b05f5719abbbbc74221496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private 属性</h2></td></tr>
+<tr class="memitem:a1613b85ba879a5758a24854969316cc4" id="r_a1613b85ba879a5758a24854969316cc4"><td class="memItemLeft" align="right" valign="top">std::shared_mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a></td></tr>
+<tr class="separator:a1613b85ba879a5758a24854969316cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a633bfae573a5e63ca08d4cac638e4a37" id="r_a633bfae573a5e63ca08d4cac638e4a37"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::type_index, <a class="el" href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">SubscriberList</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a></td></tr>
+<tr class="separator:a633bfae573a5e63ca08d4cac638e4a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56e97c8df228288ffb60d3cdbf332e3e" id="r_a56e97c8df228288ffb60d3cdbf332e3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEventBus.html#a56e97c8df228288ffb60d3cdbf332e3e">nextSubscriptionId_</a> = 0</td></tr>
+<tr class="separator:a56e97c8df228288ffb60d3cdbf332e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">成员类型定义说明</h2>
+<a id="ac86d7f0a63b05f5719abbbbc74221496" name="ac86d7f0a63b05f5719abbbbc74221496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac86d7f0a63b05f5719abbbbc74221496">&#9670;&#160;</a></span>SubscriberList</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::SubscriberList =  std::vector&lt;<a class="el" href="structEventBus_1_1Subscriber.html">Subscriber</a>&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9ccab0659fd2002fc95afc2dc2a6537d" name="a9ccab0659fd2002fc95afc2dc2a6537d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ccab0659fd2002fc95afc2dc2a6537d">&#9670;&#160;</a></span>SubscriptionId</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::SubscriptionId =  size_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">成员函数说明</h2>
+<a id="a06af2ada4648c32c47d1aec22ba340a4" name="a06af2ada4648c32c47d1aec22ba340a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06af2ada4648c32c47d1aec22ba340a4">&#9670;&#160;</a></span>publish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<div class="memtemplate">
+template&lt;typename EventType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::publish </td>
+          <td>(</td>
+          <td class="paramtype">const EventType &amp;&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aef0e5217af46c5e562c9e3d76173c0a5" name="aef0e5217af46c5e562c9e3d76173c0a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef0e5217af46c5e562c9e3d76173c0a5">&#9670;&#160;</a></span>subscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<div class="memtemplate">
+template&lt;typename EventType , typename Callback &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::subscribe </td>
+          <td>(</td>
+          <td class="paramtype">Callback &amp;&amp;&#160;</td>
+          <td class="paramname"><em>callback</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad638ed68a0a0b321d20424c48fb39e65" name="ad638ed68a0a0b321d20424c48fb39e65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad638ed68a0a0b321d20424c48fb39e65">&#9670;&#160;</a></span>unsubscribe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::unsubscribe </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a>&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aecef6d2989fed42c373d44bf259f587e" name="aecef6d2989fed42c373d44bf259f587e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecef6d2989fed42c373d44bf259f587e">&#9670;&#160;</a></span>unsubscribeAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<div class="memtemplate">
+template&lt;typename EventType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::unsubscribeAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">类成员变量说明</h2>
+<a id="a1613b85ba879a5758a24854969316cc4" name="a1613b85ba879a5758a24854969316cc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1613b85ba879a5758a24854969316cc4">&#9670;&#160;</a></span>mutex_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_mutex <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::mutex_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">mutable</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a56e97c8df228288ffb60d3cdbf332e3e" name="a56e97c8df228288ffb60d3cdbf332e3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56e97c8df228288ffb60d3cdbf332e3e">&#9670;&#160;</a></span>nextSubscriptionId_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::nextSubscriptionId_ = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a633bfae573a5e63ca08d4cac638e4a37" name="a633bfae573a5e63ca08d4cac638e4a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a633bfae573a5e63ca08d4cac638e4a37">&#9670;&#160;</a></span>subscribers_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename EventBaseType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;std::type_index, <a class="el" href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">SubscriberList</a>&gt; <a class="el" href="classEventBus.html">EventBus</a>&lt; EventBaseType &gt;::subscribers_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>该类的文档由以下文件生成:<ul>
+<li>DesignModes/<a class="el" href="EventBus_8hpp_source.html">EventBus.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

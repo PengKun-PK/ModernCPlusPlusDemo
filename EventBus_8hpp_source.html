@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ModernCPlusPlusDemo: DesignModes/EventBus.hpp 源文件</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ModernCPlusPlusDemo
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 制作者 Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','搜索');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">载入中...</div>
+<div class="SRStatus" id="Searching">搜索中...</div>
+<div class="SRStatus" id="NoMatches">未找到</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_179f3c9b076f66b50ad3eaa3ebbd152f.html">DesignModes</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle"><div class="title">EventBus.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="EventBus_8hpp.html">浏览该文件的文档.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;typeindex&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;shared_mutex&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;exception&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> EventBaseType&gt;</div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classEventBus.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classEventBus.html">EventBus</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="comment">// Unique identifier for each subscription</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">   19</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> = size_t;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// Template function to subscribe to an event type</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> EventType, <span class="keyword">typename</span> Callback&gt;</div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="}">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classEventBus.html#aef0e5217af46c5e562c9e3d76173c0a5">   23</a></span>    <a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <a class="code hl_function" href="classEventBus.html#aef0e5217af46c5e562c9e3d76173c0a5">subscribe</a>(Callback&amp;&amp; callback)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">static_assert</span>(std::is_base_of_v&lt;EventBaseType, EventType&gt;,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                      <span class="stringliteral">&quot;EventType must inherit from EventBaseType&quot;</span>);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">static_assert</span>(std::is_invocable_r_v&lt;void, Callback, const EventType&amp;&gt;,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                      <span class="stringliteral">&quot;Callback must be invocable with const EventType&amp;&quot;</span>);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        std::unique_lock lock(<a class="code hl_variable" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a>);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keyword">auto</span>&amp; subscribers = <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>[std::type_index(<span class="keyword">typeid</span>(EventType))];</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <span class="keywordtype">id</span> = <a class="code hl_variable" href="classEventBus.html#a56e97c8df228288ffb60d3cdbf332e3e">nextSubscriptionId_</a>++;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        subscribers.emplace_back(<a class="code hl_struct" href="structEventBus_1_1Subscriber.html">Subscriber</a>{</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            id,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            [cb = std::forward&lt;Callback&gt;(callback)](<span class="keyword">const</span> EventBaseType* event)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                <span class="keywordflow">try</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    cb(*<span class="keyword">static_cast&lt;</span><span class="keyword">const </span>EventType*<span class="keyword">&gt;</span>(event));</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception&amp; e)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                    std::cerr &lt;&lt; <span class="stringliteral">&quot;Exception in event callback: &quot;</span> &lt;&lt; e.what() &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="keywordflow">catch</span> (...)</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    std::cerr &lt;&lt; <span class="stringliteral">&quot;Unknown exception in event callback&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        });</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">return</span> id;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
+</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="comment">// Function to publish an event</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> EventType&gt;</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classEventBus.html#a06af2ada4648c32c47d1aec22ba340a4">   56</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classEventBus.html#a06af2ada4648c32c47d1aec22ba340a4">publish</a>(<span class="keyword">const</span> EventType&amp; event)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">static_assert</span>(std::is_base_of_v&lt;EventBaseType, EventType&gt;,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                      <span class="stringliteral">&quot;EventType must inherit from EventBaseType&quot;</span>);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        std::shared_lock lock(<a class="code hl_variable" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a>);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>.find(std::type_index(<span class="keyword">typeid</span>(EventType))); it != <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>.end())</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="comment">// Create a copy of subscribers to allow for safe iteration</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="keyword">auto</span> subscribersCopy = it-&gt;second;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            lock.unlock();  <span class="comment">// Release the lock before calling callbacks</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; subscriber : subscribersCopy)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                subscriber.callback(&amp;event);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            }</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">// Function to unsubscribe all callbacks for a specific event type</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> EventType&gt;</div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classEventBus.html#aecef6d2989fed42c373d44bf259f587e">   77</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classEventBus.html#aecef6d2989fed42c373d44bf259f587e">unsubscribeAll</a>()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">static_assert</span>(std::is_base_of_v&lt;EventBaseType, EventType&gt;,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                      <span class="stringliteral">&quot;EventType must inherit from EventBaseType&quot;</span>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        std::unique_lock lock(<a class="code hl_variable" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>.erase(std::type_index(<span class="keyword">typeid</span>(EventType)));</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
+</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// Function to unsubscribe a specific subscription</span></div>
+<div class="foldopen" id="foldopen00087" data-start="{" data-end="}">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classEventBus.html#ad638ed68a0a0b321d20424c48fb39e65">   87</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classEventBus.html#ad638ed68a0a0b321d20424c48fb39e65">unsubscribe</a>(<a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <span class="keywordtype">id</span>)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        std::unique_lock lock(<a class="code hl_variable" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a>);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; [_, subscribers] : <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            subscribers.erase(</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                std::remove_if(subscribers.begin(), subscribers.end(),</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                    [<span class="keywordtype">id</span>](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; subscriber) { return subscriber.id == id; }),</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                subscribers.end()</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            );</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    }</div>
+</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="comment">// Structure to hold subscriber information</span></div>
+<div class="foldopen" id="foldopen00102" data-start="{" data-end="};">
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="structEventBus_1_1Subscriber.html">  102</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structEventBus_1_1Subscriber.html">Subscriber</a></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="structEventBus_1_1Subscriber.html#a92c4def599cced7f102e2924e55b3811">  104</a></span>        <a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <a class="code hl_variable" href="structEventBus_1_1Subscriber.html#a92c4def599cced7f102e2924e55b3811">id</a>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="structEventBus_1_1Subscriber.html#a67319c2144a1a624665f8e66c5caaf67">  105</a></span>        std::function&lt;void(<span class="keyword">const</span> EventBaseType*)&gt; <a class="code hl_variable" href="structEventBus_1_1Subscriber.html#a67319c2144a1a624665f8e66c5caaf67">callback</a>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    };</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">  108</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">SubscriberList</a> = std::vector&lt;Subscriber&gt;;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">  110</a></span>    <span class="keyword">mutable</span> std::shared_mutex <a class="code hl_variable" href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">mutex_</a>;  <span class="comment">// Mutex for thread-safety</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">  111</a></span>    std::unordered_map&lt;std::type_index, SubscriberList&gt; <a class="code hl_variable" href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">subscribers_</a>;  <span class="comment">// Map of event types to subscribers</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classEventBus.html#a56e97c8df228288ffb60d3cdbf332e3e">  112</a></span>    <a class="code hl_typedef" href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">SubscriptionId</a> <a class="code hl_variable" href="classEventBus.html#a56e97c8df228288ffb60d3cdbf332e3e">nextSubscriptionId_</a> = 0;  <span class="comment">// Counter for generating unique subscription IDs</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>};</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="comment">//=============================================Usage example===================================================</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment">// struct Event { virtual ~Event() = default; };</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="comment">// struct UserCreatedEvent : Event { std::string username; };</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="comment">// int main()</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="comment">// {</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="comment">//     EventBus&lt;Event&gt; bus;</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="comment">//     auto id1 = bus.subscribe&lt;UserCreatedEvent&gt;([](const UserCreatedEvent&amp; e) {</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment">//         std::cout &lt;&lt; &quot;User created: &quot; &lt;&lt; e.username &lt;&lt; std::endl;</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="comment">//     });</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="comment">//     auto id2 = bus.subscribe&lt;UserCreatedEvent&gt;([](const UserCreatedEvent&amp; e) {</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="comment">//         throw std::runtime_error(&quot;Test exception&quot;);</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="comment">//     });</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="comment">//     bus.publish(UserCreatedEvent{&quot;John&quot;});  // This will print &quot;User created: John&quot; and an exception message</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="comment">//     bus.unsubscribe(id2);  // Unsubscribe the throwing callback</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="comment">//     bus.publish(UserCreatedEvent{&quot;Jane&quot;});  // This will only print &quot;User created: Jane&quot;</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="comment">//     bus.unsubscribeAll&lt;UserCreatedEvent&gt;();  // Unsubscribe all UserCreatedEvent callbacks</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="comment">//     bus.publish(UserCreatedEvent{&quot;Bob&quot;});  // This won&#39;t print anything</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="comment">//     return 0;</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="comment">// }</span></div>
+<div class="ttc" id="aclassEventBus_html"><div class="ttname"><a href="classEventBus.html">EventBus</a></div><div class="ttdef"><b>Definition</b> EventBus.hpp:16</div></div>
+<div class="ttc" id="aclassEventBus_html_a06af2ada4648c32c47d1aec22ba340a4"><div class="ttname"><a href="classEventBus.html#a06af2ada4648c32c47d1aec22ba340a4">EventBus::publish</a></div><div class="ttdeci">void publish(const EventType &amp;event) const</div><div class="ttdef"><b>Definition</b> EventBus.hpp:56</div></div>
+<div class="ttc" id="aclassEventBus_html_a1613b85ba879a5758a24854969316cc4"><div class="ttname"><a href="classEventBus.html#a1613b85ba879a5758a24854969316cc4">EventBus::mutex_</a></div><div class="ttdeci">std::shared_mutex mutex_</div><div class="ttdef"><b>Definition</b> EventBus.hpp:110</div></div>
+<div class="ttc" id="aclassEventBus_html_a56e97c8df228288ffb60d3cdbf332e3e"><div class="ttname"><a href="classEventBus.html#a56e97c8df228288ffb60d3cdbf332e3e">EventBus::nextSubscriptionId_</a></div><div class="ttdeci">SubscriptionId nextSubscriptionId_</div><div class="ttdef"><b>Definition</b> EventBus.hpp:112</div></div>
+<div class="ttc" id="aclassEventBus_html_a633bfae573a5e63ca08d4cac638e4a37"><div class="ttname"><a href="classEventBus.html#a633bfae573a5e63ca08d4cac638e4a37">EventBus::subscribers_</a></div><div class="ttdeci">std::unordered_map&lt; std::type_index, SubscriberList &gt; subscribers_</div><div class="ttdef"><b>Definition</b> EventBus.hpp:111</div></div>
+<div class="ttc" id="aclassEventBus_html_a9ccab0659fd2002fc95afc2dc2a6537d"><div class="ttname"><a href="classEventBus.html#a9ccab0659fd2002fc95afc2dc2a6537d">EventBus::SubscriptionId</a></div><div class="ttdeci">size_t SubscriptionId</div><div class="ttdef"><b>Definition</b> EventBus.hpp:19</div></div>
+<div class="ttc" id="aclassEventBus_html_ac86d7f0a63b05f5719abbbbc74221496"><div class="ttname"><a href="classEventBus.html#ac86d7f0a63b05f5719abbbbc74221496">EventBus::SubscriberList</a></div><div class="ttdeci">std::vector&lt; Subscriber &gt; SubscriberList</div><div class="ttdef"><b>Definition</b> EventBus.hpp:108</div></div>
+<div class="ttc" id="aclassEventBus_html_ad638ed68a0a0b321d20424c48fb39e65"><div class="ttname"><a href="classEventBus.html#ad638ed68a0a0b321d20424c48fb39e65">EventBus::unsubscribe</a></div><div class="ttdeci">void unsubscribe(SubscriptionId id)</div><div class="ttdef"><b>Definition</b> EventBus.hpp:87</div></div>
+<div class="ttc" id="aclassEventBus_html_aecef6d2989fed42c373d44bf259f587e"><div class="ttname"><a href="classEventBus.html#aecef6d2989fed42c373d44bf259f587e">EventBus::unsubscribeAll</a></div><div class="ttdeci">void unsubscribeAll()</div><div class="ttdef"><b>Definition</b> EventBus.hpp:77</div></div>
+<div class="ttc" id="aclassEventBus_html_aef0e5217af46c5e562c9e3d76173c0a5"><div class="ttname"><a href="classEventBus.html#aef0e5217af46c5e562c9e3d76173c0a5">EventBus::subscribe</a></div><div class="ttdeci">SubscriptionId subscribe(Callback &amp;&amp;callback)</div><div class="ttdef"><b>Definition</b> EventBus.hpp:23</div></div>
+<div class="ttc" id="astructEventBus_1_1Subscriber_html"><div class="ttname"><a href="structEventBus_1_1Subscriber.html">EventBus::Subscriber</a></div><div class="ttdef"><b>Definition</b> EventBus.hpp:103</div></div>
+<div class="ttc" id="astructEventBus_1_1Subscriber_html_a67319c2144a1a624665f8e66c5caaf67"><div class="ttname"><a href="structEventBus_1_1Subscriber.html#a67319c2144a1a624665f8e66c5caaf67">EventBus::Subscriber::callback</a></div><div class="ttdeci">std::function&lt; void(const EventBaseType *)&gt; callback</div><div class="ttdef"><b>Definition</b> EventBus.hpp:105</div></div>
+<div class="ttc" id="astructEventBus_1_1Subscriber_html_a92c4def599cced7f102e2924e55b3811"><div class="ttname"><a href="structEventBus_1_1Subscriber.html#a92c4def599cced7f102e2924e55b3811">EventBus::Subscriber::id</a></div><div class="ttdeci">SubscriptionId id</div><div class="ttdef"><b>Definition</b> EventBus.hpp:104</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+制作者&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>
