@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(ModernCPlusPlusDemo VERSION 1.0.0 LANGUAGES CXX)
 
-# 使用 C++20 标准
-set(CMAKE_CXX_STANDARD 20)
+# 使用 C++23 标准
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(MSVC)
