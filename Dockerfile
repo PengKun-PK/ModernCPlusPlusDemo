@@ -1,8 +1,22 @@
 # 尝试使用 Ubuntu 24.10 (代号 oracular)
-FROM ubuntu:oracular
+FROM ubuntu:24.04
 
 # 设置非交互式安装，避免安装过程中的提示
 ENV DEBIAN_FRONTEND=noninteractive
+
+# 设置代理环境变量
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV http_proxy=$HTTP_PROXY
+ENV https_proxy=$HTTPS_PROXY
+
+# 直接覆盖写入，不依赖 sed
+RUN echo "deb http://mirrors.aliyun.com/ubuntu/ noble main restricted universe multiverse\n\
+    deb http://mirrors.aliyun.com/ubuntu/ noble-updates main restricted universe multiverse\n\
+    deb http://mirrors.aliyun.com/ubuntu/ noble-backports main restricted universe multiverse\n\
+    deb http://mirrors.aliyun.com/ubuntu/ noble-security main restricted universe multiverse" \
+    > /etc/apt/sources.list && \
+    rm -f /etc/apt/sources.list.d/ubuntu.sources
 
 # 更新包列表并安装必要的工具和依赖
 RUN apt-get update && apt-get install -y \
